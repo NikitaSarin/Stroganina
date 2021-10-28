@@ -17,10 +17,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = scene as? UIWindowScene else { return }
 
         let window = UIWindow(windowScene: windowScene)
-        let builder = Builder()
+        let store = Store()
+        let builder = Builder(store: store)
         router = Router(window: window, builder: builder)
         router?.start()
         window.makeKeyAndVisible()
     }
-}
 
+    func sceneDidEnterBackground(_ scene: UIScene) {
+        router?.appDidEnterBackground()
+    }
+}

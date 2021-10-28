@@ -16,7 +16,6 @@ struct ChatView: View {
 
     var body: some View {
         VStack(spacing: 4) {
-            ChatHeader(chat: viewModel.chat)
             ScrollViewReader { proxy in
                 ScrollView(showsIndicators: false) {
                     LazyVStack(spacing: 4) {
@@ -30,6 +29,7 @@ struct ChatView: View {
             .animation(.easeInOut)
             .edgesIgnoringSafeArea(.bottom)
             .background(Color.tg_white)
+            .navigationTitle(viewModel.chat.title)
         }
     }
 
