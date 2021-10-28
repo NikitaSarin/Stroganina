@@ -11,6 +11,20 @@ final class Router {
 
     private let window: UIWindow
     private let builder: Builder
+    private let auth: AuthService
+    private lazy var navigation: UINavigationController = {
+        let navigation = UINavigationController()
+        navigation.setNavigationBarHidden(true, animated: false)
+        return navigation
+    }()
+
+    private var initialViewController: UIViewController {
+        if auth.isAuthorized {
+            return builder.buildChatScene(router: self)
+        } else {
+            return builder.buildStartScene(router: self)
+        }
+    }
 
     init(
         window: UIWindow,
@@ -18,9 +32,33 @@ final class Router {
     ) {
         self.window = window
         self.builder = builder
+        self.auth = AuthService(store: builder.store)
     }
 
     func start() {
-        window.rootViewController = builder.buildChatScene(router: self)
+        builder.store.load()
+        navigation.setViewControllers([initialViewController], animated: false)
+        window.rootViewController = navigation
+    }
+
+    func appDidEnterBackground() {
+        builder.store.save()
+    }
+}
+
+extension Router: AuthRouting {
+    func openLoginScene() {
+        let viewController = builder.buildLoginScene(router: self)
+        navigation.pushViewController(viewController, animated: true)
+    }
+
+    func openRegistrationScene() {
+        let viewController = builder.buildRegistrationScene(router: self)
+        navigation.pushViewController(viewController, animated: true)
+    }
+
+    func openMainFlow() {
+        let viewController = builder.buildChatScene(router: self)
+        navigation.setViewControllers([viewController], animated: true)
     }
 }
