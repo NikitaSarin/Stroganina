@@ -25,13 +25,13 @@ struct ActionButton: View {
             action()
         }, label: {
             Text(title)
+                .foregroundColor(.tg_white)
                 .bold()
+                .padding()
+                .frame(minWidth: 180)
+                .background(Color.tg_blue)
+                .cornerRadius(14)
         })
-        .padding()
-        .frame(minWidth: 180)
-        .background(Color.tg_blue)
-        .foregroundColor(.tg_white)
-        .cornerRadius(14)
     }
 }
 

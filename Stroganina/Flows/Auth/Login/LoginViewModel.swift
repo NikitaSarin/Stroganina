@@ -6,6 +6,7 @@
 //
 
 import Combine
+import Foundation
 
 protocol LoginServiceProtocol {
     func login(
@@ -16,7 +17,7 @@ protocol LoginServiceProtocol {
 
 final class LoginViewModel: ObservableObject {
 
-    @Published var username = ""
+    @Published var username = "alex8"
 
     private let router: AuthRouting
     private let service: LoginServiceProtocol
