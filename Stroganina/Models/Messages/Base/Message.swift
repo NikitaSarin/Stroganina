@@ -15,7 +15,6 @@ class Message: Identifiable, ObservableObject {
     let time: String
     var isOutgoing: Bool
     var showSenders: Bool
-    let date: Date
     let chatId: Chat.ID
     var sender: String? {
         (showSenders && !isOutgoing) ? user?.name : nil
@@ -29,7 +28,6 @@ class Message: Identifiable, ObservableObject {
         user: User?,
         isOutgoing: Bool,
         showSenders: Bool,
-        date: Date,
         chatId: Chat.ID
     ) {
         self.id = id
@@ -37,7 +35,6 @@ class Message: Identifiable, ObservableObject {
         self.user = user
         self.isOutgoing = isOutgoing
         self.showSenders = showSenders
-        self.date = date
         self.chatId = chatId
     }
 
@@ -47,7 +44,6 @@ class Message: Identifiable, ObservableObject {
         user = other.user
         isOutgoing = other.isOutgoing
         showSenders = other.showSenders
-        date = other.date
         chatId = other.chatId
     }
 }
@@ -73,7 +69,6 @@ extension Message {
             user: options.contains(.user) ? .mock : nil,
             isOutgoing: options.contains(.isOutgoing),
             showSenders: options.contains(.showSenders),
-            date: Date(),
             chatId: 1
         )
     }

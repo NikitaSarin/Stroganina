@@ -17,6 +17,7 @@ final class Router {
         navigation.setNavigationBarHidden(true, animated: false)
         return navigation
     }()
+    private let store: Store
 
     private var initialViewController: UIViewController {
         if auth.isAuthorized {
@@ -32,11 +33,12 @@ final class Router {
     ) {
         self.window = window
         self.builder = builder
+        self.store = builder.store
         self.auth = AuthService(store: builder.store)
     }
 
     func start() {
-        builder.store.load()
+        store.load()
         navigation.setViewControllers([initialViewController], animated: false)
         window.rootViewController = navigation
     }
