@@ -9,14 +9,14 @@ import Foundation
 
 final class LoginService: LoginServiceProtocol {
 
-    private let network: Networking
+    private let api: Networking
     private let store: Store
 
     init(
-        network: Networking,
+        api: Networking,
         store: Store
     ) {
-        self.network = network
+        self.api = api
         self.store = store
     }
 
@@ -24,10 +24,8 @@ final class LoginService: LoginServiceProtocol {
         with username: String,
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
-        network.send(
-            UserLoginRequest.userLogin,
-            parameters: UserLogin.Input(name: username)
-        ) { [weak self] result in
+        let function = UserLogin(name: username)
+        api.perform(function) { [weak self] result in
             switch result {
             case let .success(output):
                 self?.store.token = output.token

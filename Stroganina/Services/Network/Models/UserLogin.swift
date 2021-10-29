@@ -5,21 +5,14 @@
 //  Created by Denis Kamkin on 28.10.2021.
 //
 
-enum UserLogin {
-    struct Input: Codable {
-        let name: String
-    }
+struct UserLogin {
+    let name: String
+}
 
-    struct Output: Codable {
+extension UserLogin: ApiFunction {
+    struct Response: Decodable {
         let token: String
         let userId: Int
     }
-}
-
-typealias UserLoginRequest = Request<UserLogin.Input, UserLogin.Output>
-
-extension Request {
-	static var userLogin: UserLoginRequest {
-		UserLoginRequest(method: "user/login")
-	}
+    static var method = "user/login"
 }
