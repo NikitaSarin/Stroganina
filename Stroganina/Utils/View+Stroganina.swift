@@ -12,8 +12,8 @@ extension View {
         frame(width: size.width, height: size.height)
     }
 
-    func frame(side: CGFloat) -> some View {
-        frame(width: side, height: side)
+    func frame(edge: CGFloat) -> some View {
+        frame(width: edge, height: edge)
     }
 
     func flip() -> some View {

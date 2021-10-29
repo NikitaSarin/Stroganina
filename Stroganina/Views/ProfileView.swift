@@ -18,7 +18,7 @@ struct ProfileView: View {
     enum Size: CaseIterable {
         case small, medium
 
-        var side: CGFloat {
+        var edge: CGFloat {
             switch self {
             case .small:
                 return 24
@@ -47,14 +47,14 @@ struct ProfileView: View {
     ) {
         self.mode = mode
         self.size = size
-        self.backgroundColor = .tg_blue
+        self.backgroundColor = .sgn_brand
     }
 
     init(
         image: UIImage?,
         text: String,
         size: Size = .small,
-        backgroundColor: Color = .tg_blue
+        backgroundColor: Color = .sgn_brand
     ) {
         self.size = size
         self.mode = image != nil ? .image(image!) : .text(text)
@@ -73,9 +73,9 @@ struct ProfileView: View {
                     .font(.system(size: size.fontSize))
             }
         }
-        .frame(side: size.side)
+        .frame(edge: size.edge)
         .background(backgroundColor)
-        .cornerRadius(size.side / 2)
+        .cornerRadius(size.edge / 2)
     }
 }
 
