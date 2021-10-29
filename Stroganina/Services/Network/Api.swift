@@ -1,6 +1,6 @@
 //
-//  Network.swift
-//  StroganinaNetwork
+//  Api.swift
+//  Stroganina
 //
 //  Created by Denis Kamkin on 28.10.2021.
 //
@@ -8,16 +8,15 @@
 import Foundation
 
 protocol Networking {
-    func send<RequestType: IRequest>(
-        _ request: RequestType,
-        parameters: RequestType.RequestParameters,
-        completion: @escaping (Result<RequestType.ResponseContent, NetworkServiceError>) -> Void
+    func perform<F: ApiFunction>(
+        _ function: F,
+        completion: @escaping (Result<F.Response, ApiError>) -> Void
     )
 }
 
-final class Network: Networking {
+final class Api: NSObject, Networking {
 
-    private let session = URLSession(configuration: .default)
+    private lazy var session = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
     private let config: Config
     private let store: Store
     private var token: String? { store.token }
@@ -30,15 +29,14 @@ final class Network: Networking {
         self.store = store
     }
 
-    func send<RequestType: IRequest>(
-        _ request: RequestType,
-        parameters: RequestType.RequestParameters,
-        completion: @escaping (Result<RequestType.ResponseContent, NetworkServiceError>) -> Void
+    func perform<F: ApiFunction>(
+        _ function: F,
+        completion: @escaping (Result<F.Response, ApiError>) -> Void
     ) {
         do {
-            let requestContainer = RequestContainer(parameters: parameters, token: token)
+            let requestContainer = Request(token: token, content: function)
             let data = try JSONEncoder().encode(requestContainer)
-            let url = config.endPoint.appendingPathComponent(request.method)
+            let url = config.endPoint.appendingPathComponent(F.method)
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
             request.httpBody = data
@@ -56,7 +54,10 @@ final class Network: Networking {
                     return
                 }
                 do {
-                    let result = try JSONDecoder().decode(ResponseContainer<RequestType.ResponseContent>.self, from: data)
+                    let result = try JSONDecoder().decode(Response<F.Response>.self, from: data)
+                    if let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                        print(json)
+                    }
                     if let content = result.content {
                         DispatchQueue.main.async {
                             completion(.success(content))
@@ -87,9 +88,20 @@ final class Network: Networking {
     }
 }
 
-extension Network {
+extension Api: URLSessionDelegate {
+    public func urlSession(
+        _ session: URLSession, 
+        didReceive challenge: URLAuthenticationChallenge, 
+        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void
+    ) {
+       let urlCredential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+       completionHandler(.useCredential, urlCredential)
+    }
+}
+
+extension Api {
     struct Config {
-        static let `default` = Config(endPoint: URL(string: "http://176.57.214.20:8080")!)
+        static let `default` = Config(endPoint: URL(string: "https://176.57.214.20:8443")!)
 
         let endPoint: URL
     }
