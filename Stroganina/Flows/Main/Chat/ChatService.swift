@@ -12,36 +12,20 @@ final class ChatService: ChatServiceProtocol {
     var allMessagesFetched: Bool = true
     weak var delegate: ChatServiceDelegate?
 
-    private let network: Networking
+    private let api: Networking
 
-    init(network: Networking) {
-        self.network = network
+    init(api: Networking) {
+        self.api = api
     }
 
     func fetch(from messageId: Message.ID?) {
-        let messages: [MessageWrapper] = (0...30).map { index in
-            MessageWrapper(
-                type: .text(
-                    .init(
-                        base: .mock(
-                            index % 2 == 0 ? .isOutgoing : .default,
-                            id: index
-                        ),
-                        text: "Hello \(index)"
-                    )
-                )
-            )
-        }
-        let parameters = GetMessages.Input(
+        let function = GetMessages(
             chatId: 1,
             limit: 20,
             lastMessageId: nil,
             reverse: false
         )
-        network.send(
-            GetMessagesRequest.getMessages,
-            parameters: parameters
-        ) { [weak delegate] result in
+        api.perform(function) { [weak delegate] result in
             switch result {
             case let .success(response):
                 let wrappers = response.messages.map {
@@ -52,7 +36,6 @@ final class ChatService: ChatServiceProtocol {
                 print(error)
             }
         }
-        delegate?.didChange(messages: messages)
     }
 }
 
@@ -62,7 +45,7 @@ private extension TextMessage {
         formatter.dateFormat = "HH:mm"
         return formatter
     }()
-    convenience init(response: GetMessages.Output.Message) {
+    convenience init(response: GetMessages.Response.Message) {
         let date = Date(timeIntervalSince1970: TimeInterval(response.date))
         let base = Message(
             id: response.messageId,

@@ -11,15 +11,15 @@ import SwiftUI
 final class Builder {
 
     let store: Store
-    let network: Network
+    private let api: Networking
 
     init(store: Store) {
         self.store = store
-        self.network = Network(config: .default, store: store)
+        self.api = Api(config: .default, store: store)
     }
 
     func buildChatScene(router: Router) -> UIViewController {
-        let service = ChatService(network: network)
+        let service = ChatService(api: api)
         let factory = ChatMessagesFactory()
         let viewModel = ChatViewModel(chat: .mock, service: service)
         let view = ChatView(viewModel: viewModel, factory: factory)
@@ -32,7 +32,7 @@ final class Builder {
     }
 
     func buildLoginScene(router: AuthRouting) -> UIViewController {
-        let service = LoginService(network: network, store: store)
+        let service = LoginService(api: api, store: store)
         let viewModel = LoginViewModel(router: router, service: service)
         let view = LoginView(viewModel: viewModel)
         return UIHostingController(rootView: view)
