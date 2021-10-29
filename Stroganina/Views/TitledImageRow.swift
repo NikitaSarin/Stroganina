@@ -20,7 +20,7 @@ struct TitledImageRow: View {
             Image(imageName)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(side: 24)
+                .frame(edge: 24)
                 .cornerRadius(12)
             Text(title)
                 .font(.reqular(size: 17))

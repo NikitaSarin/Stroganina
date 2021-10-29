@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD01A91C272C9741005241ED /* EmojiMessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD62422E272AFA2D00EF7F73 /* EmojiMessageRow.swift */; };
+		FD01A91F272C97FF005241ED /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD01A91E272C97FF005241ED /* Helpers.swift */; };
 		FD624213272AF9A700EF7F73 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD624212272AF9A700EF7F73 /* ChatView.swift */; };
 		FD624240272AFA2D00EF7F73 /* Bubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD62421B272AFA2D00EF7F73 /* Bubble.swift */; };
 		FD624245272AFA2D00EF7F73 /* TextMessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD624221272AFA2D00EF7F73 /* TextMessageRow.swift */; };
@@ -56,9 +58,13 @@
 		FDCE3B98272AF50A00DAF3AB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCE3B63272AF22600DAF3AB /* User.swift */; };
 		FDCE3B9A272AF50E00DAF3AB /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCE3B75272AF22600DAF3AB /* Chat.swift */; };
 		FDCE3B9E272AF7E100DAF3AB /* MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCE3B71272AF22600DAF3AB /* MessageType.swift */; };
+		FDECCC04272C771B00BFAF8D /* ServiceMessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD624220272AFA2D00EF7F73 /* ServiceMessageRow.swift */; };
+		FDECCC09272C802600BFAF8D /* SendMessagePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDECCC08272C802600BFAF8D /* SendMessagePanel.swift */; };
+		FDECCC0B272C902000BFAF8D /* NewMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDECCC0A272C902000BFAF8D /* NewMessage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FD01A91E272C97FF005241ED /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		FD624212272AF9A700EF7F73 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		FD624218272AFA2D00EF7F73 /* WKVideoPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKVideoPlayer.swift; sourceTree = "<group>"; };
 		FD624219272AFA2D00EF7F73 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
@@ -149,6 +155,8 @@
 		FDCE3B75272AF22600DAF3AB /* Chat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		FDCE3B77272AF22600DAF3AB /* SessionEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionEntity.swift; sourceTree = "<group>"; };
 		FDCE3B78272AF22600DAF3AB /* ContactEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactEntity.swift; sourceTree = "<group>"; };
+		FDECCC08272C802600BFAF8D /* SendMessagePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessagePanel.swift; sourceTree = "<group>"; };
+		FDECCC0A272C902000BFAF8D /* NewMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,13 +200,11 @@
 				FD624224272AFA2D00EF7F73 /* Sticker */,
 				FD624227272AFA2D00EF7F73 /* Audio */,
 				FD62421C272AFA2D00EF7F73 /* Video */,
-				FD624220272AFA2D00EF7F73 /* ServiceMessageRow.swift */,
 				FD624222272AFA2D00EF7F73 /* ContactMessageRow.swift */,
 				FD624223272AFA2D00EF7F73 /* LocationMessageRow.swift */,
 				FD62422B272AFA2D00EF7F73 /* PollMessageRow.swift */,
 				FD62422C272AFA2D00EF7F73 /* ReplyView.swift */,
 				FD62422D272AFA2D00EF7F73 /* DocumentMessageRow.swift */,
-				FD62422E272AFA2D00EF7F73 /* EmojiMessageRow.swift */,
 				FD62422F272AFA2D00EF7F73 /* PhotoMessageRow.swift */,
 			);
 			path = Messages;
@@ -262,6 +268,8 @@
 			children = (
 				FD62421B272AFA2D00EF7F73 /* Bubble.swift */,
 				FD624221272AFA2D00EF7F73 /* TextMessageRow.swift */,
+				FD62422E272AFA2D00EF7F73 /* EmojiMessageRow.swift */,
+				FD624220272AFA2D00EF7F73 /* ServiceMessageRow.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -275,6 +283,7 @@
 				FD624265272AFB5F00EF7F73 /* View+Stroganina.swift */,
 				FD624267272AFBBF00EF7F73 /* UIColor+Hex.swift */,
 				FD62426D272AFCC500EF7F73 /* UIImage+Stroganina.swift */,
+				FD01A91E272C97FF005241ED /* Helpers.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -346,6 +355,7 @@
 			children = (
 				FD624297272B43AB00EF7F73 /* UserLogin.swift */,
 				FD6242A4272B4B6000EF7F73 /* GetMessages.swift */,
+				FDECCC0A272C902000BFAF8D /* NewMessage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -416,6 +426,7 @@
 		FDCE3B50272AEF9500DAF3AB /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				FDECCC05272C7FF300BFAF8D /* SendMessage */,
 				FD624212272AF9A700EF7F73 /* ChatView.swift */,
 				FD624275272B185400EF7F73 /* ChatHeader.swift */,
 				FD62426F272AFF9A00EF7F73 /* ChatViewModel.swift */,
@@ -499,6 +510,14 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		FDECCC05272C7FF300BFAF8D /* SendMessage */ = {
+			isa = PBXGroup;
+			children = (
+				FDECCC08272C802600BFAF8D /* SendMessagePanel.swift */,
+			);
+			path = SendMessage;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -569,6 +588,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDECCC09272C802600BFAF8D /* SendMessagePanel.swift in Sources */,
 				FDCE3B94272AF4F400DAF3AB /* Message.swift in Sources */,
 				FD62425C272AFA2D00EF7F73 /* Section.swift in Sources */,
 				FDCE3B4A272AEEF900DAF3AB /* Router.swift in Sources */,
@@ -577,13 +597,17 @@
 				FD624287272B392300EF7F73 /* RegistrationView.swift in Sources */,
 				FD62428F272B3FD200EF7F73 /* RegistrationService.swift in Sources */,
 				FD6242A3272B43AB00EF7F73 /* ResponseContainer.swift in Sources */,
+				FDECCC0B272C902000BFAF8D /* NewMessage.swift in Sources */,
+				FD01A91F272C97FF005241ED /* Helpers.swift in Sources */,
 				FD624245272AFA2D00EF7F73 /* TextMessageRow.swift in Sources */,
 				FD624283272B285C00EF7F73 /* AuthRouting.swift in Sources */,
 				FD62428B272B3CF500EF7F73 /* LoginViewModel.swift in Sources */,
+				FD01A91C272C9741005241ED /* EmojiMessageRow.swift in Sources */,
 				FD624289272B393200EF7F73 /* LoginView.swift in Sources */,
 				FD624213272AF9A700EF7F73 /* ChatView.swift in Sources */,
 				FDCE3B33272AEEBC00DAF3AB /* AppDelegate.swift in Sources */,
 				FD624276272B185400EF7F73 /* ChatHeader.swift in Sources */,
+				FDECCC04272C771B00BFAF8D /* ServiceMessageRow.swift in Sources */,
 				FD62426C272AFC4F00EF7F73 /* Typealiases.swift in Sources */,
 				FD624263272AFB0D00EF7F73 /* Color+Stroganina.swift in Sources */,
 				FD624268272AFBBF00EF7F73 /* UIColor+Hex.swift in Sources */,
@@ -755,6 +779,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Stroganina/Preview Content\"";
+				DEVELOPMENT_TEAM = D28449VFLN;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Stroganina/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -775,6 +800,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Stroganina/Preview Content\"";
+				DEVELOPMENT_TEAM = D28449VFLN;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Stroganina/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

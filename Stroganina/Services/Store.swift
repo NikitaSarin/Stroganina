@@ -13,9 +13,14 @@ final class Store {
         case token
     }
 
-    var token: String?
+    private(set) var token: String?
 
     private let defaults = UserDefaults.standard
+
+    func set(token: String) {
+        self.token = token
+        save()
+    }
 
     func load() {
         token = defaults.string(forKey: Key.token.rawValue)

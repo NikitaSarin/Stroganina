@@ -15,52 +15,57 @@ struct ChatView: View {
     let factory: ChatMessagesFactory
 
     var body: some View {
-        VStack(spacing: 4) {
-            ScrollViewReader { proxy in
-                ScrollView(showsIndicators: false) {
-                    LazyVStack(spacing: 4) {
-                        content
-                    }
-                }
-            }
-            .padding(.horizontal, 8)
-            .flip()
-            .transition(.opacity)
-            .animation(.easeInOut)
-            .edgesIgnoringSafeArea(.bottom)
-            .background(Color.tg_white)
-            .navigationTitle(viewModel.chat.title)
+        ZStack {
+            Color.sgn_surface
+                .ignoresSafeArea(.container, edges: .bottom)
+            content
         }
-    }
-
-    private var bottomSpacer: some View {
-        Spacer(minLength: 20)
+        .navigationTitle(viewModel.chat.title)
     }
 
     private var content: some View {
-        Group {
-            Spacer(minLength: 20)
-            ForEach(viewModel.history) { wrapper in
-                factory.bubble(for: wrapper.type) {
-                    viewModel.didTapMessage(with: wrapper)
-                }
-                .listRowInsets(EdgeInsets())
-                .listRowBackground(Color.clear)
-                .flip()
-                .id(wrapper.id)
-                .onAppear {
-                    if wrapper.id == viewModel.history.last?.id {
-                        viewModel.loadNewMessagesIfNeeded()
-                    }
-                }
-            }
+        VStack(spacing: 0) {
             if viewModel.history.isEmpty {
+                Spacer()
                 Text("No messages\nhere yet")
                     .foregroundColor(.tg_grey)
                     .font(.reqular(size: 17))
                     .multilineTextAlignment(.center)
-                    .flip()
+                Spacer()
+            } else {
+                messages
             }
+            SendMessagePanel(
+                text: $viewModel.messageText,
+                delegate: viewModel
+            )
+        }
+        .background(Color.sgn_background)
+    }
+
+    private var messages: some View {
+        ScrollViewReader { proxy in
+            ScrollView(showsIndicators: false) {
+                LazyVStack(spacing: 4) {
+                    Color.clear
+                        .frame(height: 8)
+                    ForEach(viewModel.history) { wrapper in
+                        factory.bubble(for: wrapper.type) {}
+                        .flip()
+                            .id(wrapper.id)
+                            .onAppear {
+                                if wrapper.id == viewModel.history.last?.id {
+                                    viewModel.loadNewMessagesIfNeeded()
+                                }
+                            }
+                    }
+                }
+            }
+        }
+        .flip()
+        .padding(.horizontal, 8)
+        .onTapGesture {
+            UIApplication.shared.endEditing()
         }
     }
 }
@@ -80,6 +85,8 @@ struct ChatView_Previews: PreviewProvider {
     struct Service: ChatServiceProtocol {
         var allMessagesFetched = true
         weak var delegate: ChatServiceDelegate?
+
+        func send(text: String, completion: @escaping BoolClosure) {}
 
         func fetch(from messageId: Message.ID?) {
             let messages: [MessageWrapper] = (0...20).map { index in

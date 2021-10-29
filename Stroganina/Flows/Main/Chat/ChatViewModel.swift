@@ -6,22 +6,14 @@
 //
 
 import Foundation
-
-protocol ChatServiceDelegate: AnyObject {
-    func didChange(messages: [MessageWrapper])
-}
-
-protocol ChatServiceProtocol {
-    var allMessagesFetched: Bool { get }
-    var delegate: ChatServiceDelegate? { get set }
-
-    func fetch(from messageId: Message.ID?)
-}
+import SwiftUI
 
 final class ChatViewModel: ObservableObject {
 
-    @Published var history = [MessageWrapper]()
     let chat: Chat
+
+    @Published var history = [MessageWrapper]()
+    @Published var messageText = ""
 
     private var service: ChatServiceProtocol
 
@@ -43,9 +35,6 @@ final class ChatViewModel: ObservableObject {
         }
     }
 
-    func didTapMessage(with type: MessageWrapper) {
-    }
-
     private func fetchHistory() {
         service.fetch(from: history.last?.id)
     }
@@ -54,7 +43,17 @@ final class ChatViewModel: ObservableObject {
 extension ChatViewModel: ChatServiceDelegate {
     func didChange(messages: [MessageWrapper]) {
         DispatchQueue.main.async {
-            self.history = messages
+            withAnimation {
+                self.history = messages
+            }
+        }
+    }
+}
+
+extension ChatViewModel: SendMessagePanelDelegate {
+    func sendButtonTapped() {
+        service.send(text: messageText) { [weak self] success in
+            self?.messageText = ""
         }
     }
 }

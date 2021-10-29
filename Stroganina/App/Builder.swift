@@ -19,9 +19,16 @@ final class Builder {
     }
 
     func buildChatScene(router: Router) -> UIViewController {
-        let service = ChatService(api: api)
+        let chat = Chat(
+            id: 1, 
+            title: "Big Dick Club", 
+            showSenders: true,
+            unreadCount: 0, 
+            lastMessage: nil
+        )
+        let service = ChatService(chatId: chat.id, api: api)
         let factory = ChatMessagesFactory()
-        let viewModel = ChatViewModel(chat: .mock, service: service)
+        let viewModel = ChatViewModel(chat: chat, service: service)
         let view = ChatView(viewModel: viewModel, factory: factory)
         return UIHostingController(rootView: view)
     }
