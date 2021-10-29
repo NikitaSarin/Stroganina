@@ -1,19 +1,19 @@
 //
 //  Request.swift
-//  StroganinaNetwork
+//  Stroganina
 //
 //  Created by Denis Kamkin on 28.10.2021.
 //
 
 import Foundation
 
-protocol IRequest {
-	associatedtype RequestParameters: Encodable
-	associatedtype ResponseContent: Decodable
+struct Request<Content: Encodable>: Encodable {
 
-	var method: String { get }
-}
+    enum CodingKeys: String, CodingKey {
+        case token
+        case content = "parameters"
+    }
 
-struct Request<RequestParameters: Encodable, ResponseContent: Decodable>: IRequest {
-	let method: String
+    let token: String?
+    let content: Content
 }
