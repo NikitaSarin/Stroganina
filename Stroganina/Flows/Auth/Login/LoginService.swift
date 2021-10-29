@@ -28,7 +28,7 @@ final class LoginService: LoginServiceProtocol {
         api.perform(function) { [weak self] result in
             switch result {
             case let .success(output):
-                self?.store.token = output.token
+                self?.store.set(token: output.token)
                 completion(.success(()))
             case let .failure(error):
                 completion(.failure(error))

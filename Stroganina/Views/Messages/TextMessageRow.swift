@@ -10,7 +10,7 @@ import SwiftUI
 extension Text {
     func bubble(isOutgoing: Bool) -> some View {
         font(.reqular(size: 17))
-        .foregroundColor(isOutgoing ? .tg_white : .tg_black)
+        .foregroundColor(isOutgoing ? .tg_white : .sgn_primary)
         .lineLimit(nil)
     }
 }

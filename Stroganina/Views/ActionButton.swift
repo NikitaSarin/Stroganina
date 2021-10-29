@@ -29,7 +29,7 @@ struct ActionButton: View {
                 .bold()
                 .padding()
                 .frame(minWidth: 180)
-                .background(Color.tg_blue)
+                .background(Color.sgn_brand)
                 .cornerRadius(14)
         })
     }
