@@ -18,10 +18,10 @@ final class Builder {
         self.api = Api(config: .default, store: store)
     }
 
-    func buildChatScene(router: Router) -> UIViewController {
-        let service = ChatService(api: api)
+    func buildChatScene(router: Router, input: Chat) -> UIViewController {
+        let service = ChatService(chatId: input.id, api: api)
         let factory = ChatMessagesFactory()
-        let viewModel = ChatViewModel(chat: .mock, service: service)
+        let viewModel = ChatViewModel(chat: input, service: service)
         let view = ChatView(viewModel: viewModel, factory: factory)
         return UIHostingController(rootView: view)
     }

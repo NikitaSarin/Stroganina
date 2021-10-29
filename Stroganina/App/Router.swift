@@ -21,7 +21,7 @@ final class Router {
 
     private var initialViewController: UIViewController {
         if auth.isAuthorized {
-            return builder.buildChatScene(router: self)
+            return builder.buildChatScene(router: self, input: .mock)
         } else {
             return builder.buildStartScene(router: self)
         }
@@ -48,6 +48,13 @@ final class Router {
     }
 }
 
+extension Router {
+    func openChatScene(input: Chat) {
+        let viewController = builder.buildChatScene(router: self, input: input)
+        navigation.setViewControllers([viewController], animated: true)
+    }
+}
+
 extension Router: AuthRouting {
     func openLoginScene() {
         let viewController = builder.buildLoginScene(router: self)
@@ -60,7 +67,6 @@ extension Router: AuthRouting {
     }
 
     func openMainFlow() {
-        let viewController = builder.buildChatScene(router: self)
-        navigation.setViewControllers([viewController], animated: true)
+        openChatScene(input: .mock)
     }
 }

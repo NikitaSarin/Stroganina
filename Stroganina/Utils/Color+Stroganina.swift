@@ -9,15 +9,18 @@ import SwiftUI
 
 extension Color {
 
-    static let tg_blue = Color(UIColor(hex: "2094FA"))
+    static let sgn_brand = Color("Brand")
+    static let sgn_primary = Color("Primary")
+    static let sgn_background = Color("Background")
+    static let sgn_surface = Color("Surface")
+
+    // Legacy
 
     static let tg_hidden = Color(UIColor(hex: "2094FA00"))
 
     static let tg_black = Color(UIColor(hex: "000000"))
     static let tg_grey = Color(UIColor(hex: "8E8E93"))
     static let tg_greyPlatter = Color(UIColor(hex: "222223"))
-
-    static let tg_surface = Color(UIColor(hex: "F0F0F4"))
 
     static let tg_white =  Color(UIColor(white: 1, alpha: 1))
     static let tg_white25 = Color(UIColor(white: 1, alpha: 0.25))
