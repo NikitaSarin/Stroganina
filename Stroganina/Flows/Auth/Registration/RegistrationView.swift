@@ -21,6 +21,9 @@ struct RegistrationView: View {
             TextField("Username", text: $viewModel.username)
                 .multilineTextAlignment(.center)
                 .frame(height: 60)
+            SecureField("Password", text: $viewModel.password)
+                .multilineTextAlignment(.center)
+                .frame(height: 60)
             ActionButton("Register") {
                 viewModel.registerButtonTapped()
             }
@@ -34,6 +37,7 @@ struct RegistrationView_Previews: PreviewProvider {
     struct Service: RegistrationServiceProtocol {
         func register(
             with username: String,
+            password: String,
             completion: @escaping (Result<Void, Error>) -> Void
         ) {
             completion(.success(()))

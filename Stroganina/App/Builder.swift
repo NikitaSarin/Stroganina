@@ -39,7 +39,7 @@ final class Builder {
     }
 
     func buildRegistrationScene(router: AuthRouting) -> UIViewController {
-        let service = RegistrationService(store: store)
+        let service = RegistrationService(api: api, store: store)
         let viewModel = RegistrationViewModel(router: router, service: service)
         let view = RegistrationView(viewModel: viewModel)
         return UIHostingController(rootView: view)
