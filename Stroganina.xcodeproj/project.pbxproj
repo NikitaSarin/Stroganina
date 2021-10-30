@@ -12,6 +12,21 @@
 		DC5469BE272CB05A00935298 /* Date+ServerTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5469BD272CB05A00935298 /* Date+ServerTime.swift */; };
 		DC5469C0272D523F00935298 /* UserRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5469BF272D523F00935298 /* UserRegistration.swift */; };
 		DC5469C4272D69A200935298 /* AuthorisationContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5469C3272D69A200935298 /* AuthorisationContext.swift */; };
+		DC5469C7272D764200935298 /* ChatsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5469C6272D764200935298 /* ChatsListView.swift */; };
+		DC5469C9272D766600935298 /* ChatsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5469C8272D766600935298 /* ChatsListViewModel.swift */; };
+		DC5469CB272D769300935298 /* ChatsListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5469CA272D769300935298 /* ChatsListService.swift */; };
+		DC5469CD272D787F00935298 /* GetChats.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5469CC272D787F00935298 /* GetChats.swift */; };
+		DC5469CF272D789900935298 /* ID.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5469CE272D789900935298 /* ID.swift */; };
+		DC5469D2272D8A0300935298 /* UserRaw.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5469D1272D8A0300935298 /* UserRaw.swift */; };
+		DC5469D4272D8A1900935298 /* MessageRaw.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5469D3272D8A1900935298 /* MessageRaw.swift */; };
+		DC5469D6272D8A6600935298 /* ChatRaw.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5469D5272D8A6600935298 /* ChatRaw.swift */; };
+		DC5469DB272D8B7100935298 /* User+Raw.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5469DA272D8B7100935298 /* User+Raw.swift */; };
+		DC5469DD272D8B9C00935298 /* Message+Raw.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5469DC272D8B9C00935298 /* Message+Raw.swift */; };
+		DC5469DF272D8D0800935298 /* MessageWrapper+Raw.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5469DE272D8D0800935298 /* MessageWrapper+Raw.swift */; };
+		DC5469E1272D8D9500935298 /* MessageTypeRaw.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5469E0272D8D9500935298 /* MessageTypeRaw.swift */; };
+		DC5469E3272D8E0D00935298 /* SafeCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5469E2272D8E0D00935298 /* SafeCodable.swift */; };
+		DC546CAD272D917200935298 /* Chat+Raw.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC546CAC272D917200935298 /* Chat+Raw.swift */; };
+		DCE8FE17272DA14300A43032 /* ChatListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE16272DA14300A43032 /* ChatListRouter.swift */; };
 		FD01A91C272C9741005241ED /* EmojiMessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD62422E272AFA2D00EF7F73 /* EmojiMessageRow.swift */; };
 		FD01A91F272C97FF005241ED /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD01A91E272C97FF005241ED /* Helpers.swift */; };
 		FD624213272AF9A700EF7F73 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD624212272AF9A700EF7F73 /* ChatView.swift */; };
@@ -74,6 +89,21 @@
 		DC5469BD272CB05A00935298 /* Date+ServerTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ServerTime.swift"; sourceTree = "<group>"; };
 		DC5469BF272D523F00935298 /* UserRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegistration.swift; sourceTree = "<group>"; };
 		DC5469C3272D69A200935298 /* AuthorisationContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorisationContext.swift; sourceTree = "<group>"; };
+		DC5469C6272D764200935298 /* ChatsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsListView.swift; sourceTree = "<group>"; };
+		DC5469C8272D766600935298 /* ChatsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsListViewModel.swift; sourceTree = "<group>"; };
+		DC5469CA272D769300935298 /* ChatsListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsListService.swift; sourceTree = "<group>"; };
+		DC5469CC272D787F00935298 /* GetChats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChats.swift; sourceTree = "<group>"; };
+		DC5469CE272D789900935298 /* ID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ID.swift; sourceTree = "<group>"; };
+		DC5469D1272D8A0300935298 /* UserRaw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRaw.swift; sourceTree = "<group>"; };
+		DC5469D3272D8A1900935298 /* MessageRaw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRaw.swift; sourceTree = "<group>"; };
+		DC5469D5272D8A6600935298 /* ChatRaw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRaw.swift; sourceTree = "<group>"; };
+		DC5469DA272D8B7100935298 /* User+Raw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+Raw.swift"; sourceTree = "<group>"; };
+		DC5469DC272D8B9C00935298 /* Message+Raw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+Raw.swift"; sourceTree = "<group>"; };
+		DC5469DE272D8D0800935298 /* MessageWrapper+Raw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageWrapper+Raw.swift"; sourceTree = "<group>"; };
+		DC5469E0272D8D9500935298 /* MessageTypeRaw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTypeRaw.swift; sourceTree = "<group>"; };
+		DC5469E2272D8E0D00935298 /* SafeCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeCodable.swift; sourceTree = "<group>"; };
+		DC546CAC272D917200935298 /* Chat+Raw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chat+Raw.swift"; sourceTree = "<group>"; };
+		DCE8FE16272DA14300A43032 /* ChatListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListRouter.swift; sourceTree = "<group>"; };
 		FD01A91E272C97FF005241ED /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		FD624212272AF9A700EF7F73 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		FD624218272AFA2D00EF7F73 /* WKVideoPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKVideoPlayer.swift; sourceTree = "<group>"; };
@@ -180,6 +210,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DC5469C5272D762200935298 /* ChatsList */ = {
+			isa = PBXGroup;
+			children = (
+				DC5469C6272D764200935298 /* ChatsListView.swift */,
+				DC5469C8272D766600935298 /* ChatsListViewModel.swift */,
+				DC5469CA272D769300935298 /* ChatsListService.swift */,
+			);
+			path = ChatsList;
+			sourceTree = "<group>";
+		};
+		DC5469D0272D89E700935298 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				DC5469D1272D8A0300935298 /* UserRaw.swift */,
+				DC5469D3272D8A1900935298 /* MessageRaw.swift */,
+				DC5469D5272D8A6600935298 /* ChatRaw.swift */,
+				DC5469E0272D8D9500935298 /* MessageTypeRaw.swift */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		DC5469D9272D8B5D00935298 /* Mapping */ = {
+			isa = PBXGroup;
+			children = (
+				DC5469DA272D8B7100935298 /* User+Raw.swift */,
+				DC5469DC272D8B9C00935298 /* Message+Raw.swift */,
+				DC5469DE272D8D0800935298 /* MessageWrapper+Raw.swift */,
+				DC546CAC272D917200935298 /* Chat+Raw.swift */,
+			);
+			path = Mapping;
+			sourceTree = "<group>";
+		};
 		FD624216272AFA2D00EF7F73 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,6 +359,7 @@
 				DC5469BB272CB00E00935298 /* String+Hash.swift */,
 				DC5469BD272CB05A00935298 /* Date+ServerTime.swift */,
 				DC5469C3272D69A200935298 /* AuthorisationContext.swift */,
+				DC5469E2272D8E0D00935298 /* SafeCodable.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -336,6 +399,7 @@
 		FD62427A272B236600EF7F73 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				DC5469D0272D89E700935298 /* DTO */,
 				FD624292272B43AB00EF7F73 /* Network */,
 				FD62427B272B23B900EF7F73 /* Store.swift */,
 			);
@@ -371,6 +435,8 @@
 				FD6242A4272B4B6000EF7F73 /* GetMessages.swift */,
 				FDECCC0A272C902000BFAF8D /* NewMessage.swift */,
 				DC5469BF272D523F00935298 /* UserRegistration.swift */,
+				DC5469CC272D787F00935298 /* GetChats.swift */,
+				DC5469CE272D789900935298 /* ID.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -454,6 +520,8 @@
 		FDCE3B51272AEFA200DAF3AB /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				DCE8FE16272DA14300A43032 /* ChatListRouter.swift */,
+				DC5469C5272D762200935298 /* ChatsList */,
 				FDCE3B50272AEF9500DAF3AB /* Chat */,
 			);
 			path = Main;
@@ -462,6 +530,7 @@
 		FDCE3B62272AF22500DAF3AB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				DC5469D9272D8B5D00935298 /* Mapping */,
 				FDCE3B63272AF22600DAF3AB /* User.swift */,
 				FDCE3B75272AF22600DAF3AB /* Chat.swift */,
 				FDCE3B92272AF45E00DAF3AB /* Messages */,
@@ -603,6 +672,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCE8FE17272DA14300A43032 /* ChatListRouter.swift in Sources */,
 				FDECCC09272C802600BFAF8D /* SendMessagePanel.swift in Sources */,
 				FDCE3B94272AF4F400DAF3AB /* Message.swift in Sources */,
 				FD62425C272AFA2D00EF7F73 /* Section.swift in Sources */,
@@ -617,42 +687,56 @@
 				FD6242A3272B43AB00EF7F73 /* ResponseContainer.swift in Sources */,
 				FDECCC0B272C902000BFAF8D /* NewMessage.swift in Sources */,
 				FD01A91F272C97FF005241ED /* Helpers.swift in Sources */,
+				DC546CAD272D917200935298 /* Chat+Raw.swift in Sources */,
 				FD624245272AFA2D00EF7F73 /* TextMessageRow.swift in Sources */,
 				FD624283272B285C00EF7F73 /* AuthRouting.swift in Sources */,
 				FD62428B272B3CF500EF7F73 /* LoginViewModel.swift in Sources */,
 				FD01A91C272C9741005241ED /* EmojiMessageRow.swift in Sources */,
+				DC5469D6272D8A6600935298 /* ChatRaw.swift in Sources */,
 				FD624289272B393200EF7F73 /* LoginView.swift in Sources */,
 				FD624213272AF9A700EF7F73 /* ChatView.swift in Sources */,
 				FDCE3B33272AEEBC00DAF3AB /* AppDelegate.swift in Sources */,
 				FD624276272B185400EF7F73 /* ChatHeader.swift in Sources */,
 				FDECCC04272C771B00BFAF8D /* ServiceMessageRow.swift in Sources */,
 				FD62426C272AFC4F00EF7F73 /* Typealiases.swift in Sources */,
+				DC5469CD272D787F00935298 /* GetChats.swift in Sources */,
+				DC5469E3272D8E0D00935298 /* SafeCodable.swift in Sources */,
 				FD624263272AFB0D00EF7F73 /* Color+Stroganina.swift in Sources */,
 				FD624268272AFBBF00EF7F73 /* UIColor+Hex.swift in Sources */,
+				DC5469E1272D8D9500935298 /* MessageTypeRaw.swift in Sources */,
+				DC5469DD272D8B9C00935298 /* Message+Raw.swift in Sources */,
+				DC5469CF272D789900935298 /* ID.swift in Sources */,
 				FDCE3B9A272AF50E00DAF3AB /* Chat.swift in Sources */,
 				FD624285272B29C900EF7F73 /* ActionButton.swift in Sources */,
+				DC5469CB272D769300935298 /* ChatsListService.swift in Sources */,
+				DC5469D2272D8A0300935298 /* UserRaw.swift in Sources */,
 				DC5469BE272CB05A00935298 /* Date+ServerTime.swift in Sources */,
 				FD624252272AFA2D00EF7F73 /* TitledImageRow.swift in Sources */,
 				FD624274272B022C00EF7F73 /* ChatMessagesFactory.swift in Sources */,
+				DC5469C7272D764200935298 /* ChatsListView.swift in Sources */,
 				FD6242A1272B43AB00EF7F73 /* Request.swift in Sources */,
 				FD62429F272B43AB00EF7F73 /* UserLogin.swift in Sources */,
 				FD6242A0272B43AB00EF7F73 /* Api.swift in Sources */,
 				FD624270272AFF9A00EF7F73 /* ChatViewModel.swift in Sources */,
 				FD624291272B3FF600EF7F73 /* RegistrationViewModel.swift in Sources */,
+				DC5469D4272D8A1900935298 /* MessageRaw.swift in Sources */,
 				FD624257272AFA2D00EF7F73 /* Dot.swift in Sources */,
 				DC5469C0272D523F00935298 /* UserRegistration.swift in Sources */,
 				FD62428D272B3DA500EF7F73 /* LoginService.swift in Sources */,
 				FDCE3B98272AF50A00DAF3AB /* User.swift in Sources */,
 				FD624266272AFB5F00EF7F73 /* View+Stroganina.swift in Sources */,
 				FD624272272B01DA00EF7F73 /* ChatService.swift in Sources */,
+				DC5469DF272D8D0800935298 /* MessageWrapper+Raw.swift in Sources */,
 				FD6242A2272B43AB00EF7F73 /* ApiFunction.swift in Sources */,
 				FDCE3B35272AEEBC00DAF3AB /* SceneDelegate.swift in Sources */,
 				FD624240272AFA2D00EF7F73 /* Bubble.swift in Sources */,
 				FD62426E272AFCC500EF7F73 /* UIImage+Stroganina.swift in Sources */,
 				FD6242A5272B4B6000EF7F73 /* GetMessages.swift in Sources */,
+				DC5469DB272D8B7100935298 /* User+Raw.swift in Sources */,
 				FD624281272B283100EF7F73 /* StartView.swift in Sources */,
 				FDCE3B37272AEEBC00DAF3AB /* ContentView.swift in Sources */,
 				FD62429D272B43AB00EF7F73 /* ApiError.swift in Sources */,
+				DC5469C9272D766600935298 /* ChatsListViewModel.swift in Sources */,
 				FDCE3B4E272AEF0300DAF3AB /* Builder.swift in Sources */,
 				FD62426A272AFC2000EF7F73 /* Font+Stroganina.swift in Sources */,
 				FD62425D272AFA2D00EF7F73 /* TitledSwitchRow.swift in Sources */,

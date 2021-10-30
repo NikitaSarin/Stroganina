@@ -34,4 +34,14 @@ final class MessageWrapper: Identifiable, ObservableObject {
         self.id = type.id
         self.type = type
     }
+    
+    var base: Message {
+        type.base
+    }
+}
+
+extension MessageWrapper {
+    static var mock: MessageWrapper {
+        MessageWrapper(type: .text(.mock))
+    }
 }
