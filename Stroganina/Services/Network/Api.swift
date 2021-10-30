@@ -34,7 +34,7 @@ final class Api: NSObject, Networking {
         completion: @escaping (Result<F.Response, ApiError>) -> Void
     ) {
         do {
-            let requestContainer = createRequest(function)
+            let requestContainer = makeRequest(function)
             let data = try JSONEncoder().encode(requestContainer)
             let url = config.endPoint.appendingPathComponent(F.method)
             var request = URLRequest(url: url)
@@ -87,7 +87,7 @@ final class Api: NSObject, Networking {
         }
     }
     
-    private func createRequest<F: ApiFunction>(_ function: F) -> Request<F> {
+    private func makeRequest<F: ApiFunction>(_ function: F) -> Request<F> {
         let time = Date.serverTime
         let request = Request(
             time: time,
