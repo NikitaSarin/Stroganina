@@ -36,7 +36,7 @@ final class Chat: Identifiable, ObservableObject {
 extension Chat {
     static let mock = Chat(
         id: 1,
-        title: "Big Dick Club",
+        title: "Stroganina Club",
         showSenders: true,
         unreadCount: 2,
         lastMessage: .mock

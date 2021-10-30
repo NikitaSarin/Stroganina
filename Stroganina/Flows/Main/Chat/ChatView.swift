@@ -21,6 +21,9 @@ struct ChatView: View {
             content
         }
         .navigationTitle(viewModel.chat.title)
+        .onAppear {
+            viewModel.start()
+        }
     }
 
     private var content: some View {
@@ -73,21 +76,23 @@ struct ChatView: View {
 
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatView(
-            viewModel: ChatViewModel(
-                chat: .mock,
-                service: Service()
-            ),
-            factory: ChatMessagesFactory()
-        )
+        NavigationView {
+            ChatView(
+                viewModel: ChatViewModel(
+                    chat: .mock,
+                    service: Service()
+                ),
+                factory: ChatMessagesFactory()
+            )
+        }
     }
 
     struct Service: ChatServiceProtocol {
         var allMessagesFetched = true
-        weak var delegate: ChatServiceDelegate?
+        var delegate: ChatServiceDelegate?
 
+        func start() {}
         func send(text: String, completion: @escaping BoolClosure) {}
-
         func fetch(from messageId: Message.ID?) {
             let messages: [MessageWrapper] = (0...20).map { index in
                 MessageWrapper(
