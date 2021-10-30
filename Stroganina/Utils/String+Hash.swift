@@ -9,7 +9,7 @@ import CryptoKit
 
 extension String {
     func hash(with time: UInt) -> String {
-        guard let data = self.data(using: .utf8) else {
+        guard let data = (self + "\(time)").data(using: .utf8) else {
             assertionFailure("Not generate data for hash")
             return ""
         }

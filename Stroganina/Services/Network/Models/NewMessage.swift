@@ -9,7 +9,7 @@ import Foundation
 
 struct NewMessage {
     /// произвольный типо обрабатывается на клиентах (можно писать че захотите до 15 символов)
-    let type: RawMessageType
+    let type: MessageTypeRaw
     /// сам контент
     let content: String
     /// в какой чат

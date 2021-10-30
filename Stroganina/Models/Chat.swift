@@ -16,20 +16,31 @@ final class Chat: Identifiable, ObservableObject {
     var showSenders: Bool
 
     @Published var unreadCount: Int
-    @Published var lastMessage: TextMessage?
+    @Published var lastMessage: MessageWrapper?
+    @Published var users: [User]?
 
     init(
         id: ID,
         title: String,
         showSenders: Bool,
         unreadCount: Int,
-        lastMessage: TextMessage?
+        lastMessage: MessageWrapper?
     ) {
         self.id = id
         self.title = title
         self.showSenders = showSenders
         self.unreadCount = unreadCount
         self.lastMessage = lastMessage
+    }
+}
+
+extension Chat: Hashable {
+    static func == (lhs: Chat, rhs: Chat) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
 

@@ -76,7 +76,7 @@ final class ChatService: ChatServiceProtocol {
             switch result {
             case let .success(response):
                 self?.messages = response.messages.map {
-                    MessageWrapper(response: $0)
+                    MessageWrapper($0)
                 }
                 self?.notifyDelegate()
             case let .failure(error):
@@ -91,49 +91,5 @@ final class ChatService: ChatServiceProtocol {
 
     private func notifyDelegate() {
         delegate?.didChange(messages: messages)
-    }
-}
-
-enum RawMessageType: String, Codable {
-    case text = "TEXT"
-    case service = "SYSTEM_TEXT"
-    case unknown
-}
-
-private extension MessageWrapper {
-
-    static let formatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        return formatter
-    }()
-
-    convenience init(response: GetMessages.Response.Message) {
-        let date = Date(timeIntervalSince1970: TimeInterval(response.date))
-        let user = User(id: response.user.userId, name: response.user.name)
-        let base = Message(
-            id: response.messageId,
-            time: Self.formatter.string(from: date),
-            user: user,
-            isOutgoing: response.user.isSelf,
-            showSenders: true,
-            chatId: response.chatId
-        )
-        let rawType = RawMessageType(rawValue: response.type) ?? .unknown
-        let type: MessageType
-        switch rawType {
-        case .text:
-            if response.content.containsOnlyEmoji, response.content.count < 4 {
-                type = .emoji(TextMessage(base: base, text: response.content))
-            } else {
-                type = .text(TextMessage(base: base, text: response.content))
-            }
-
-        case .service:
-            type = .service(TextMessage(base: base, text: response.content))
-        case .unknown:
-            type = .service(TextMessage(base: base, text: "Unknown message type"))
-        }
-        self.init(type: type)
     }
 }

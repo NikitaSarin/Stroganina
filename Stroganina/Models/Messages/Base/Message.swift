@@ -12,7 +12,7 @@ class Message: Identifiable, ObservableObject {
     typealias ID = UInt
 
     let id: ID
-    let time: String
+    let date: Date
     var isOutgoing: Bool
     var showSenders: Bool
     let chatId: Chat.ID
@@ -24,14 +24,14 @@ class Message: Identifiable, ObservableObject {
 
     init(
         id: ID,
-        time: String,
+        date: Date,
         user: User?,
         isOutgoing: Bool,
         showSenders: Bool,
         chatId: Chat.ID
     ) {
         self.id = id
-        self.time = time
+        self.date = date
         self.user = user
         self.isOutgoing = isOutgoing
         self.showSenders = showSenders
@@ -40,7 +40,7 @@ class Message: Identifiable, ObservableObject {
 
     init(_ other: Message) {
         id = other.id
-        time = other.time
+        date = other.date
         user = other.user
         isOutgoing = other.isOutgoing
         showSenders = other.showSenders
@@ -65,7 +65,7 @@ extension Message {
     static func mock(_ options: MockOptions = .default, id: Message.ID = 1) -> Message {
         Message(
             id: id,
-            time: "12:34",
+            date: Date(),
             user: options.contains(.user) ? .mock : nil,
             isOutgoing: options.contains(.isOutgoing),
             showSenders: options.contains(.showSenders),
