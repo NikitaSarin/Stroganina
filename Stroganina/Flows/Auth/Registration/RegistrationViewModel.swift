@@ -10,6 +10,7 @@ import Foundation
 final class RegistrationViewModel: ObservableObject {
 
     @Published var username = ""
+    @Published var password = ""
 
     private let router: AuthRouting
     private let service: RegistrationServiceProtocol
@@ -23,7 +24,7 @@ final class RegistrationViewModel: ObservableObject {
     }
 
     func registerButtonTapped() {
-        service.register(with: username) { [weak self] result in
+        service.register(with: username, password: password) { [weak self] result in
             switch result {
             case .success:
                 self?.router.openMainFlow()

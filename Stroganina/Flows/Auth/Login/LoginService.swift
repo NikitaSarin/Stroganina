@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CryptoKit
 
 final class LoginService: LoginServiceProtocol {
 
@@ -22,14 +23,24 @@ final class LoginService: LoginServiceProtocol {
 
     func login(
         with username: String,
+        password: String,
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
-        let function = UserLogin(name: username)
-        api.perform(function) { [weak self] result in
+        let context = AuthorisationContext(store: store, username: username, password: password)
+        let function = UserLogin(
+            name: username,
+            securityHash: context.securityHash,
+            userPublicKey: context.publicUserKey
+        )
+
+        api.perform(function) { result in
             switch result {
             case let .success(output):
-                self?.store.set(token: output.token)
-                completion(.success(()))
+                context.success(
+                    serverPublicKey: output.serverPublicKey,
+                    token: output.token,
+                    completion: completion
+                )
             case let .failure(error):
                 completion(.failure(error))
             }

@@ -19,7 +19,7 @@ final class Api: NSObject, Networking {
     private lazy var session = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
     private let config: Config
     private let store: Store
-    private var token: String? { store.token }
+    private var authorisationInfo: AuthorisationInfo? { store.authorisationInfo }
 
     init(
         config: Config,
@@ -34,7 +34,7 @@ final class Api: NSObject, Networking {
         completion: @escaping (Result<F.Response, ApiError>) -> Void
     ) {
         do {
-            let requestContainer = Request(token: token, content: function)
+            let requestContainer = makeRequest(function)
             let data = try JSONEncoder().encode(requestContainer)
             let url = config.endPoint.appendingPathComponent(F.method)
             var request = URLRequest(url: url)
@@ -85,6 +85,21 @@ final class Api: NSObject, Networking {
                 completion(.failure(.networkError(error)))
             }
         }
+    }
+    
+    private func makeRequest<F: ApiFunction>(_ function: F) -> Request<F> {
+        let time = Date.serverTime
+        let request = Request(
+            time: time,
+            authorisation: authorisationInfo.flatMap {
+                AuthorisationInfo(
+                    token: $0.token,
+                    secretKey: $0.secretKey.hash(with: time)
+                )
+            },
+            content: function
+        )
+        return request
     }
 }
 
