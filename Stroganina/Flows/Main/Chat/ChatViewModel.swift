@@ -25,17 +25,20 @@ final class ChatViewModel: ObservableObject {
         self.service = service
 
         self.service.delegate = self
+    }
 
-        fetchHistory()
+    func start() {
+        service.start()
+        reloadHistory()
     }
 
     func loadNewMessagesIfNeeded() {
         if !service.allMessagesFetched {
-            fetchHistory()
+            reloadHistory()
         }
     }
 
-    private func fetchHistory() {
+    func reloadHistory() {
         service.fetch(from: history.last?.id)
     }
 }

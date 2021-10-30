@@ -14,6 +14,7 @@ protocol ChatServiceDelegate: AnyObject {
 protocol ChatServiceProtocol {
     var allMessagesFetched: Bool { get }
     var delegate: ChatServiceDelegate? { get set }
+    func start()
     func fetch(from messageId: Message.ID?)
     func send(text: String, completion: @escaping BoolClosure)
 }
@@ -24,6 +25,7 @@ final class ChatService: ChatServiceProtocol {
     weak var delegate: ChatServiceDelegate?
 
     private let api: Networking
+    private var timer: Timer?
     private let chatId: Chat.ID
 
     private var messages = [MessageWrapper]()
@@ -36,6 +38,15 @@ final class ChatService: ChatServiceProtocol {
         self.api = api
     }
 
+    func start() {
+        self.timer = Timer.scheduledTimer(
+            withTimeInterval: 5,
+            repeats: true,
+            block: { [weak self] _ in
+            self?.reload()
+        })
+    }
+
     func send(text: String, completion: @escaping BoolClosure) {
         let function = NewMessage(
             type: .text,
@@ -46,7 +57,7 @@ final class ChatService: ChatServiceProtocol {
             switch result {
             case .success:
                 completion(true)
-                self?.fetch(from: nil)
+                self?.reload()
             case let .failure(error):
                 print(error)
                 completion(false)
@@ -74,6 +85,10 @@ final class ChatService: ChatServiceProtocol {
         }
     }
 
+    private func reload() {
+        fetch(from: messages.first?.id)
+    }
+
     private func notifyDelegate() {
         delegate?.didChange(messages: messages)
     }
@@ -95,10 +110,11 @@ private extension MessageWrapper {
 
     convenience init(response: GetMessages.Response.Message) {
         let date = Date(timeIntervalSince1970: TimeInterval(response.date))
+        let user = User(id: response.user.userId, name: response.user.name)
         let base = Message(
             id: response.messageId,
             time: Self.formatter.string(from: date),
-            user: nil,
+            user: user,
             isOutgoing: response.user.isSelf,
             showSenders: true,
             chatId: response.chatId
