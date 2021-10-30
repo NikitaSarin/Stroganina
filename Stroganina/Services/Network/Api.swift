@@ -116,7 +116,7 @@ extension Api: URLSessionDelegate {
 
 extension Api {
     struct Config {
-        static let `default` = Config(endPoint: URL(string: "http://127.0.0.1:8080")!)
+        static let `default` = Config(endPoint: URL(string: "https://176.57.214.20:8443")!)
 
         let endPoint: URL
     }
