@@ -13,11 +13,11 @@ enum BubbleStyle {
     func backgroundColor(isOutgoing: Bool) -> Color {
         switch self {
         case .plain:
-            return isOutgoing ? .tg_blue : .tg_surface
+            return isOutgoing ? .sgn_brand : .sgn_surface
         case .transparent:
             return .clear
         case .service:
-            return .tg_greyPlatter
+            return .sgn_surface
         }
     }
 
@@ -34,9 +34,9 @@ enum BubbleStyle {
             return .init()
         case .service:
             return EdgeInsets(
-                top: 1,
+                top: 2,
                 leading: 8,
-                bottom: 1,
+                bottom: 4,
                 trailing: 8
             )
         }
@@ -135,7 +135,7 @@ struct Bubble_Previews: PreviewProvider {
             VStack {
                 Bubble(
                     message: .mock(),
-                    style: .plain
+                    style: .service
                 ) {
                     Text("Who?")
                         .bubble(isOutgoing: false)

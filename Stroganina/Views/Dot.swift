@@ -10,8 +10,8 @@ import SwiftUI
 struct Dot: View {
     var body: some View {
         Circle()
-            .fill(Color.tg_blue)
-            .frame(side: 6)
+            .fill(Color.sgn_brand)
+            .frame(edge: 6)
     }
 }
 
