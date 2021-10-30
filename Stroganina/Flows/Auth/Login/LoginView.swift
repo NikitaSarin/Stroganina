@@ -23,6 +23,9 @@ struct LoginView: View {
             TextField("Username", text: $viewModel.username)
                 .multilineTextAlignment(.center)
                 .frame(height: 60)
+            SecureField("Password", text: $viewModel.password)
+                .multilineTextAlignment(.center)
+                .frame(height: 60)
             ActionButton("Login") {
                 viewModel.loginButtonTapped()
             }
@@ -34,10 +37,7 @@ struct LoginView: View {
 struct LoginView_Previews: PreviewProvider {
 
     struct Service: LoginServiceProtocol {
-        func login(
-            with username: String,
-            completion: @escaping (Result<Void, Error>) -> Void
-        ) {
+        func login(with username: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
             completion(.success(()))
         }
     }

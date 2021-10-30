@@ -10,7 +10,7 @@ import Foundation
 final class AuthService {
 
     var isAuthorized: Bool {
-        !(store.token ?? "").isEmpty
+        store.authorisationInfo != nil
     }
 
     private let store: Store
