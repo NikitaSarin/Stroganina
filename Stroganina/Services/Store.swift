@@ -11,23 +11,31 @@ final class Store {
 
     private enum Key: String {
         case token
+        case secretKey
     }
 
-    private(set) var token: String?
+    private(set) var authorisationInfo: AuthorisationInfo?
 
     private let defaults = UserDefaults.standard
 
-    func set(token: String) {
-        self.token = token
+    func set(authorisationInfo: AuthorisationInfo) {
+        self.authorisationInfo = authorisationInfo
         save()
     }
 
     func load() {
-        token = defaults.string(forKey: Key.token.rawValue)
+        guard
+            let token = defaults.string(forKey: Key.token.rawValue),
+            let secretKey = defaults.string(forKey: Key.secretKey.rawValue)
+        else {
+            return
+        }
+        self.authorisationInfo = AuthorisationInfo(token: token, secretKey: secretKey)
     }
 
     func save() {
-        defaults.set(token, forKey: Key.token.rawValue)
+        defaults.set(authorisationInfo?.token, forKey: Key.token.rawValue)
+        defaults.set(authorisationInfo?.secretKey, forKey: Key.secretKey.rawValue)
     }
 
 }

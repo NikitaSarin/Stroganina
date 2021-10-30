@@ -11,13 +11,15 @@ import Foundation
 protocol LoginServiceProtocol {
     func login(
         with username: String,
+        password: String,
         completion: @escaping (Result<Void, Error>) -> Void
     )
 }
 
 final class LoginViewModel: ObservableObject {
 
-    @Published var username = "alex8"
+    @Published var username: String = "alex8"
+    @Published var password: String = "123456"
 
     private let router: AuthRouting
     private let service: LoginServiceProtocol
@@ -31,14 +33,13 @@ final class LoginViewModel: ObservableObject {
     }
 
     func loginButtonTapped() {
-        service.login(with: username) { [weak self] result in
+        service.login(with: username, password: password) { [weak self] result in
             switch result {
             case .success:
                 self?.router.openMainFlow()
             case let .failure(error):
                 print(error.localizedDescription)
             }
-
         }
     }
 }

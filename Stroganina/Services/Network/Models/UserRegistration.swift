@@ -1,19 +1,19 @@
 //
-//  UserLogin.swift
-//  StroganinaNetwork
+//  UserRegistration.swift
+//  Stroganina
 //
-//  Created by Denis Kamkin on 28.10.2021.
+//  Created by Aleksandr Shipin on 30.10.2021.
 //
 
-struct UserLogin {
+struct UserRegistration {
     let name: String
     let securityHash: String
     let userPublicKey: String
 }
 
-extension UserLogin: ApiFunction {
+extension UserRegistration: ApiFunction {
 
-    static var method = "user/login"
+    static var method = "user/registration"
 
     struct Response: Decodable {
         let token: String
@@ -21,3 +21,4 @@ extension UserLogin: ApiFunction {
         let userId: User.ID
     }
 }
+
