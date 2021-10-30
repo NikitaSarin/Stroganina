@@ -10,6 +10,8 @@ import Combine
 enum MessageType: Identifiable {
 
     case text(TextMessage)
+    case emoji(TextMessage)
+    case service(TextMessage)
 
     var id: Message.ID {
         base.id
@@ -18,6 +20,8 @@ enum MessageType: Identifiable {
     var base: Message {
         switch self {
         case let .text(message): return message
+        case let .emoji(message): return message
+        case let .service(message): return message
         }
     }
 }

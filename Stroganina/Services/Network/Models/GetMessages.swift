@@ -18,6 +18,8 @@ struct GetMessages {
 
 extension GetMessages: ApiFunction {
 
+    static var method = "message/get_from_chat"
+
     struct Response: Codable {
         
         struct User: Codable {
@@ -38,5 +40,4 @@ extension GetMessages: ApiFunction {
         let messages: [Message]
     }
 
-    static var method = "message/get_from_chat"
 }

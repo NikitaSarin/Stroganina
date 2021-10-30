@@ -10,9 +10,11 @@ struct UserLogin {
 }
 
 extension UserLogin: ApiFunction {
+
+    static var method = "user/login"
+
     struct Response: Decodable {
         let token: String
         let userId: Int
     }
-    static var method = "user/login"
 }

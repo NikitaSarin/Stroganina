@@ -12,6 +12,10 @@ private extension MessageType {
         switch self {
         case .text:
             return .plain
+        case .emoji:
+            return .transparent
+        case .service:
+            return .service
         }
     }
 }
@@ -27,6 +31,10 @@ struct ChatMessagesFactory {
             switch type {
             case let .text(message):
                 TextMessageRow(message: message)
+            case let .emoji(message):
+                EmojiMessageRow(message: message)
+            case let .service(message):
+                ServiceMessageRow(message: message)
             }
         }
     }
