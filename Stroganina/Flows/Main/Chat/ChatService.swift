@@ -27,24 +27,23 @@ final class ChatService: ChatServiceProtocol {
     private let api: Networking
     private var timer: Timer?
     private let chatId: Chat.ID
+    private let updateCenter: UpdateCenter
 
     private var messages = [MessageWrapper]()
 
     init(
         chatId: Chat.ID,
-        api: Networking
+        api: Networking,
+        updateCenter: UpdateCenter
     ) {
         self.chatId = chatId
         self.api = api
+        self.updateCenter = updateCenter
+        updateCenter.addListener(self)
+        self.reload()
     }
 
     func start() {
-        self.timer = Timer.scheduledTimer(
-            withTimeInterval: 5,
-            repeats: true,
-            block: { [weak self] _ in
-            self?.reload()
-        })
     }
 
     func send(text: String, completion: @escaping BoolClosure) {
@@ -53,11 +52,22 @@ final class ChatService: ChatServiceProtocol {
             content: text,
             chatId: chatId
         )
-        api.perform(function) { [weak self] result in
+        api.perform(function) { [updateCenter, chatId] result in
             switch result {
-            case .success:
+            case .success(let response):
+                let base = Message(
+                    id: response.messageId,
+                    date: Date(), // временное решение позже с сервера буду досылать дату
+                    user: nil,
+                    isOutgoing: true,
+                    showSenders: true,
+                    chatId: chatId
+                )
+                let message = MessageWrapper(
+                    type: .text(TextMessage(base: base, text: text))
+                )
+                updateCenter.sendNotification([.newMessage(message)])
                 completion(true)
-                self?.reload()
             case let .failure(error):
                 print(error)
                 completion(false)
@@ -91,5 +101,27 @@ final class ChatService: ChatServiceProtocol {
 
     private func notifyDelegate() {
         delegate?.didChange(messages: messages)
+    }
+}
+
+extension ChatService: Listener {
+    func update(_ notifications: [Notification]) {
+        var isNeedUpdate: Bool = false
+
+        for notification in notifications {
+            switch notification {
+            case .newMessage(let message):
+                if message.base.chatId == chatId {
+                    messages.insert(message, at: 0)
+                    isNeedUpdate = true
+                }
+            default:
+                break
+            }
+        }
+        
+        if isNeedUpdate {
+            self.notifyDelegate()
+        }
     }
 }

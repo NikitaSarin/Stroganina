@@ -12,14 +12,16 @@ final class Builder {
 
     let store: Store
     private let api: Networking
+    private let updateCenter: UpdateCenter
 
     init(store: Store) {
         self.store = store
         self.api = Api(config: .default, store: store)
+        self.updateCenter = UpdateCenter(api: api)
     }
 
     func buildChatScene(router: Router, input: Chat) -> UIViewController {
-        let service = ChatService(chatId: input.id, api: api)
+        let service = ChatService(chatId: input.id, api: api, updateCenter: updateCenter)
         let factory = ChatMessagesFactory()
         let viewModel = ChatViewModel(chat: input, service: service)
         let view = ChatView(viewModel: viewModel, factory: factory)
@@ -46,7 +48,7 @@ final class Builder {
     }
     
     func buildChatsListScene(router: ChatListRouting) -> UIViewController {
-        let service = ChatsListService(api: api)
+        let service = ChatsListService(api: api, updateCenter: updateCenter)
         let factory = ChatMessagesFactory()
         let viewModel = ChatsListViewModel(service: service, store: store, routing: router)
         let view = ChatsListView(viewModel: viewModel, factory: factory)
@@ -54,7 +56,7 @@ final class Builder {
     }
     
     func buildMakeChatScene(router: MakeChatRouter, users: [User]) -> UIViewController {
-        let service = MakeChatService(api: api)
+        let service = MakeChatService(api: api, updateCenter: updateCenter)
         let viewModel = MakeChatViewModel(users: users, router: router, service: service)
         let view = MakeChatView(viewModel: viewModel)
         return UIHostingController(rootView: view)

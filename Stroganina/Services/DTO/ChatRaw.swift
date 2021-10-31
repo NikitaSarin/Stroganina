@@ -12,6 +12,6 @@ struct ChatRaw: Codable {
     let chatId: ID
     let isPersonal: Bool
     let message: MessageRaw?
-    let lastMessageId: ID
+    let lastMessageId: ID?
     let notReadCount: Int?
 }

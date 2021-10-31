@@ -38,6 +38,9 @@ final class Api: NSObject, Networking {
             let data = try JSONEncoder().encode(requestContainer)
             let url = config.endPoint.appendingPathComponent(F.method)
             var request = URLRequest(url: url)
+            if F.longTimeOut {
+                request.timeoutInterval = 60
+            }
             request.httpMethod = "POST"
             request.httpBody = data
             session.dataTask(with: request) { (data, _, error) in
