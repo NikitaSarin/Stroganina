@@ -23,10 +23,16 @@ final class ChatsListService: ChatsListServiceProtocol {
     }
     
     private let api: Networking
+    private let updateCenter: UpdateCenter
     private var chats = Set<Chat>()
     
-    init(api: Networking) {
+    init(
+        api: Networking,
+        updateCenter: UpdateCenter
+    ) {
         self.api = api
+        self.updateCenter = updateCenter
+        updateCenter.addListener(self)
         self.update()
     }
 
@@ -53,13 +59,32 @@ final class ChatsListService: ChatsListServiceProtocol {
                 let rhsMessage = rhs.lastMessage?.base,
                 let lhsMessage = lhs.lastMessage?.base
             {
-                return rhsMessage.date > lhsMessage.date
+                return rhsMessage.date < lhsMessage.date
             }
             if lhs.lastMessage == nil && rhs.lastMessage != nil {
-                return true
+                return false
             }
-            return false
+            return true
         })
         delegate?.didChange(chats: chats)
+    }
+}
+
+extension ChatsListService: Listener {
+    func update(_ notifications: [Notification]) {
+        var isNeedUpdate: Bool = false
+        for notification in notifications {
+            switch notification {
+            case .newMessage(let message):
+                chats.first(where: { $0.id == message.base.chatId })?.lastMessage = message
+                isNeedUpdate = true
+            case .newChat(let chat):
+                chats.insert(chat)
+                isNeedUpdate = true
+            }
+        }
+        if isNeedUpdate {
+            self.sendUpdate()
+        }
     }
 }

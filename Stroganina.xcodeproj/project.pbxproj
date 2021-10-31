@@ -26,6 +26,7 @@
 		DC5469E1272D8D9500935298 /* MessageTypeRaw.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5469E0272D8D9500935298 /* MessageTypeRaw.swift */; };
 		DC5469E3272D8E0D00935298 /* SafeCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5469E2272D8E0D00935298 /* SafeCodable.swift */; };
 		DC546CAD272D917200935298 /* Chat+Raw.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC546CAC272D917200935298 /* Chat+Raw.swift */; };
+		DCAE4071272ED47900EEA2A1 /* GetUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAE4070272ED47900EEA2A1 /* GetUpdate.swift */; };
 		DCE8FE17272DA14300A43032 /* ChatListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE16272DA14300A43032 /* ChatListRouter.swift */; };
 		DCE8FE1B272E9E6300A43032 /* cert.crt in Resources */ = {isa = PBXBuildFile; fileRef = DCE8FE1A272E9E6300A43032 /* cert.crt */; };
 		DCE8FE1D272EA6A600A43032 /* UsersSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE1C272EA6A600A43032 /* UsersSearchView.swift */; };
@@ -40,6 +41,8 @@
 		DCE8FE38272EBE6500A43032 /* AddUserInChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE37272EBE6500A43032 /* AddUserInChat.swift */; };
 		DCE8FE3A272EC0A000A43032 /* MakeChatRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE39272EC0A000A43032 /* MakeChatRouting.swift */; };
 		DCE8FE3D272EC3BF00A43032 /* MakeChatRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE3C272EC3BF00A43032 /* MakeChatRouter.swift */; };
+		DCE8FE40272ECCBE00A43032 /* UpdateCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE3F272ECCBE00A43032 /* UpdateCenter.swift */; };
+		DCE8FE42272ECCC700A43032 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE41272ECCC700A43032 /* Notification.swift */; };
 		FD01A91C272C9741005241ED /* EmojiMessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD62422E272AFA2D00EF7F73 /* EmojiMessageRow.swift */; };
 		FD01A91F272C97FF005241ED /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD01A91E272C97FF005241ED /* Helpers.swift */; };
 		FD624213272AF9A700EF7F73 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD624212272AF9A700EF7F73 /* ChatView.swift */; };
@@ -116,6 +119,7 @@
 		DC5469E0272D8D9500935298 /* MessageTypeRaw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTypeRaw.swift; sourceTree = "<group>"; };
 		DC5469E2272D8E0D00935298 /* SafeCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeCodable.swift; sourceTree = "<group>"; };
 		DC546CAC272D917200935298 /* Chat+Raw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chat+Raw.swift"; sourceTree = "<group>"; };
+		DCAE4070272ED47900EEA2A1 /* GetUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUpdate.swift; sourceTree = "<group>"; };
 		DCE8FE16272DA14300A43032 /* ChatListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListRouter.swift; sourceTree = "<group>"; };
 		DCE8FE1A272E9E6300A43032 /* cert.crt */ = {isa = PBXFileReference; lastKnownFileType = file; path = cert.crt; sourceTree = "<group>"; };
 		DCE8FE1C272EA6A600A43032 /* UsersSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersSearchView.swift; sourceTree = "<group>"; };
@@ -130,6 +134,8 @@
 		DCE8FE37272EBE6500A43032 /* AddUserInChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserInChat.swift; sourceTree = "<group>"; };
 		DCE8FE39272EC0A000A43032 /* MakeChatRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeChatRouting.swift; sourceTree = "<group>"; };
 		DCE8FE3C272EC3BF00A43032 /* MakeChatRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeChatRouter.swift; sourceTree = "<group>"; };
+		DCE8FE3F272ECCBE00A43032 /* UpdateCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCenter.swift; sourceTree = "<group>"; };
+		DCE8FE41272ECCC700A43032 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		FD01A91E272C97FF005241ED /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		FD624212272AF9A700EF7F73 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		FD624218272AFA2D00EF7F73 /* WKVideoPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKVideoPlayer.swift; sourceTree = "<group>"; };
@@ -300,6 +306,15 @@
 			path = MakeChat;
 			sourceTree = "<group>";
 		};
+		DCE8FE3E272ECCA500A43032 /* UpdateCenter */ = {
+			isa = PBXGroup;
+			children = (
+				DCE8FE3F272ECCBE00A43032 /* UpdateCenter.swift */,
+				DCE8FE41272ECCC700A43032 /* Notification.swift */,
+			);
+			path = UpdateCenter;
+			sourceTree = "<group>";
+		};
 		FD624216272AFA2D00EF7F73 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -458,6 +473,7 @@
 		FD62427A272B236600EF7F73 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				DCE8FE3E272ECCA500A43032 /* UpdateCenter */,
 				DC5469D0272D89E700935298 /* DTO */,
 				FD624292272B43AB00EF7F73 /* Network */,
 				FD62427B272B23B900EF7F73 /* Store.swift */,
@@ -500,6 +516,7 @@
 				DCE8FE23272EA74000A43032 /* UsersSearch.swift */,
 				DCE8FE35272EBD8900A43032 /* MakeChat.swift */,
 				DCE8FE37272EBE6500A43032 /* AddUserInChat.swift */,
+				DCAE4070272ED47900EEA2A1 /* GetUpdate.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -752,6 +769,7 @@
 				DCE8FE1D272EA6A600A43032 /* UsersSearchView.swift in Sources */,
 				FD6242A3272B43AB00EF7F73 /* ResponseContainer.swift in Sources */,
 				FDECCC0B272C902000BFAF8D /* NewMessage.swift in Sources */,
+				DCE8FE42272ECCC700A43032 /* Notification.swift in Sources */,
 				FD01A91F272C97FF005241ED /* Helpers.swift in Sources */,
 				DCE8FE3D272EC3BF00A43032 /* MakeChatRouter.swift in Sources */,
 				DC546CAD272D917200935298 /* Chat+Raw.swift in Sources */,
@@ -761,6 +779,7 @@
 				FD62428B272B3CF500EF7F73 /* LoginViewModel.swift in Sources */,
 				DCE8FE20272EA6C500A43032 /* UsersSearchViewModel.swift in Sources */,
 				DCE8FE36272EBD8900A43032 /* MakeChat.swift in Sources */,
+				DCE8FE40272ECCBE00A43032 /* UpdateCenter.swift in Sources */,
 				DCE8FE28272EAB1000A43032 /* Scheduler.swift in Sources */,
 				FD01A91C272C9741005241ED /* EmojiMessageRow.swift in Sources */,
 				DC5469D6272D8A6600935298 /* ChatRaw.swift in Sources */,
@@ -771,6 +790,7 @@
 				FDECCC04272C771B00BFAF8D /* ServiceMessageRow.swift in Sources */,
 				FD62426C272AFC4F00EF7F73 /* Typealiases.swift in Sources */,
 				DC5469CD272D787F00935298 /* GetChats.swift in Sources */,
+				DCAE4071272ED47900EEA2A1 /* GetUpdate.swift in Sources */,
 				DCE8FE34272EBD2E00A43032 /* MakeChatViewModel.swift in Sources */,
 				DC5469E3272D8E0D00935298 /* SafeCodable.swift in Sources */,
 				FD624263272AFB0D00EF7F73 /* Color+Stroganina.swift in Sources */,

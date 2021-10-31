@@ -10,4 +10,11 @@ import Foundation
 protocol ApiFunction: Encodable {
     associatedtype Response: Decodable
     static var method: String { get }
+    static var longTimeOut: Bool { get }
+}
+
+extension ApiFunction {
+    static var longTimeOut: Bool {
+        false
+    }
 }
