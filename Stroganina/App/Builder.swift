@@ -48,7 +48,7 @@ final class Builder {
     func buildChatsListScene(router: ChatListRouting) -> UIViewController {
         let service = ChatsListService(api: api)
         let factory = ChatMessagesFactory()
-        let viewModel = ChatsListViewModel(service: service, routing: router)
+        let viewModel = ChatsListViewModel(service: service, store: store, routing: router)
         let view = ChatsListView(viewModel: viewModel, factory: factory)
         return UIHostingController(rootView: view)
     }

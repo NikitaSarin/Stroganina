@@ -7,8 +7,10 @@
 
 protocol ChatListRouting {
     func openChatScene(_ chat: Chat)
+    func logout()
 }
 
 struct ChatListRoutingMock: ChatListRouting {
     func openChatScene(_ chat: Chat) {}
+    func logout() { }
 }

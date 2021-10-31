@@ -109,15 +109,59 @@ extension Api: URLSessionDelegate {
         didReceive challenge: URLAuthenticationChallenge, 
         completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void
     ) {
-       let urlCredential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
-       completionHandler(.useCredential, urlCredential)
+        if config.withoutCertificateVerification {
+            let urlCredential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+            completionHandler(.useCredential, urlCredential)
+        }
+        let serverCredential = getServerUrlCredential(protectionSpace: challenge.protectionSpace)
+        guard serverCredential != nil else {
+            completionHandler(.cancelAuthenticationChallenge, nil)
+            return
+        }
+        completionHandler(.useCredential, serverCredential)
+    }
+}
+
+extension Api {
+    func getServerUrlCredential(protectionSpace: URLProtectionSpace) -> URLCredential? {
+        if let serverTrust = protectionSpace.serverTrust {
+            /// Надо будет другой сертификат подложить
+            //var error: CFError? = nil
+            //let status = SecTrustEvaluateWithError(serverTrust, &error)
+
+            if
+                true,
+                let serverCertificate = SecTrustGetCertificateAtIndex(
+                    serverTrust,
+                    SecTrustGetCertificateCount(serverTrust) - 1
+                )
+            {
+                let serverCertificateData = SecCertificateCopyData(serverCertificate)
+
+                guard config.certificates.contains(where: { $0 == serverCertificateData as Data }) else {
+                    print("Certificates doesn't match.")
+                    return nil
+                }
+
+                return URLCredential(trust: serverTrust)
+            }
+        }
+        return nil
     }
 }
 
 extension Api {
     struct Config {
-        static let `default` = Config(endPoint: URL(string: "https://176.57.214.20:8443")!)
+        static let `default` = Config(
+            endPoint: URL(string: "https://176.57.214.20:8443")!,
+            certificates: [try! Data(contentsOf: Bundle.main.url(forResource: "cert", withExtension: "crt")!)],
+            withoutCertificateVerification: false
+        )
 
         let endPoint: URL
+        let certificates: [Data]
+        
+        // отключает проверку сертификата нужно для дебага
+        let withoutCertificateVerification: Bool
     }
 }
