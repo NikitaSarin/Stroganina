@@ -35,9 +35,16 @@ struct ChatsListView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
-                    viewModel.tapInLogout()
+                    viewModel.logoutButtonTapped()
                 } label: {
                     Image(systemName: "hand.raised.slash.fill")
+                }
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    viewModel.makeChatButtonTapped()
+                } label: {
+                    Image(systemName: "person.fill.badge.plus")
                 }
             }
         }

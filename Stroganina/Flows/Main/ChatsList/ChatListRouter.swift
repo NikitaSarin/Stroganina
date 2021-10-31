@@ -8,9 +8,11 @@
 protocol ChatListRouting {
     func openChatScene(_ chat: Chat)
     func logout()
+    func openMakeChatScene()
 }
 
 struct ChatListRoutingMock: ChatListRouting {
     func openChatScene(_ chat: Chat) {}
     func logout() { }
+    func openMakeChatScene() { }
 }

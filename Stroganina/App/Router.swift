@@ -26,6 +26,10 @@ final class Router {
             return builder.buildStartScene(router: self)
         }
     }
+    
+    lazy var makeChatRouter = MakeChatRouter(builder: builder) { [weak self] chat in
+        self?.openChatScene(chat)
+    }
 
     init(
         window: UIWindow,
@@ -74,5 +78,10 @@ extension Router: ChatListRouting {
     func openChatScene(_ chat: Chat) {
         let viewController = builder.buildChatScene(router: self, input: chat)
         navigation.pushViewController(viewController, animated: true)
+    }
+    
+    func openMakeChatScene() {
+        makeChatRouter.start()
+        navigation.present(makeChatRouter.navigation, animated: true, completion: nil)
     }
 }

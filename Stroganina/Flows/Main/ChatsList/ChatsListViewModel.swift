@@ -30,9 +30,13 @@ final class ChatsListViewModel: ObservableObject {
         routing.openChatScene(chat)
     }
     
-    func tapInLogout() {
+    func logoutButtonTapped() {
         store.set(authorisationInfo: nil)
         routing.logout()
+    }
+    
+    func makeChatButtonTapped() {
+        routing.openMakeChatScene()
     }
 }
 

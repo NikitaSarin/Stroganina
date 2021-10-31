@@ -28,6 +28,18 @@
 		DC546CAD272D917200935298 /* Chat+Raw.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC546CAC272D917200935298 /* Chat+Raw.swift */; };
 		DCE8FE17272DA14300A43032 /* ChatListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE16272DA14300A43032 /* ChatListRouter.swift */; };
 		DCE8FE1B272E9E6300A43032 /* cert.crt in Resources */ = {isa = PBXBuildFile; fileRef = DCE8FE1A272E9E6300A43032 /* cert.crt */; };
+		DCE8FE1D272EA6A600A43032 /* UsersSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE1C272EA6A600A43032 /* UsersSearchView.swift */; };
+		DCE8FE20272EA6C500A43032 /* UsersSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE1F272EA6C500A43032 /* UsersSearchViewModel.swift */; };
+		DCE8FE22272EA6D100A43032 /* UsersSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE21272EA6D100A43032 /* UsersSearchService.swift */; };
+		DCE8FE24272EA74000A43032 /* UsersSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE23272EA74000A43032 /* UsersSearch.swift */; };
+		DCE8FE28272EAB1000A43032 /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE27272EAB1000A43032 /* Scheduler.swift */; };
+		DCE8FE2A272EBBE800A43032 /* MakeChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE29272EBBE800A43032 /* MakeChatView.swift */; };
+		DCE8FE32272EBD1D00A43032 /* MakeChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE31272EBD1D00A43032 /* MakeChatService.swift */; };
+		DCE8FE34272EBD2E00A43032 /* MakeChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE33272EBD2E00A43032 /* MakeChatViewModel.swift */; };
+		DCE8FE36272EBD8900A43032 /* MakeChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE35272EBD8900A43032 /* MakeChat.swift */; };
+		DCE8FE38272EBE6500A43032 /* AddUserInChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE37272EBE6500A43032 /* AddUserInChat.swift */; };
+		DCE8FE3A272EC0A000A43032 /* MakeChatRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE39272EC0A000A43032 /* MakeChatRouting.swift */; };
+		DCE8FE3D272EC3BF00A43032 /* MakeChatRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE3C272EC3BF00A43032 /* MakeChatRouter.swift */; };
 		FD01A91C272C9741005241ED /* EmojiMessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD62422E272AFA2D00EF7F73 /* EmojiMessageRow.swift */; };
 		FD01A91F272C97FF005241ED /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD01A91E272C97FF005241ED /* Helpers.swift */; };
 		FD624213272AF9A700EF7F73 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD624212272AF9A700EF7F73 /* ChatView.swift */; };
@@ -106,6 +118,18 @@
 		DC546CAC272D917200935298 /* Chat+Raw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chat+Raw.swift"; sourceTree = "<group>"; };
 		DCE8FE16272DA14300A43032 /* ChatListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListRouter.swift; sourceTree = "<group>"; };
 		DCE8FE1A272E9E6300A43032 /* cert.crt */ = {isa = PBXFileReference; lastKnownFileType = file; path = cert.crt; sourceTree = "<group>"; };
+		DCE8FE1C272EA6A600A43032 /* UsersSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersSearchView.swift; sourceTree = "<group>"; };
+		DCE8FE1F272EA6C500A43032 /* UsersSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersSearchViewModel.swift; sourceTree = "<group>"; };
+		DCE8FE21272EA6D100A43032 /* UsersSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersSearchService.swift; sourceTree = "<group>"; };
+		DCE8FE23272EA74000A43032 /* UsersSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersSearch.swift; sourceTree = "<group>"; };
+		DCE8FE27272EAB1000A43032 /* Scheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
+		DCE8FE29272EBBE800A43032 /* MakeChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeChatView.swift; sourceTree = "<group>"; };
+		DCE8FE31272EBD1D00A43032 /* MakeChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeChatService.swift; sourceTree = "<group>"; };
+		DCE8FE33272EBD2E00A43032 /* MakeChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeChatViewModel.swift; sourceTree = "<group>"; };
+		DCE8FE35272EBD8900A43032 /* MakeChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeChat.swift; sourceTree = "<group>"; };
+		DCE8FE37272EBE6500A43032 /* AddUserInChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserInChat.swift; sourceTree = "<group>"; };
+		DCE8FE39272EC0A000A43032 /* MakeChatRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeChatRouting.swift; sourceTree = "<group>"; };
+		DCE8FE3C272EC3BF00A43032 /* MakeChatRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeChatRouter.swift; sourceTree = "<group>"; };
 		FD01A91E272C97FF005241ED /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		FD624212272AF9A700EF7F73 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		FD624218272AFA2D00EF7F73 /* WKVideoPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKVideoPlayer.swift; sourceTree = "<group>"; };
@@ -215,6 +239,7 @@
 		DC5469C5272D762200935298 /* ChatsList */ = {
 			isa = PBXGroup;
 			children = (
+				DCE8FE16272DA14300A43032 /* ChatListRouter.swift */,
 				DC5469C6272D764200935298 /* ChatsListView.swift */,
 				DC5469C8272D766600935298 /* ChatsListViewModel.swift */,
 				DC5469CA272D769300935298 /* ChatsListService.swift */,
@@ -242,6 +267,37 @@
 				DC546CAC272D917200935298 /* Chat+Raw.swift */,
 			);
 			path = Mapping;
+			sourceTree = "<group>";
+		};
+		DCE8FE1E272EA6AE00A43032 /* UsersSearch */ = {
+			isa = PBXGroup;
+			children = (
+				DCE8FE1C272EA6A600A43032 /* UsersSearchView.swift */,
+				DCE8FE1F272EA6C500A43032 /* UsersSearchViewModel.swift */,
+				DCE8FE21272EA6D100A43032 /* UsersSearchService.swift */,
+			);
+			path = UsersSearch;
+			sourceTree = "<group>";
+		};
+		DCE8FE2B272EBBED00A43032 /* MakeChat */ = {
+			isa = PBXGroup;
+			children = (
+				DCE8FE29272EBBE800A43032 /* MakeChatView.swift */,
+				DCE8FE31272EBD1D00A43032 /* MakeChatService.swift */,
+				DCE8FE33272EBD2E00A43032 /* MakeChatViewModel.swift */,
+			);
+			path = MakeChat;
+			sourceTree = "<group>";
+		};
+		DCE8FE3B272EC34200A43032 /* MakeChat */ = {
+			isa = PBXGroup;
+			children = (
+				DCE8FE39272EC0A000A43032 /* MakeChatRouting.swift */,
+				DCE8FE3C272EC3BF00A43032 /* MakeChatRouter.swift */,
+				DCE8FE2B272EBBED00A43032 /* MakeChat */,
+				DCE8FE1E272EA6AE00A43032 /* UsersSearch */,
+			);
+			path = MakeChat;
 			sourceTree = "<group>";
 		};
 		FD624216272AFA2D00EF7F73 /* Views */ = {
@@ -362,6 +418,7 @@
 				DC5469BD272CB05A00935298 /* Date+ServerTime.swift */,
 				DC5469C3272D69A200935298 /* AuthorisationContext.swift */,
 				DC5469E2272D8E0D00935298 /* SafeCodable.swift */,
+				DCE8FE27272EAB1000A43032 /* Scheduler.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -440,6 +497,9 @@
 				DC5469BF272D523F00935298 /* UserRegistration.swift */,
 				DC5469CC272D787F00935298 /* GetChats.swift */,
 				DC5469CE272D789900935298 /* ID.swift */,
+				DCE8FE23272EA74000A43032 /* UsersSearch.swift */,
+				DCE8FE35272EBD8900A43032 /* MakeChat.swift */,
+				DCE8FE37272EBE6500A43032 /* AddUserInChat.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -501,6 +561,7 @@
 		FDCE3B48272AEEEC00DAF3AB /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				DCE8FE3B272EC34200A43032 /* MakeChat */,
 				FD624277272B232400EF7F73 /* Auth */,
 				FDCE3B51272AEFA200DAF3AB /* Main */,
 			);
@@ -523,7 +584,6 @@
 		FDCE3B51272AEFA200DAF3AB /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				DCE8FE16272DA14300A43032 /* ChatListRouter.swift */,
 				DC5469C5272D762200935298 /* ChatsList */,
 				FDCE3B50272AEF9500DAF3AB /* Chat */,
 			);
@@ -685,16 +745,23 @@
 				DC5469BA272CA97600935298 /* AuthorisationInfo.swift in Sources */,
 				FDCE3B96272AF4F800DAF3AB /* TextMessage.swift in Sources */,
 				FDCE3B9E272AF7E100DAF3AB /* MessageType.swift in Sources */,
+				DCE8FE32272EBD1D00A43032 /* MakeChatService.swift in Sources */,
 				FD624287272B392300EF7F73 /* RegistrationView.swift in Sources */,
 				FD62428F272B3FD200EF7F73 /* RegistrationService.swift in Sources */,
 				DC5469BC272CB00E00935298 /* String+Hash.swift in Sources */,
+				DCE8FE1D272EA6A600A43032 /* UsersSearchView.swift in Sources */,
 				FD6242A3272B43AB00EF7F73 /* ResponseContainer.swift in Sources */,
 				FDECCC0B272C902000BFAF8D /* NewMessage.swift in Sources */,
 				FD01A91F272C97FF005241ED /* Helpers.swift in Sources */,
+				DCE8FE3D272EC3BF00A43032 /* MakeChatRouter.swift in Sources */,
 				DC546CAD272D917200935298 /* Chat+Raw.swift in Sources */,
 				FD624245272AFA2D00EF7F73 /* TextMessageRow.swift in Sources */,
 				FD624283272B285C00EF7F73 /* AuthRouting.swift in Sources */,
+				DCE8FE3A272EC0A000A43032 /* MakeChatRouting.swift in Sources */,
 				FD62428B272B3CF500EF7F73 /* LoginViewModel.swift in Sources */,
+				DCE8FE20272EA6C500A43032 /* UsersSearchViewModel.swift in Sources */,
+				DCE8FE36272EBD8900A43032 /* MakeChat.swift in Sources */,
+				DCE8FE28272EAB1000A43032 /* Scheduler.swift in Sources */,
 				FD01A91C272C9741005241ED /* EmojiMessageRow.swift in Sources */,
 				DC5469D6272D8A6600935298 /* ChatRaw.swift in Sources */,
 				FD624289272B393200EF7F73 /* LoginView.swift in Sources */,
@@ -704,9 +771,11 @@
 				FDECCC04272C771B00BFAF8D /* ServiceMessageRow.swift in Sources */,
 				FD62426C272AFC4F00EF7F73 /* Typealiases.swift in Sources */,
 				DC5469CD272D787F00935298 /* GetChats.swift in Sources */,
+				DCE8FE34272EBD2E00A43032 /* MakeChatViewModel.swift in Sources */,
 				DC5469E3272D8E0D00935298 /* SafeCodable.swift in Sources */,
 				FD624263272AFB0D00EF7F73 /* Color+Stroganina.swift in Sources */,
 				FD624268272AFBBF00EF7F73 /* UIColor+Hex.swift in Sources */,
+				DCE8FE38272EBE6500A43032 /* AddUserInChat.swift in Sources */,
 				DC5469E1272D8D9500935298 /* MessageTypeRaw.swift in Sources */,
 				DC5469DD272D8B9C00935298 /* Message+Raw.swift in Sources */,
 				DC5469CF272D789900935298 /* ID.swift in Sources */,
@@ -724,7 +793,9 @@
 				FD624270272AFF9A00EF7F73 /* ChatViewModel.swift in Sources */,
 				FD624291272B3FF600EF7F73 /* RegistrationViewModel.swift in Sources */,
 				DC5469D4272D8A1900935298 /* MessageRaw.swift in Sources */,
+				DCE8FE2A272EBBE800A43032 /* MakeChatView.swift in Sources */,
 				FD624257272AFA2D00EF7F73 /* Dot.swift in Sources */,
+				DCE8FE24272EA74000A43032 /* UsersSearch.swift in Sources */,
 				DC5469C0272D523F00935298 /* UserRegistration.swift in Sources */,
 				FD62428D272B3DA500EF7F73 /* LoginService.swift in Sources */,
 				FDCE3B98272AF50A00DAF3AB /* User.swift in Sources */,
@@ -732,6 +803,7 @@
 				FD624272272B01DA00EF7F73 /* ChatService.swift in Sources */,
 				DC5469DF272D8D0800935298 /* MessageWrapper+Raw.swift in Sources */,
 				FD6242A2272B43AB00EF7F73 /* ApiFunction.swift in Sources */,
+				DCE8FE22272EA6D100A43032 /* UsersSearchService.swift in Sources */,
 				FDCE3B35272AEEBC00DAF3AB /* SceneDelegate.swift in Sources */,
 				FD624240272AFA2D00EF7F73 /* Bubble.swift in Sources */,
 				FD62426E272AFCC500EF7F73 /* UIImage+Stroganina.swift in Sources */,
@@ -890,6 +962,7 @@
 				DEVELOPMENT_TEAM = D28449VFLN;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Stroganina/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -911,6 +984,7 @@
 				DEVELOPMENT_TEAM = D28449VFLN;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Stroganina/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
