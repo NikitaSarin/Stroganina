@@ -27,6 +27,7 @@
 		DC5469E3272D8E0D00935298 /* SafeCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5469E2272D8E0D00935298 /* SafeCodable.swift */; };
 		DC546CAD272D917200935298 /* Chat+Raw.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC546CAC272D917200935298 /* Chat+Raw.swift */; };
 		DCE8FE17272DA14300A43032 /* ChatListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE16272DA14300A43032 /* ChatListRouter.swift */; };
+		DCE8FE1B272E9E6300A43032 /* cert.crt in Resources */ = {isa = PBXBuildFile; fileRef = DCE8FE1A272E9E6300A43032 /* cert.crt */; };
 		FD01A91C272C9741005241ED /* EmojiMessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD62422E272AFA2D00EF7F73 /* EmojiMessageRow.swift */; };
 		FD01A91F272C97FF005241ED /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD01A91E272C97FF005241ED /* Helpers.swift */; };
 		FD624213272AF9A700EF7F73 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD624212272AF9A700EF7F73 /* ChatView.swift */; };
@@ -104,6 +105,7 @@
 		DC5469E2272D8E0D00935298 /* SafeCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeCodable.swift; sourceTree = "<group>"; };
 		DC546CAC272D917200935298 /* Chat+Raw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chat+Raw.swift"; sourceTree = "<group>"; };
 		DCE8FE16272DA14300A43032 /* ChatListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListRouter.swift; sourceTree = "<group>"; };
+		DCE8FE1A272E9E6300A43032 /* cert.crt */ = {isa = PBXFileReference; lastKnownFileType = file; path = cert.crt; sourceTree = "<group>"; };
 		FD01A91E272C97FF005241ED /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		FD624212272AF9A700EF7F73 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		FD624218272AFA2D00EF7F73 /* WKVideoPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKVideoPlayer.swift; sourceTree = "<group>"; };
@@ -417,6 +419,7 @@
 		FD624292272B43AB00EF7F73 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				DCE8FE1A272E9E6300A43032 /* cert.crt */,
 				FD624296272B43AB00EF7F73 /* Models */,
 				FD624298272B43AB00EF7F73 /* Api.swift */,
 				FD62429A272B43AB00EF7F73 /* ApiFunction.swift */,
@@ -660,6 +663,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FDCE3B3F272AEEBD00DAF3AB /* LaunchScreen.storyboard in Resources */,
+				DCE8FE1B272E9E6300A43032 /* cert.crt in Resources */,
 				FDCE3B3C272AEEBD00DAF3AB /* Preview Assets.xcassets in Resources */,
 				FDCE3B39272AEEBD00DAF3AB /* Assets.xcassets in Resources */,
 			);

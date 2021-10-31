@@ -66,6 +66,11 @@ extension Router: AuthRouting {
 }
 
 extension Router: ChatListRouting {
+    func logout() {
+        let viewController = builder.buildStartScene(router: self)
+        navigation.setViewControllers([viewController], animated: true)
+    }
+    
     func openChatScene(_ chat: Chat) {
         let viewController = builder.buildChatScene(router: self, input: chat)
         navigation.pushViewController(viewController, animated: true)

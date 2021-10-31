@@ -18,7 +18,7 @@ final class Store {
 
     private let defaults = UserDefaults.standard
 
-    func set(authorisationInfo: AuthorisationInfo) {
+    func set(authorisationInfo: AuthorisationInfo?) {
         self.authorisationInfo = authorisationInfo
         save()
     }

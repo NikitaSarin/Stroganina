@@ -28,8 +28,19 @@ struct ChatsListView: View {
                 } else {
                     chats
                 }
-            }.background(Color.sgn_background)
-        }.navigationTitle("Chats")
+            }
+            .background(Color.sgn_background)
+        }
+        .navigationTitle("Chats")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    viewModel.tapInLogout()
+                } label: {
+                    Image(systemName: "hand.raised.slash.fill")
+                }
+            }
+        }
     }
 
     private var chats: some View {
@@ -70,6 +81,7 @@ struct ChatsListView_Previews: PreviewProvider {
             ChatsListView(
                 viewModel: ChatsListViewModel(
                     service: Service(),
+                    store: Store(),
                     routing: ChatListRoutingMock()
                 ),
                 factory: ChatMessagesFactory()

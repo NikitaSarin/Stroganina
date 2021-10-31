@@ -13,18 +13,26 @@ final class ChatsListViewModel: ObservableObject {
     
     private var service: ChatsListServiceProtocol
     private let routing: ChatListRouting
+    private let store: Store
 
     init(
         service: ChatsListServiceProtocol,
+        store: Store,
         routing: ChatListRouting
     ) {
         self.service = service
         self.routing = routing
+        self.store = store
         self.service.delegate = self
     }
     
     func tapInChat(_ chat: Chat) {
         routing.openChatScene(chat)
+    }
+    
+    func tapInLogout() {
+        store.set(authorisationInfo: nil)
+        routing.logout()
     }
 }
 
