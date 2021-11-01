@@ -5,6 +5,8 @@
 //  Created by Aleksandr Shipin on 31.10.2021.
 //
 
+import NetworkApi
+
 protocol UsersSearchServiceProtocol {
     func fetch(with name: String, completion: @escaping (Result<[User], Error>) -> Void)
 }

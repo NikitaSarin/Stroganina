@@ -5,10 +5,10 @@
 //  Created by Aleksandr Shipin on 30.10.2021.
 //
 
-import Foundation
+import NetworkApi
 
 extension Chat {
-    convenience init(_ raw: ChatRaw) {
+    convenience init(_ raw: Raw.Chat) {
         self.init(
             id: raw.chatId,
             title: raw.name,

@@ -5,6 +5,7 @@
 //  Created by Aleksandr Shipin on 31.10.2021.
 //
 
+import NetworkApi
 
 protocol MakeChatServiceProtocol {
     func makeChat(with name: String, users: [User], completion: @escaping (Result<Chat, Error>) -> Void)
@@ -23,7 +24,7 @@ final class MakeChatService: MakeChatServiceProtocol {
     }
 
     func makeChat(with name: String, users: [User], completion: @escaping (Result<Chat, Error>) -> Void) {
-        api.perform(MakeChat(name: name)) { [weak self] result in
+        api.perform(NewChat(name: name)) { [weak self] result in
             switch result {
             case .success(let response):
                 self?.didMakeChat(with: name, users: users, chatId: response.chatId, completion: completion)
