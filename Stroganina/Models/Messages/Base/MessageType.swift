@@ -24,6 +24,17 @@ enum MessageType: Identifiable {
         case let .service(message): return message
         }
     }
+
+    var description: String {
+        switch self {
+        case let .text(message):
+            return message.text
+        case let .emoji(message):
+            return message.text
+        case let .service(message):
+            return message.text
+        }
+    }
 }
 
 final class MessageWrapper: Identifiable, ObservableObject {

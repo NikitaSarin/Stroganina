@@ -15,13 +15,14 @@ final class Router {
     private lazy var navigation: UINavigationController = {
         let navigation = UINavigationController()
         navigation.setNavigationBarHidden(true, animated: false)
+        navigation.navigationBar.prefersLargeTitles = true
         return navigation
     }()
     private let store: Store
 
     private var initialViewController: UIViewController {
         if auth.isAuthorized {
-            return builder.buildChatsListScene(router: self)
+            return builder.buildChatListScene(router: self)
         } else {
             return builder.buildStartScene(router: self)
         }
@@ -64,7 +65,7 @@ extension Router: AuthRouting {
     }
 
     func openMainFlow() {
-        let viewController = builder.buildChatsListScene(router: self)
+        let viewController = builder.buildChatListScene(router: self)
         navigation.setViewControllers([viewController], animated: true)
     }
 }
