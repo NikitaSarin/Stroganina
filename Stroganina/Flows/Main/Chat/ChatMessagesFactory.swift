@@ -28,12 +28,6 @@ struct ChatMessagesFactory {
             style: type.bubbleStyle,
             detailsBlock: openMessageBlock
         ) {
-            self.content(for: type)
-        }
-    }
-    
-    func content(for type: MessageType) -> some View {
-        Group {
             switch type {
             case let .text(message):
                 TextMessageRow(message: message)
