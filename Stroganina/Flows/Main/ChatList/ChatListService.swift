@@ -1,5 +1,5 @@
 //
-//  ChatsListService.swift
+//  ChatListService.swift
 //  Stroganina
 //
 //  Created by Aleksandr Shipin on 30.10.2021.
@@ -8,16 +8,16 @@
 import Foundation
 import NetworkApi
 
-protocol ChatsListServiceDelegate {
+protocol ChatListServiceDelegate {
     func didChange(chats: [Chat])
 }
 
-protocol ChatsListServiceProtocol {
-    var delegate: ChatsListServiceDelegate? { get set }
+protocol ChatListServiceProtocol {
+    var delegate: ChatListServiceDelegate? { get set }
 }
 
-final class ChatsListService: ChatsListServiceProtocol {
-    var delegate: ChatsListServiceDelegate? {
+final class ChatListService: ChatListServiceProtocol {
+    var delegate: ChatListServiceDelegate? {
         didSet {
             self.sendUpdate()
         }
@@ -71,7 +71,7 @@ final class ChatsListService: ChatsListServiceProtocol {
     }
 }
 
-extension ChatsListService: Listener {
+extension ChatListService: Listener {
     func update(_ notifications: [Notification]) {
         var isNeedUpdate: Bool = false
         for notification in notifications {
