@@ -1,5 +1,5 @@
 //
-//  ChatsListViewModel.swift
+//  ChatListViewModel.swift
 //  Stroganina
 //
 //  Created by Aleksandr Shipin on 30.10.2021.
@@ -8,15 +8,16 @@
 import Foundation
 import SwiftUI
 
-final class ChatsListViewModel: ObservableObject {
+final class ChatListViewModel: ObservableObject {
+
     @Published var chats = [Chat]()
-    
-    private var service: ChatsListServiceProtocol
+
+    private var service: ChatListServiceProtocol
     private let routing: ChatListRouting
     private let store: Store
 
     init(
-        service: ChatsListServiceProtocol,
+        service: ChatListServiceProtocol,
         store: Store,
         routing: ChatListRouting
     ) {
@@ -26,7 +27,7 @@ final class ChatsListViewModel: ObservableObject {
         self.service.delegate = self
     }
     
-    func tapInChat(_ chat: Chat) {
+    func didTap(on chat: Chat) {
         routing.openChatScene(chat)
     }
     
@@ -40,7 +41,7 @@ final class ChatsListViewModel: ObservableObject {
     }
 }
 
-extension ChatsListViewModel: ChatsListServiceDelegate {
+extension ChatListViewModel: ChatListServiceDelegate {
     func didChange(chats: [Chat]) {
         DispatchQueue.main.async {
             withAnimation {

@@ -1,5 +1,5 @@
 //
-//  ChatsListView.swift
+//  ChatListView.swift
 //  Stroganina
 //
 //  Created by Aleksandr Shipin on 30.10.2021.
@@ -8,11 +8,10 @@
 import Foundation
 import SwiftUI
 
-struct ChatsListView: View {
-    @ObservedObject var viewModel: ChatsListViewModel
-    
-    let factory: ChatMessagesFactory
-    
+struct ChatList: View {
+
+    @ObservedObject var viewModel: ChatListViewModel
+
     var body: some View {
         ZStack {
             Color.sgn_surface
@@ -31,7 +30,7 @@ struct ChatsListView: View {
             }
             .background(Color.sgn_background)
         }
-        .navigationTitle("Chats")
+        .navigationBarTitle("Chats", displayMode: .large)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 HStack {
@@ -57,47 +56,33 @@ struct ChatsListView: View {
                     Color.clear
                         .frame(height: 8)
                     ForEach(viewModel.chats) { chat in
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text(chat.title)
-                                    .font(.medium(size: 17))
-                                if let message = chat.lastMessage {
-                                    factory.content(for: message.type)
-                                } else {
-                                    Text("No messages here yet")
-                                }
-                                Divider()
-                            }
-                        }.onTapGesture {
-                            viewModel.tapInChat(chat)
+                        ChatRow(chat: chat)
+                        .onTapGesture {
+                            viewModel.didTap(on: chat)
                         }
                     }
                 }
             }
         }
         .padding(.horizontal, 8)
-        .onTapGesture {
-            UIApplication.shared.endEditing()
-        }
     }
 }
 
-struct ChatsListView_Previews: PreviewProvider {
+struct ChatList_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ChatsListView(
-                viewModel: ChatsListViewModel(
+            ChatList(
+                viewModel: ChatListViewModel(
                     service: Service(),
                     store: Store(),
                     routing: ChatListRoutingMock()
-                ),
-                factory: ChatMessagesFactory()
+                )
             )
         }
     }
 
-    struct Service: ChatsListServiceProtocol {
-        var delegate: ChatsListServiceDelegate? {
+    struct Service: ChatListServiceProtocol {
+        var delegate: ChatListServiceDelegate? {
             didSet {
                 sendChat()
             }
