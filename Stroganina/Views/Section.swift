@@ -8,34 +8,27 @@
 import SwiftUI
 
 struct Section<Content: View>: View {
-    let title: String
     let content: Content
 
     init(
-        _ title: String,
         @ViewBuilder content: () -> Content
     ) {
-        self.title = title
         self.content = content()
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack(spacing: 0) {
-                Text(title.uppercased())
-                    .font(.reqular(size: 14))
-                    .foregroundColor(.tg_grey)
-                    .padding(.horizontal, 9)
-                Spacer(minLength: 0)
-            }
+        HStack(spacing: 14) {
             content
         }
+        .padding(12)
+        .background(Color.sgn_surface)
+        .cornerRadius(14)
     }
 }
 
 struct Section_Previews: PreviewProvider {
     static var previews: some View {
-        Section("Title") {
+        Section {
             Text("Hehe")
         }
     }
