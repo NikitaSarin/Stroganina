@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import NetworkApi
 
-final class Store {
+final class Store: ApiStore {
 
     private enum Key: String {
         case token

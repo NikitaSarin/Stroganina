@@ -5,10 +5,10 @@
 //  Created by Aleksandr Shipin on 30.10.2021.
 //
 
-import Foundation
+import NetworkApi
 
 extension MessageWrapper {
-    convenience init(_ raw: MessageRaw) {
+    convenience init(_ raw: Raw.Message) {
         let base = Message(raw)
         let type: MessageType
         switch raw.type {

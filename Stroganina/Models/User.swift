@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct User {
+struct User: Identifiable {
 
     typealias ID = UInt
 
@@ -28,8 +28,4 @@ extension User: Hashable {
     static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.id == rhs.id
     }
-}
-
-extension User: Identifiable {
-    
 }

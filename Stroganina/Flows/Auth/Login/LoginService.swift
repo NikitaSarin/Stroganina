@@ -7,6 +7,7 @@
 
 import Foundation
 import CryptoKit
+import NetworkApi
 
 final class LoginService: LoginServiceProtocol {
 
