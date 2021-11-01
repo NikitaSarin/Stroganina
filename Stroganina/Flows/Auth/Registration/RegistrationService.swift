@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NetworkApi
 
 protocol RegistrationServiceProtocol {
     func register(

@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import NetworkApi
 
 extension Message {
-    convenience init(_ raw: MessageRaw) {
+    convenience init(_ raw: Raw.Message) {
         self.init(
             id: raw.messageId,
             date: Date(timeIntervalSince1970: TimeInterval(raw.date)),

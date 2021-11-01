@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NetworkApi
 
 protocol ChatServiceDelegate: AnyObject {
     func didChange(messages: [MessageWrapper])
