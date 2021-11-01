@@ -5,8 +5,9 @@
 //  Created by Aleksandr Shipin on 30.10.2021.
 //
 
-import CryptoKit
 import Foundation
+import CryptoKit
+import NetworkApi
 
 final class AuthorisationContext {
     var publicUserKey: String {
@@ -75,5 +76,16 @@ final class AuthorisationContext {
 extension AuthorisationContext {
     enum AuthorisationContextError: Error {
         case generateKeyError
+    }
+}
+
+private extension String {
+    var cleanHash: String {
+        guard let data = self.data(using: .utf8) else {
+            assertionFailure("Not generate data for hash")
+            return ""
+        }
+        let hash = SHA512.hash(data: data).map({ String(format:"%02x", UInt8($0)) }).joined()
+        return hash
     }
 }

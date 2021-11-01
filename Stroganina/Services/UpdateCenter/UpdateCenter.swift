@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NetworkApi
 
 final class UpdateCenter {
     private let api: Networking
