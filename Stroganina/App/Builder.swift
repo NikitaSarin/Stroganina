@@ -17,7 +17,7 @@ final class Builder {
 
     init(store: Store) {
         self.store = store
-        self.api = Api(config: .local, store: store)
+        self.api = Api(config: .default, store: store)
         self.updateCenter = UpdateCenter(api: api)
     }
 
