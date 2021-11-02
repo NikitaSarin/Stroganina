@@ -15,18 +15,9 @@ final class Router {
     private lazy var navigation: UINavigationController = {
         let navigation = UINavigationController()
         navigation.setNavigationBarHidden(true, animated: false)
-        navigation.navigationBar.prefersLargeTitles = true
         return navigation
     }()
     private let store: Store
-
-    private var initialViewController: UIViewController {
-        if auth.isAuthorized {
-            return builder.buildChatListScene(router: self)
-        } else {
-            return builder.buildStartScene(router: self)
-        }
-    }
     
     lazy var makeChatRouter = MakeChatRouter(builder: builder) { [weak self] chat in
         self?.openChatScene(chat)
@@ -44,7 +35,11 @@ final class Router {
 
     func start() {
         store.load()
-        navigation.setViewControllers([initialViewController], animated: false)
+        if auth.isAuthorized {
+            openMainFlow(animated: false)
+        } else {
+            openStartScene(animated: false)
+        }
         window.rootViewController = navigation
     }
 
@@ -64,25 +59,27 @@ extension Router: AuthRouting {
         navigation.pushViewController(viewController, animated: true)
     }
 
-    func openMainFlow() {
-        let viewController = builder.buildChatListScene(router: self)
-        navigation.setViewControllers([viewController], animated: true)
+    func openMainFlow(animated: Bool) {
+        let viewController = builder.buildMainScene(router: self)
+        navigation.setViewControllers([viewController], animated: animated)
     }
 }
 
 extension Router: ChatListRouting {
-    func logout() {
-        let viewController = builder.buildStartScene(router: self)
-        navigation.setViewControllers([viewController], animated: true)
-    }
-    
     func openChatScene(_ chat: Chat) {
         let viewController = builder.buildChatScene(router: self, input: chat)
         navigation.pushViewController(viewController, animated: true)
     }
-    
+
     func openMakeChatScene() {
         makeChatRouter.start()
         navigation.present(makeChatRouter.navigation, animated: true, completion: nil)
+    }
+}
+
+extension Router: SettingsRouting {
+    func openStartScene(animated: Bool) {
+        let viewController = builder.buildStartScene(router: self)
+        navigation.setViewControllers([viewController], animated: animated)
     }
 }

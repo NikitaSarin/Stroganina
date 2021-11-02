@@ -32,6 +32,10 @@
 		FD063DC92730507F00464DDA /* NetworkApi in Frameworks */ = {isa = PBXBuildFile; productRef = FD063DC82730507F00464DDA /* NetworkApi */; };
 		FD063DCE27305C9100464DDA /* cert.crt in Resources */ = {isa = PBXBuildFile; fileRef = FD063DCD27305C9100464DDA /* cert.crt */; };
 		FD063DD027305F9400464DDA /* ChatRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD063DCF27305F9300464DDA /* ChatRow.swift */; };
+		FD063DD22730777C00464DDA /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD063DD12730777C00464DDA /* TabBarController.swift */; };
+		FD063DD52730795E00464DDA /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD063DD42730795E00464DDA /* SettingsView.swift */; };
+		FD063DD727309CA400464DDA /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD063DD627309CA400464DDA /* SettingsService.swift */; };
+		FD063DD927309CBF00464DDA /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD063DD827309CBF00464DDA /* SettingsViewModel.swift */; };
 		FD624213272AF9A700EF7F73 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD624212272AF9A700EF7F73 /* ChatView.swift */; };
 		FD624240272AFA2D00EF7F73 /* Bubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD62421B272AFA2D00EF7F73 /* Bubble.swift */; };
 		FD624245272AFA2D00EF7F73 /* TextMessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD624221272AFA2D00EF7F73 /* TextMessageRow.swift */; };
@@ -101,6 +105,10 @@
 		FD01A91E272C97FF005241ED /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		FD063DCD27305C9100464DDA /* cert.crt */ = {isa = PBXFileReference; lastKnownFileType = file; path = cert.crt; sourceTree = "<group>"; };
 		FD063DCF27305F9300464DDA /* ChatRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRow.swift; sourceTree = "<group>"; };
+		FD063DD12730777C00464DDA /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		FD063DD42730795E00464DDA /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		FD063DD627309CA400464DDA /* SettingsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsService.swift; sourceTree = "<group>"; };
+		FD063DD827309CBF00464DDA /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		FD624212272AF9A700EF7F73 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		FD624218272AFA2D00EF7F73 /* WKVideoPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKVideoPlayer.swift; sourceTree = "<group>"; };
 		FD624219272AFA2D00EF7F73 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
@@ -274,6 +282,16 @@
 				FD063DCD27305C9100464DDA /* cert.crt */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		FD063DD32730794B00464DDA /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				FD063DD42730795E00464DDA /* SettingsView.swift */,
+				FD063DD827309CBF00464DDA /* SettingsViewModel.swift */,
+				FD063DD627309CA400464DDA /* SettingsService.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		FD624216272AFA2D00EF7F73 /* Views */ = {
@@ -526,6 +544,8 @@
 		FDCE3B51272AEFA200DAF3AB /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				FD063DD12730777C00464DDA /* TabBarController.swift */,
+				FD063DD32730794B00464DDA /* Settings */,
 				DC5469C5272D762200935298 /* ChatList */,
 				FDCE3B50272AEF9500DAF3AB /* Chat */,
 			);
@@ -689,6 +709,7 @@
 				DC5469C4272D69A200935298 /* AuthorisationContext.swift in Sources */,
 				FDCE3B96272AF4F800DAF3AB /* TextMessage.swift in Sources */,
 				FDCE3B9E272AF7E100DAF3AB /* MessageType.swift in Sources */,
+				FD063DD927309CBF00464DDA /* SettingsViewModel.swift in Sources */,
 				DCE8FE32272EBD1D00A43032 /* MakeChatService.swift in Sources */,
 				FD624287272B392300EF7F73 /* RegistrationView.swift in Sources */,
 				FD62428F272B3FD200EF7F73 /* RegistrationService.swift in Sources */,
@@ -699,6 +720,7 @@
 				DC546CAD272D917200935298 /* Chat+Raw.swift in Sources */,
 				FD624245272AFA2D00EF7F73 /* TextMessageRow.swift in Sources */,
 				FD624283272B285C00EF7F73 /* AuthRouting.swift in Sources */,
+				FD063DD727309CA400464DDA /* SettingsService.swift in Sources */,
 				DCE8FE3A272EC0A000A43032 /* MakeChatRouting.swift in Sources */,
 				FD62428B272B3CF500EF7F73 /* LoginViewModel.swift in Sources */,
 				DCE8FE20272EA6C500A43032 /* UsersSearchViewModel.swift in Sources */,
@@ -706,6 +728,7 @@
 				DCE8FE28272EAB1000A43032 /* Scheduler.swift in Sources */,
 				FD01A91C272C9741005241ED /* EmojiMessageRow.swift in Sources */,
 				FD624289272B393200EF7F73 /* LoginView.swift in Sources */,
+				FD063DD52730795E00464DDA /* SettingsView.swift in Sources */,
 				FD624213272AF9A700EF7F73 /* ChatView.swift in Sources */,
 				FDCE3B33272AEEBC00DAF3AB /* AppDelegate.swift in Sources */,
 				FD624276272B185400EF7F73 /* ChatHeader.swift in Sources */,
@@ -731,6 +754,7 @@
 				FD624266272AFB5F00EF7F73 /* View+Stroganina.swift in Sources */,
 				FD624272272B01DA00EF7F73 /* ChatService.swift in Sources */,
 				DC5469DF272D8D0800935298 /* MessageWrapper+Raw.swift in Sources */,
+				FD063DD22730777C00464DDA /* TabBarController.swift in Sources */,
 				DCE8FE22272EA6D100A43032 /* UsersSearchService.swift in Sources */,
 				FDCE3B35272AEEBC00DAF3AB /* SceneDelegate.swift in Sources */,
 				FD624240272AFA2D00EF7F73 /* Bubble.swift in Sources */,
@@ -882,8 +906,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"Stroganina/Preview Content\"";
 				DEVELOPMENT_TEAM = D28449VFLN;
 				ENABLE_PREVIEWS = YES;
@@ -895,6 +920,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.urodsk.stroganina;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = Stroganina;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -905,8 +931,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"Stroganina/Preview Content\"";
 				DEVELOPMENT_TEAM = D28449VFLN;
 				ENABLE_PREVIEWS = YES;
@@ -918,6 +945,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.urodsk.stroganina;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = Stroganina;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
