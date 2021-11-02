@@ -43,31 +43,32 @@ public final class Api: NSObject, Networking {
             }
             request.httpMethod = "POST"
             request.httpBody = data
+            log("[API][\(F.method)][REQUEST]", String(data: data, encoding: .utf8) ?? "")
             session.dataTask(with: request) { (data, _, error) in
                 if let error = error {
                     DispatchQueue.main.async {
+                        log("[API][\(F.method)][ERROR]", "\(error)")
                         completion(.failure(.networkError(error)))
                     }
                     return
                 }
                 guard let data = data else {
+                    log("[API][\(F.method)][ERROR]", "data is empty")
                     DispatchQueue.main.async {
                         completion(.failure(.decodingError))
                     }
                     return
                 }
                 do {
+                    log("[API][\(F.method)][RESPONSE]", String(data: data, encoding: .utf8) ?? "")
                     let result = try JSONDecoder().decode(Response<F.Response>.self, from: data)
-                    if let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                        print(json)
-                    }
                     if let content = result.content {
                         DispatchQueue.main.async {
                             completion(.success(content))
                         }
                         return
                     }
-                    if let error = result.error {
+                    if let error = result.errors?.first {
                         DispatchQueue.main.async {
                             completion(.failure(.userError(error)))
                         }
@@ -159,6 +160,12 @@ extension Api {
             endPoint: URL(string: "https://176.57.214.20:8443")!,
             certificates: [try! Data(contentsOf: Bundle.main.url(forResource: "cert", withExtension: "crt")!)],
             withoutCertificateVerification: false
+        )
+        
+        public static let local = Config(
+            endPoint: URL(string: "http://127.0.0.1:8080")!,
+            certificates: [],
+            withoutCertificateVerification: true
         )
 
         let endPoint: URL
