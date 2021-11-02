@@ -27,7 +27,7 @@ final class RegistrationViewModel: ObservableObject {
         service.register(with: username, password: password) { [weak self] result in
             switch result {
             case .success:
-                self?.router.openMainFlow()
+                self?.router.openMainFlow(animated: true)
             case let .failure(error):
                 print(error.localizedDescription)
             }

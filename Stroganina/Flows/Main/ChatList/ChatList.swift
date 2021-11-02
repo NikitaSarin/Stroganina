@@ -13,6 +13,24 @@ struct ChatList: View {
     @ObservedObject var viewModel: ChatListViewModel
 
     var body: some View {
+        NavigationView {
+            content
+                .navigationBarTitle("Chats", displayMode: .large)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            viewModel.makeChatButtonTapped()
+                        } label: {
+                            Image(systemName: "plus")
+                        }
+                    }
+                }
+        }
+        .navigationTitle("")
+        .navigationBarHidden(true)
+    }
+
+    var content: some View {
         ZStack {
             Color.sgn_surface
                 .ignoresSafeArea(.container, edges: .bottom)
@@ -30,23 +48,6 @@ struct ChatList: View {
             }
             .background(Color.sgn_background)
         }
-        .navigationBarTitle("Chats", displayMode: .large)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                HStack {
-                    Button {
-                        viewModel.logoutButtonTapped()
-                    } label: {
-                        Image(systemName: "hand.raised.slash.fill")
-                    }
-                    Button {
-                        viewModel.makeChatButtonTapped()
-                    } label: {
-                        Image(systemName: "person.fill.badge.plus")
-                    }
-                }
-            }
-        }
     }
 
     private var chats: some View {
@@ -57,9 +58,9 @@ struct ChatList: View {
                         .frame(height: 8)
                     ForEach(viewModel.chats) { chat in
                         ChatRow(chat: chat)
-                        .onTapGesture {
-                            viewModel.didTap(on: chat)
-                        }
+                            .onTapGesture {
+                                viewModel.didTap(on: chat)
+                            }
                     }
                 }
             }

@@ -10,11 +10,11 @@ import Foundation
 protocol AuthRouting {
     func openLoginScene()
     func openRegistrationScene()
-    func openMainFlow()
+    func openMainFlow(animated: Bool)
 }
 
 struct AuthRouterMock: AuthRouting {
     func openLoginScene() {}
     func openRegistrationScene() {}
-    func openMainFlow() {}
+    func openMainFlow(animated: Bool) {}
 }

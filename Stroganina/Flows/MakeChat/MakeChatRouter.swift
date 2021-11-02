@@ -37,7 +37,7 @@ extension MakeChatRouter: MakeChatRouting {
     }
 
     func openMakeChatScreen(with users: [User]) {
-        let viewController = builder.buildMakeChatScene(router: self, users: users)
+        let viewController = builder.buildNewChatScene(router: self, users: users)
         navigation.pushViewController(viewController, animated: true)
     }
     
