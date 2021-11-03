@@ -44,7 +44,8 @@ struct LoginView_Previews: PreviewProvider {
         LoginView(
             viewModel: LoginViewModel(
                 router: AuthRouterMock(),
-                service: Service()
+                service: Service(),
+                pushService: PushServiceMock()
             )
         )
     }

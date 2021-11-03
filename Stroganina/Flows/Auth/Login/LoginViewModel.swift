@@ -23,13 +23,16 @@ final class LoginViewModel: ObservableObject {
 
     private let router: AuthRouting
     private let service: LoginServiceProtocol
+    private let pushService: PushServiceProtocol
 
     init(
         router: AuthRouting,
-        service: LoginServiceProtocol
+        service: LoginServiceProtocol,
+        pushService: PushServiceProtocol
     ) {
         self.router = router
         self.service = service
+        self.pushService = pushService
     }
 
     func loginButtonTapped() {
@@ -37,6 +40,7 @@ final class LoginViewModel: ObservableObject {
             switch result {
             case .success:
                 self?.router.openMainFlow(animated: true)
+                self?.pushService.requestPush()
             case let .failure(error):
                 print(error.localizedDescription)
             }
