@@ -13,10 +13,8 @@ struct SettingsView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            ScrollView {
-                header
-                Spacer()
-            }
+            header
+            Spacer()
             Section {
                 Spacer()
                 Text("Logout")
@@ -25,11 +23,18 @@ struct SettingsView: View {
                     .frame(height: 30)
                 Spacer()
             }
+            .padding(.bottom, 12)
             .onTapGesture {
                 viewModel.logoutTapped()
             }
         }
         .padding(16)
+        .navigationTitle("")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarHidden(true)
+        .clipped()
+        .padding(.top, safeAreaInsets.top)
+        .edgesIgnoringSafeArea(.top)
     }
 
     private var header: some View {

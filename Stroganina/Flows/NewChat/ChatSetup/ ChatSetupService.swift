@@ -1,5 +1,5 @@
 //
-//  MakeChatService.swift
+//  ChatSetupService.swift
 //  Stroganina
 //
 //  Created by Aleksandr Shipin on 31.10.2021.
@@ -7,14 +7,15 @@
 
 import NetworkApi
 
-protocol MakeChatServiceProtocol {
-    func makeChat(with name: String, users: [User], completion: @escaping (Result<Chat, Error>) -> Void)
+protocol ChatSetupServiceProtocol {
+    func createChat(with name: String, users: [User], completion: @escaping (Result<Chat, Error>) -> Void)
 }
 
-final class MakeChatService: MakeChatServiceProtocol {
+final class ChatSetupService: ChatSetupServiceProtocol {
+
     private let api: Networking
     private let updateCenter: UpdateCenter
-    
+
     init(
         api: Networking,
         updateCenter: UpdateCenter
@@ -23,18 +24,18 @@ final class MakeChatService: MakeChatServiceProtocol {
         self.updateCenter = updateCenter
     }
 
-    func makeChat(with name: String, users: [User], completion: @escaping (Result<Chat, Error>) -> Void) {
+    func createChat(with name: String, users: [User], completion: @escaping (Result<Chat, Error>) -> Void) {
         api.perform(NewChat(name: name)) { [weak self] result in
             switch result {
             case .success(let response):
-                self?.didMakeChat(with: name, users: users, chatId: response.chatId, completion: completion)
+                self?.didNewChat(with: name, users: users, chatId: response.chatId, completion: completion)
             case .failure(let error):
                 completion(.failure(error))
             }
         }
     }
     
-    private func didMakeChat(
+    private func didNewChat(
         with name: String,
         users: [User],
         chatId: ID,
