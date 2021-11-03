@@ -19,7 +19,7 @@ final class Router {
     }()
     private let store: Store
     
-    lazy var makeChatRouter = MakeChatRouter(builder: builder) { [weak self] chat in
+    lazy var newChatRouter = NewChatRouter(builder: builder) { [weak self] chat in
         self?.openChatScene(chat)
     }
 
@@ -71,9 +71,9 @@ extension Router: ChatListRouting {
         navigation.pushViewController(viewController, animated: true)
     }
 
-    func openMakeChatScene() {
-        makeChatRouter.start()
-        navigation.present(makeChatRouter.navigation, animated: true, completion: nil)
+    func openNewChatScene() {
+        newChatRouter.start()
+        navigation.present(newChatRouter.navigation, animated: true, completion: nil)
     }
 }
 

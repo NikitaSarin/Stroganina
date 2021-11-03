@@ -19,7 +19,7 @@ struct ChatList: View {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
-                            viewModel.makeChatButtonTapped()
+                            viewModel.NewChatButtonTapped()
                         } label: {
                             Image(systemName: "plus")
                         }
