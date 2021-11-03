@@ -17,6 +17,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = scene as? UIWindowScene else { return }
 
         let window = UIWindow(windowScene: windowScene)
+        AppContext.shared = AppContext(window: window)
+
         let store = Store()
         let builder = Builder(store: store)
         router = Router(window: window, builder: builder)
