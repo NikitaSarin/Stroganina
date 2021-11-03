@@ -15,6 +15,7 @@
 		DC5469DD272D8B9C00935298 /* Message+Raw.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5469DC272D8B9C00935298 /* Message+Raw.swift */; };
 		DC5469DF272D8D0800935298 /* MessageWrapper+Raw.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5469DE272D8D0800935298 /* MessageWrapper+Raw.swift */; };
 		DC546CAD272D917200935298 /* Chat+Raw.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC546CAC272D917200935298 /* Chat+Raw.swift */; };
+		DC667B9B27334AFF00254D6A /* PushService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC667B9A27334AFF00254D6A /* PushService.swift */; };
 		DCE8FE17272DA14300A43032 /* ChatListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE16272DA14300A43032 /* ChatListRouter.swift */; };
 		DCE8FE1D272EA6A600A43032 /* UserSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE1C272EA6A600A43032 /* UserSearchView.swift */; };
 		DCE8FE20272EA6C500A43032 /* UserSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE1F272EA6C500A43032 /* UserSearchViewModel.swift */; };
@@ -94,6 +95,8 @@
 		DC5469DC272D8B9C00935298 /* Message+Raw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+Raw.swift"; sourceTree = "<group>"; };
 		DC5469DE272D8D0800935298 /* MessageWrapper+Raw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageWrapper+Raw.swift"; sourceTree = "<group>"; };
 		DC546CAC272D917200935298 /* Chat+Raw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chat+Raw.swift"; sourceTree = "<group>"; };
+		DC667B9A27334AFF00254D6A /* PushService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushService.swift; sourceTree = "<group>"; };
+		DCE089FD27331C68002F3DD4 /* Stroganina.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Stroganina.entitlements; sourceTree = "<group>"; };
 		DCE8FE16272DA14300A43032 /* ChatListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListRouter.swift; sourceTree = "<group>"; };
 		DCE8FE1C272EA6A600A43032 /* UserSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchView.swift; sourceTree = "<group>"; };
 		DCE8FE1F272EA6C500A43032 /* UserSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchViewModel.swift; sourceTree = "<group>"; };
@@ -235,6 +238,14 @@
 				DC546CAC272D917200935298 /* Chat+Raw.swift */,
 			);
 			path = Mapping;
+			sourceTree = "<group>";
+		};
+		DC667B9927334AE900254D6A /* NotificationCenter */ = {
+			isa = PBXGroup;
+			children = (
+				DC667B9A27334AFF00254D6A /* PushService.swift */,
+			);
+			path = NotificationCenter;
 			sourceTree = "<group>";
 		};
 		DCE8FE1E272EA6AE00A43032 /* UserSearch */ = {
@@ -461,6 +472,7 @@
 		FD62427A272B236600EF7F73 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				DC667B9927334AE900254D6A /* NotificationCenter */,
 				DCE8FE3E272ECCA500A43032 /* UpdateCenter */,
 				FD62427B272B23B900EF7F73 /* Store.swift */,
 			);
@@ -496,6 +508,7 @@
 		FDCE3B31272AEEBC00DAF3AB /* Stroganina */ = {
 			isa = PBXGroup;
 			children = (
+				DCE089FD27331C68002F3DD4 /* Stroganina.entitlements */,
 				FD063DCC27305C9100464DDA /* Resources */,
 				FDCE3B47272AEEDF00DAF3AB /* App */,
 				FD624261272AFADC00EF7F73 /* Utils */,
@@ -756,6 +769,7 @@
 				FDCE3B9A272AF50E00DAF3AB /* Chat.swift in Sources */,
 				FD624285272B29C900EF7F73 /* ActionButton.swift in Sources */,
 				DC5469CB272D769300935298 /* ChatListService.swift in Sources */,
+				DC667B9B27334AFF00254D6A /* PushService.swift in Sources */,
 				FD624252272AFA2D00EF7F73 /* TitledImageRow.swift in Sources */,
 				FD624274272B022C00EF7F73 /* ChatMessagesFactory.swift in Sources */,
 				DC5469C7272D764200935298 /* ChatList.swift in Sources */,
@@ -922,6 +936,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Stroganina/Stroganina.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 4;
@@ -936,7 +951,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.urodsk.stroganina;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Stroganina;
+				PROVISIONING_PROFILE_SPECIFIER = "Stroganina Development";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -947,6 +962,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Stroganina/Stroganina.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 4;
@@ -961,7 +977,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.urodsk.stroganina;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Stroganina;
+				PROVISIONING_PROFILE_SPECIFIER = "Stroganina Development";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

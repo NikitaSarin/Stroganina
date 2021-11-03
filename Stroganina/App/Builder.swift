@@ -12,6 +12,7 @@ import NetworkApi
 final class Builder {
 
     let store: Store
+    let pushService: PushService
     private let api: Networking
     private let updateCenter: UpdateCenter
 
@@ -19,6 +20,7 @@ final class Builder {
         self.store = store
         self.api = Api(config: .default, store: store)
         self.updateCenter = UpdateCenter(api: api)
+        self.pushService = PushService(api: api, store: store)
     }
 
     func buildStartScene(router: AuthRouting) -> UIViewController {
@@ -28,14 +30,14 @@ final class Builder {
 
     func buildLoginScene(router: AuthRouting) -> UIViewController {
         let service = LoginService(api: api, store: store)
-        let viewModel = LoginViewModel(router: router, service: service)
+        let viewModel = LoginViewModel(router: router, service: service, pushService: pushService)
         let view = LoginView(viewModel: viewModel)
         return UIHostingController(rootView: view)
     }
 
     func buildRegistrationScene(router: AuthRouting) -> UIViewController {
         let service = RegistrationService(api: api, store: store)
-        let viewModel = RegistrationViewModel(router: router, service: service)
+        let viewModel = RegistrationViewModel(router: router, service: service, pushService: pushService)
         let view = RegistrationView(viewModel: viewModel)
         return UIHostingController(rootView: view)
     }

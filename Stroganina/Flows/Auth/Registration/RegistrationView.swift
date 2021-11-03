@@ -43,12 +43,14 @@ struct RegistrationView_Previews: PreviewProvider {
             completion(.success(()))
         }
     }
+    
 
     static var previews: some View {
         RegistrationView(
             viewModel: .init(
                 router: AuthRouterMock(),
-                service: Service()
+                service: Service(),
+                pushService: PushServiceMock()
             )
         )
     }
