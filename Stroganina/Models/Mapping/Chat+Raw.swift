@@ -12,7 +12,7 @@ extension Chat {
         self.init(
             id: raw.chatId,
             title: raw.name,
-            showSenders: raw.isPersonal == false,
+            showSenders: raw.type != .personal,
             unreadCount: raw.notReadCount ?? 0,
             lastMessage: raw.message.flatMap(MessageWrapper.init)
         )
