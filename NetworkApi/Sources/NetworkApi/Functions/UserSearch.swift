@@ -1,11 +1,11 @@
 //
-//  UsersSearch.swift
+//  UserSearch.swift
 //  Stroganina
 //
 //  Created by Aleksandr Shipin on 31.10.2021.
 //
 
-public struct UsersSearch {
+public struct UserSearch {
 
     let name: String
 
@@ -14,7 +14,7 @@ public struct UsersSearch {
     }
 }
 
-extension UsersSearch: ApiFunction {
+extension UserSearch: ApiFunction {
 
     public static var method = "user/search"
 

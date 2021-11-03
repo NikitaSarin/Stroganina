@@ -31,8 +31,8 @@ final class ChatListViewModel: ObservableObject {
         routing.openChatScene(chat)
     }
 
-    func makeChatButtonTapped() {
-        routing.openMakeChatScene()
+    func NewChatButtonTapped() {
+        routing.openNewChatScene()
     }
 }
 

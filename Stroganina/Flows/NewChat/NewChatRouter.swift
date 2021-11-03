@@ -1,5 +1,5 @@
 //
-//  MakeChatRouter.swift
+//  NewChatRouter.swift
 //  Stroganina
 //
 //  Created by Aleksandr Shipin on 31.10.2021.
@@ -7,10 +7,10 @@
 
 import UIKit
 
-final class MakeChatRouter {
-    lazy var navigation: UINavigationController = {
+final class NewChatRouter {
+
+    private(set) lazy var navigation: UINavigationController = {
         let navigation = UINavigationController()
-        navigation.setNavigationBarHidden(true, animated: false)
         return navigation
     }()
 
@@ -26,23 +26,19 @@ final class MakeChatRouter {
     }
     
     func start() {
-        let viewController = builder.buildUsersSearchScene(router: self)
+        let viewController = builder.buildUserSearchScene(router: self)
         navigation.setViewControllers([viewController], animated: false)
     }
 }
 
-extension MakeChatRouter: MakeChatRouting {
-    func close() {
-        navigation.dismiss(animated: true)
-    }
-
-    func openMakeChatScreen(with users: [User]) {
-        let viewController = builder.buildNewChatScene(router: self, users: users)
+extension NewChatRouter: NewChatRouting {
+    func openChatSetupScene(input: [User]) {
+        let viewController = builder.buildChatSetupScene(router: self, users: input)
         navigation.pushViewController(viewController, animated: true)
     }
-    
-    func openMakeChat(_ chat: Chat) {
-        self.openChatHandler(chat)
-        navigation.dismiss(animated: true)
+
+    func openChatScene(input: Chat) {
+        navigation.dismiss(animated: true, completion: nil)
+        openChatHandler(input)
     }
 }

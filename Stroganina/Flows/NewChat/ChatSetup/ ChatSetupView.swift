@@ -1,5 +1,5 @@
 //
-//  MakeChatView.swift
+//  ChatSetupView.swift
 //  Stroganina
 //
 //  Created by Aleksandr Shipin on 31.10.2021.
@@ -7,42 +7,47 @@
 
 import SwiftUI
 
-struct MakeChatView: View {
+struct ChatSetupView: View {
 
-    @ObservedObject var viewModel: MakeChatViewModel
+    @ObservedObject var viewModel: ChatSetupViewModel
 
     var body: some View {
         VStack(spacing: 32) {
             Spacer()
-            Text("Create chat")
+            Text("Choose\nthe chat name")
                 .font(.title)
                 .bold()
+                .multilineTextAlignment(.center)
             Spacer()
             TextField("Name", text: $viewModel.name)
                 .multilineTextAlignment(.center)
                 .frame(height: 60)
             ActionButton("Create") {
-                viewModel.makeChatButtonTapped()
+                viewModel.createButtonTapped()
             }
             Spacer()
         }
     }
 }
 
-struct MakeChatView_Previews: PreviewProvider {
+struct ChatSetupView_Previews: PreviewProvider {
 
-    struct Service: MakeChatServiceProtocol {
-        func makeChat(with name: String, users: [User], completion: @escaping (Result<Chat, Error>) -> Void) {
+    struct Service: ChatSetupServiceProtocol {
+        func createChat(
+            with name: String,
+            users: [User],
+            completion: @escaping (Result<Chat, Error>) -> Void
+        ) {
             completion(.success(.mock))
         }
     }
 
     static var previews: some View {
         NavigationView {
-            MakeChatView(
-                viewModel: MakeChatViewModel(
+            ChatSetupView(
+                viewModel: ChatSetupViewModel(
                     users: [],
-                    router: MakeChatRoutingMock(),
+                    router: NewChatRouterMock(),
                     service: Service()
                 )
             )

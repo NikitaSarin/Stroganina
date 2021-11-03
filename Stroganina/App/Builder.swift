@@ -76,17 +76,17 @@ final class Builder {
 
     // Все ниже в отдельный билдер
 
-    func buildNewChatScene(router: MakeChatRouter, users: [User]) -> UIViewController {
-        let service = MakeChatService(api: api, updateCenter: updateCenter)
-        let viewModel = MakeChatViewModel(users: users, router: router, service: service)
-        let view = MakeChatView(viewModel: viewModel)
+    func buildChatSetupScene(router: NewChatRouter, users: [User]) -> UIViewController {
+        let service = ChatSetupService(api: api, updateCenter: updateCenter)
+        let viewModel = ChatSetupViewModel(users: users, router: router, service: service)
+        let view = ChatSetupView(viewModel: viewModel)
         return UIHostingController(rootView: view)
     }
 
-    func buildUsersSearchScene(router: MakeChatRouter) -> UIViewController {
-        let service = UsersSearchService(api: api)
-        let viewModel = UsersSearchViewModel(service: service, router: router)
-        let view = UsersSearchView(viewModel: viewModel)
+    func buildUserSearchScene(router: NewChatRouter) -> UIViewController {
+        let service = UserSearchService(api: api)
+        let viewModel = UserSearchViewModel(service: service, router: router)
+        let view = UserSearchView(viewModel: viewModel)
         return UIHostingController(rootView: view)
     }
 }
