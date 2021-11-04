@@ -10,8 +10,18 @@ import Foundation
 public protocol Networking {
     func perform<F: ApiFunction>(
         _ function: F,
+        queue: DispatchQueue,
         completion: @escaping (Result<F.Response, ApiError>) -> Void
     )
+}
+
+public extension Networking {
+    func perform<F: ApiFunction>(
+        _ function: F,
+        completion: @escaping (Result<F.Response, ApiError>) -> Void
+    ) {
+        perform(function, queue: .main, completion: completion)
+    }
 }
 
 public final class Api: NSObject, Networking {
@@ -31,6 +41,7 @@ public final class Api: NSObject, Networking {
 
     public func perform<F: ApiFunction>(
         _ function: F,
+        queue: DispatchQueue,
         completion: @escaping (Result<F.Response, ApiError>) -> Void
     ) {
         do {
@@ -46,7 +57,7 @@ public final class Api: NSObject, Networking {
             log("[API][\(F.method)][REQUEST]", String(data: data, encoding: .utf8) ?? "")
             session.dataTask(with: request) { (data, _, error) in
                 if let error = error {
-                    DispatchQueue.main.async {
+                    queue.async {
                         log("[API][\(F.method)][ERROR]", "\(error)")
                         completion(.failure(.networkError(error)))
                     }
@@ -54,7 +65,7 @@ public final class Api: NSObject, Networking {
                 }
                 guard let data = data else {
                     log("[API][\(F.method)][ERROR]", "data is empty")
-                    DispatchQueue.main.async {
+                    queue.async {
                         completion(.failure(.decodingError))
                     }
                     return
@@ -63,29 +74,29 @@ public final class Api: NSObject, Networking {
                     log("[API][\(F.method)][RESPONSE]", String(data: data, encoding: .utf8) ?? "")
                     let result = try JSONDecoder().decode(Response<F.Response>.self, from: data)
                     if let content = result.content {
-                        DispatchQueue.main.async {
+                        queue.async {
                             completion(.success(content))
                         }
                         return
                     }
                     if let error = result.errors?.first {
-                        DispatchQueue.main.async {
+                        queue.async {
                             completion(.failure(.userError(error)))
                         }
                         return
                     }
-                    DispatchQueue.main.async {
+                    queue.async {
                         completion(.failure(.decodingError))
                     }
                 }
                 catch {
-                    DispatchQueue.main.async {
+                    queue.async {
                         completion(.failure(.networkError(error)))
                     }
                 }
             }.resume()
         } catch {
-            DispatchQueue.main.async {
+            queue.async {
                 completion(.failure(.networkError(error)))
             }
         }

@@ -19,7 +19,7 @@ struct ChatList: View {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
-                            viewModel.NewChatButtonTapped()
+                            viewModel.newChatButtonTapped()
                         } label: {
                             Image(systemName: "plus")
                         }
@@ -28,25 +28,27 @@ struct ChatList: View {
         }
         .navigationTitle("")
         .navigationBarHidden(true)
+        .onAppear {
+            viewModel.start()
+        }
     }
 
     var content: some View {
-        ZStack {
-            Color.sgn_surface
-                .ignoresSafeArea(.container, edges: .bottom)
-            Group {
-                if viewModel.chats.isEmpty {
-                    Spacer()
+        Group {
+            if viewModel.chats.isEmpty {
+                Spacer()
+                if viewModel.isLoading {
+                    ProgressView()
+                } else {
                     Text("No chats")
                         .foregroundColor(.tg_grey)
                         .font(.reqular(size: 17))
                         .multilineTextAlignment(.center)
-                    Spacer()
-                } else {
-                    chats
                 }
+                Spacer()
+            } else {
+                chats
             }
-            .background(Color.sgn_background)
         }
     }
 
@@ -63,6 +65,8 @@ struct ChatList: View {
                             }
                     }
                 }
+                .transition(.opacity)
+                .animation(.easeIn)
             }
         }
         .padding(.horizontal, 8)
@@ -83,13 +87,9 @@ struct ChatList_Previews: PreviewProvider {
     }
 
     struct Service: ChatListServiceProtocol {
-        var delegate: ChatListServiceDelegate? {
-            didSet {
-                sendChat()
-            }
-        }
-        
-        private func sendChat() {
+        var delegate: ChatListServiceDelegate?
+
+        func fetchChats() {
             delegate?.didChange(chats: [.mock])
         }
     }

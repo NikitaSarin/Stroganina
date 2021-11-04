@@ -6,11 +6,12 @@
 //
 
 public struct UpdateSelf {
+
     let hex: String?
     let emoji: String?
     let firstName: String?
     let lastName: String?
-    
+
     public init(
         hex: String?,
         emoji: String?,

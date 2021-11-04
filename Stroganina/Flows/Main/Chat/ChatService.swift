@@ -53,21 +53,11 @@ final class ChatService: ChatServiceProtocol {
             content: text,
             chatId: chatId
         )
-        api.perform(function) { [updateCenter, chatId] result in
+        api.perform(function) { [updateCenter] result in
             switch result {
             case .success(let response):
-                let base = Message(
-                    id: response.messageId,
-                    date: Date(), // временное решение позже с сервера буду досылать дату
-                    user: nil,
-                    isOutgoing: true,
-                    showSenders: true,
-                    chatId: chatId
-                )
-                let message = MessageWrapper(
-                    type: .text(TextMessage(base: base, text: text))
-                )
-                updateCenter.sendNotification([.newMessage(message)])
+                let message = MessageWrapper(response)
+                updateCenter.sendNotification(.newMessage(message))
                 completion(true)
             case let .failure(error):
                 print(error)

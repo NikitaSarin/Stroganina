@@ -11,16 +11,19 @@ struct FlowLayout<T: Hashable, V: View>: View {
     let mode: Mode
     let items: [T]
     let viewMapping: (T) -> V
+    let spacing: Double
 
     @State private var totalHeight: CGFloat
 
     init(
         mode: Mode,
         items: [T],
+        spacing: Double = 2,
         viewMapping: @escaping (T) -> V
     ) {
         self.mode = mode
         self.items = items
+        self.spacing = spacing
         self.viewMapping = viewMapping
         _totalHeight = State(initialValue: (mode == .scrollable) ? .zero : .infinity)
     }
@@ -38,7 +41,6 @@ struct FlowLayout<T: Hashable, V: View>: View {
                 stack.frame(maxHeight: totalHeight)
             }
         }
-        .animation(.spring(), value: 1)
     }
 
     private func content(in g: GeometryProxy) -> some View {
@@ -47,7 +49,7 @@ struct FlowLayout<T: Hashable, V: View>: View {
         return ZStack(alignment: .topLeading) {
             ForEach(self.items, id: \.self) { item in
                 self.viewMapping(item)
-                    .padding([.horizontal, .vertical], 4)
+                    .padding([.horizontal, .vertical], spacing)
                     .alignmentGuide(.leading, computeValue: { d in
                         if (abs(width - d.width) > g.size.width) {
                             width = 0
@@ -71,6 +73,7 @@ struct FlowLayout<T: Hashable, V: View>: View {
             }
         }
         .background(viewHeightReader($totalHeight))
+        .padding([.horizontal, .vertical], -spacing)
     }
 
     private func viewHeightReader(_ binding: Binding<CGFloat>) -> some View {
@@ -99,9 +102,6 @@ struct FlowLayout_Previews: PreviewProvider {
                 .font(.system(size: 12))
                 .foregroundColor(.black)
                 .padding()
-                .background(RoundedRectangle(cornerRadius: 4)
-                                .border(Color.gray)
-                                .foregroundColor(Color.gray))
-        }.padding()
+        }
     }
 }

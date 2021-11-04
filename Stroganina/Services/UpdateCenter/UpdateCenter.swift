@@ -9,20 +9,26 @@ import Foundation
 import NetworkApi
 
 final class UpdateCenter {
-    private let api: Networking
 
+    private let api: Networking
     private var listeners = [WeakContainer]()
+    private let queue = DispatchQueue(label: "stroganina.updates", qos: .userInteractive)
 
     init(api: Networking) {
         self.api = api
-        updateLoop()
     }
-    
+
+    func start() {
+        queue.async { [weak self] in
+            self?.requestUpdate()
+        }
+    }
+
     func addListener(_ listener: Listener) {
         self.listeners.append(WeakContainer(listener))
     }
-    
-    func sendNotification(_ notifications: [Notification]) {
+
+    func sendNotification(_ notifications: Notification...) {
         self.update(notifications)
     }
 
@@ -37,23 +43,22 @@ final class UpdateCenter {
         }
         listeners = newListeners
     }
-    
-    private func updateLoop() {
-        api.perform(GetUpdate()) { [weak self] result in
+
+    private func requestUpdate() {
+        api.perform(GetUpdate(), queue: queue) { [weak self] result in
             switch result {
             case .success(let response):
-                self?.didLoadUpdate(response.notifications)
-                self?.updateLoop()
+                self?.process(notifications: response.notifications)
+                self?.requestUpdate()
             case .failure(_):
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
-                    self?.updateLoop()
+                self?.queue.asyncAfter(deadline: .now() + 5) {
+                    self?.requestUpdate()
                 }
-                break
             }
         }
     }
-    
-    private func didLoadUpdate(_ notifications: [GetUpdate.Response.Notification]){
+
+    private func process(notifications: [GetUpdate.Response.Notification]){
         var result = [Notification]()
         for notification in notifications {
             switch notification {

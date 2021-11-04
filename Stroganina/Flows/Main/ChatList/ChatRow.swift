@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ChatRow: View {
 
-    let chat: Chat
+    @ObservedObject var chat: Chat
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {

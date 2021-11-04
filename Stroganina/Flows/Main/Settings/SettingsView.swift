@@ -9,11 +9,13 @@ import SwiftUI
 
 struct SettingsView: View {
 
-    let viewModel: SettingsViewModel
+    @ObservedObject var viewModel: SettingsViewModel
 
     var body: some View {
         VStack(spacing: 20) {
-            header
+            if let user = viewModel.user {
+                SettingsHeader(user: user)
+            }
             Spacer()
             Section {
                 Spacer()
@@ -35,34 +37,8 @@ struct SettingsView: View {
         .clipped()
         .padding(.top, safeAreaInsets.top)
         .edgesIgnoringSafeArea(.top)
-    }
-
-    private var header: some View {
-        Section {
-            VStack {
-                Spacer()
-                HStack {
-                    Spacer()
-                    Text("🐲")
-                        .font(.reqular(size: 38))
-                    Spacer()
-                }
-                Spacer()
-            }
-            .background(Color.yellow)
-            .frame(edge: 80)
-            .cornerRadius(50)
-            VStack(alignment: .leading, spacing: 6) {
-                Text("Mr. Smaug")
-                    .font(.medium(size: 20))
-                Text("@dragonborn")
-                    .foregroundColor(.tg_grey)
-                    .font(.reqular(size: 16))
-            }
-            Spacer()
-            Image(systemName: "chevron.forward")
-                .frame(edge: 24)
-                .foregroundColor(.tg_grey)
+        .onAppear {
+            viewModel.start()
         }
     }
 }
@@ -71,6 +47,10 @@ struct SettingsView_Previews: PreviewProvider {
 
     struct Service: SettingsServiceProtocol {
         func logout() {}
+
+        func fetchSelf(completion: @escaping (Result<User, Error>) -> Void) {
+            completion(.success(.mock))
+        }
     }
 
     struct Router: SettingsRouting {

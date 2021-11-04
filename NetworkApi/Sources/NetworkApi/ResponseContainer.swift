@@ -8,9 +8,9 @@
 import Foundation
 
 struct Response<Content: Decodable>: Decodable {
-	let state: ResponseState
-	let content: Content?
-	let errors: [ResponseError]?
+    let state: ResponseState
+    let content: Content?
+    let errors: [ResponseError]?
 }
 
 enum ResponseState: String, Codable {
