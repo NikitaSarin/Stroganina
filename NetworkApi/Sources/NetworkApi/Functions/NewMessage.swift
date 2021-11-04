@@ -24,7 +24,5 @@ extension NewMessage: ApiFunction {
 
     public static var method = "message/send"
 
-    public struct Response: Decodable {
-        public let messageId: ID
-    }
+    public typealias Response = Raw.Message
 }

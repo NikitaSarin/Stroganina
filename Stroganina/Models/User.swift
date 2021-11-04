@@ -6,18 +6,44 @@
 //
 
 import UIKit
+import SwiftUI
 
 struct User: Identifiable {
+
+    struct Picture {
+        let emoji: String
+        let color: Color
+    }
 
     typealias ID = UInt
 
     let id: ID
-    var name: String
-    var isSelf: Bool
+    let isSelf: Bool
+    let name: String
+    let firstName: String?
+    let lastName: String?
+    var picture: Picture?
+
+    var fullName: String {
+        if let first = firstName, !first.isEmpty {
+            return first + " " + (lastName ?? "")
+        }
+        if let last = lastName, !last.isEmpty {
+            return (firstName ?? "") + " " + last
+        }
+        return name
+    }
 }
 
 extension User {
-    static let mock = User(id: 1, name: "Vova", isSelf: false)
+    static let mock = User(
+        id: 1,
+        isSelf: true,
+        name: "mr_boxmastaer",
+        firstName: "Oleg",
+        lastName: "Dudkin",
+        picture: .init(emoji: "🐲", color: .yellow)
+    )
 }
 
 extension User: Hashable {

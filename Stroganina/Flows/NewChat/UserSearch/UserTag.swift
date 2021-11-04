@@ -18,6 +18,7 @@ struct UserTag: View {
             Image(systemName: "xmark")
                 .resizable()
                 .padding(4)
+                .foregroundColor(.tg_grey)
                 .frame(edge: 20)
                 .onTapGesture {
                     deleteAction?()

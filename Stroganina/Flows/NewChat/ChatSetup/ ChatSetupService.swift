@@ -51,7 +51,7 @@ final class ChatSetupService: ChatSetupServiceProtocol {
         users.forEach { [api] user in
             api.perform(AddUserInChat(chatId: chatId, userId: user.id), completion: { _ in })
         }
-        updateCenter.sendNotification([.newChat(chat)])
+        updateCenter.sendNotification(.newChat(chat))
         completion(.success(chat))
     }
 }

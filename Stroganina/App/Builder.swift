@@ -12,9 +12,10 @@ import NetworkApi
 final class Builder {
 
     let store: Store
+    let updateCenter: UpdateCenter
     let pushService: PushService
+
     private let api: Networking
-    private let updateCenter: UpdateCenter
 
     init(store: Store) {
         self.store = store
@@ -68,7 +69,7 @@ final class Builder {
     }
 
     private func buildSettingsScene(router: Router) -> UIViewController {
-        let service = SettingsService(store: store)
+        let service = SettingsService(api: api, store: store)
         let viewModel = SettingsViewModel(router: router, service: service)
         let view = SettingsView(viewModel: viewModel)
         let viewController = UIHostingController(rootView: view)

@@ -8,21 +8,20 @@
 import Foundation
 import NetworkApi
 
-protocol ChatListServiceDelegate {
+protocol ChatListServiceDelegate: AnyObject {
     func didChange(chats: [Chat])
 }
 
 protocol ChatListServiceProtocol {
     var delegate: ChatListServiceDelegate? { get set }
+
+    func fetchChats()
 }
 
 final class ChatListService: ChatListServiceProtocol {
-    var delegate: ChatListServiceDelegate? {
-        didSet {
-            self.sendUpdate()
-        }
-    }
-    
+
+    weak var delegate: ChatListServiceDelegate?
+
     private let api: Networking
     private let updateCenter: UpdateCenter
     private var chats = Set<Chat>()
@@ -33,16 +32,15 @@ final class ChatListService: ChatListServiceProtocol {
     ) {
         self.api = api
         self.updateCenter = updateCenter
-        updateCenter.addListener(self)
-        self.update()
     }
 
-    private func update() {
+    func fetchChats() {
+        updateCenter.addListener(self)
         api.perform(GetChats()) { [weak self] response in
             self?.didLoad(response)
         }
     }
-    
+
     private func didLoad(_ response: Result<GetChats.Response, ApiError>) {
         switch response {
         case .success(let content):
@@ -53,7 +51,7 @@ final class ChatListService: ChatListServiceProtocol {
             break
         }
     }
-    
+
     private func sendUpdate() {
         let chats = Array(chats).sorted(by: { (lhs: Chat, rhs: Chat) in
             if
@@ -67,7 +65,9 @@ final class ChatListService: ChatListServiceProtocol {
             }
             return true
         })
-        delegate?.didChange(chats: chats)
+        DispatchQueue.main.async {
+            self.delegate?.didChange(chats: chats)
+        }
     }
 }
 
@@ -85,7 +85,7 @@ extension ChatListService: Listener {
             }
         }
         if isNeedUpdate {
-            self.sendUpdate()
+            sendUpdate()
         }
     }
 }
