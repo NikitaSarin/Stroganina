@@ -16,7 +16,7 @@ struct ProfileView: View {
     }
 
     enum Size: CaseIterable {
-        case small, medium
+        case small, medium, large
 
         var edge: CGFloat {
             switch self {
@@ -24,6 +24,8 @@ struct ProfileView: View {
                 return 24
             case .medium:
                 return 44
+            case .large:
+                return 80
             }
         }
 
@@ -33,6 +35,8 @@ struct ProfileView: View {
                 return 12
             case .medium:
                 return 20
+            case .large:
+                return 40
             }
         }
     }
@@ -40,6 +44,12 @@ struct ProfileView: View {
     let mode: Mode
     let size: Size
     let backgroundColor: Color
+
+    init(user: User) {
+        self.size = .medium
+        self.mode = .text(user.picture?.emoji ?? user.fullName)
+        self.backgroundColor = user.picture?.color ?? .sgn_brand
+    }
 
     init(
         mode: Mode,
@@ -71,6 +81,7 @@ struct ProfileView: View {
             case let .text(title):
                 Text(title.prefix(1))
                     .font(.system(size: size.fontSize))
+                    .foregroundColor(.tg_white)
             }
         }
         .frame(edge: size.edge)

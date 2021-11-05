@@ -7,6 +7,7 @@
 
 extension Raw {
     public struct Chat: Codable {
+
         public enum ChatType: String, Codable, UnknownSafable {
             case group
             case personal
@@ -18,7 +19,6 @@ extension Raw {
         public let message: Message?
         public let lastMessageId: ID?
         public let notReadCount: Int?
-        
         @SafeCodable public var type: ChatType
     }
 }

@@ -13,12 +13,11 @@ extension MessageWrapper {
         let type: MessageType
         switch raw.type {
         case .text:
-            if raw.content.containsOnlyEmoji, raw.content.count < 4 {
+            if raw.content.isSingleEmoji {
                 type = .emoji(TextMessage(base: base, text: raw.content))
             } else {
                 type = .text(TextMessage(base: base, text: raw.content))
             }
-
         case .service:
             type = .service(TextMessage(base: base, text: raw.content))
         case .unknown:

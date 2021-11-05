@@ -25,6 +25,7 @@ struct UserSearchView: View {
                 Spacer()
             }
         }
+        .padding(.horizontal, 20)
         .transition(.opacity)
         .animation(.spring())
         .navigationBarTitle("Users")
@@ -44,8 +45,8 @@ struct UserSearchView: View {
             .frame(height: 40)
             .background(Color.sgn_surface)
             .cornerRadius(8)
-            .padding(.horizontal, 30)
             .padding(.top, 8)
+            .padding(.horizontal, 20)
     }
 
     private var selectedUsers: some View {
@@ -58,8 +59,7 @@ struct UserSearchView: View {
             }
             .transition(.scale)
         }
-        .frame(minHeight: 40)
-        .padding(.horizontal, 12)
+        .padding(.top, 10)
     }
 
     private var searchResults: some View {
@@ -80,7 +80,6 @@ struct UserSearchView: View {
                 }
             }
         }
-        .padding(.horizontal, 40)
     }
 }
 
@@ -90,6 +89,7 @@ struct UserSearchView_Previews: PreviewProvider {
             service: Service(),
             router: NewChatRouterMock()
         )
+        viewModel.searchText = "kek"
         viewModel.selectedUsers = [.mock]
         viewModel.users = [.mock, .mock]
         return viewModel

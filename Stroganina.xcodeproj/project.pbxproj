@@ -41,6 +41,7 @@
 		FD063DDD273176F100464DDA /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD063DDC273176F100464DDA /* FlowLayout.swift */; };
 		FD063DDF2731DA3900464DDA /* UserTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD063DDE2731DA3900464DDA /* UserTag.swift */; };
 		FD063DE12732031000464DDA /* UserRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD063DE02732031000464DDA /* UserRow.swift */; };
+		FD063DE327335DEA00464DDA /* SettingsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD063DE227335DEA00464DDA /* SettingsHeader.swift */; };
 		FD624213272AF9A700EF7F73 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD624212272AF9A700EF7F73 /* ChatView.swift */; };
 		FD624240272AFA2D00EF7F73 /* Bubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD62421B272AFA2D00EF7F73 /* Bubble.swift */; };
 		FD624245272AFA2D00EF7F73 /* TextMessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD624221272AFA2D00EF7F73 /* TextMessageRow.swift */; };
@@ -120,6 +121,7 @@
 		FD063DDC273176F100464DDA /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
 		FD063DDE2731DA3900464DDA /* UserTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTag.swift; sourceTree = "<group>"; };
 		FD063DE02732031000464DDA /* UserRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRow.swift; sourceTree = "<group>"; };
+		FD063DE227335DEA00464DDA /* SettingsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHeader.swift; sourceTree = "<group>"; };
 		FD624212272AF9A700EF7F73 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		FD624218272AFA2D00EF7F73 /* WKVideoPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKVideoPlayer.swift; sourceTree = "<group>"; };
 		FD624219272AFA2D00EF7F73 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
@@ -308,6 +310,7 @@
 		FD063DD32730794B00464DDA /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				FD063DE227335DEA00464DDA /* SettingsHeader.swift */,
 				FD063DD42730795E00464DDA /* SettingsView.swift */,
 				FD063DD827309CBF00464DDA /* SettingsViewModel.swift */,
 				FD063DD627309CA400464DDA /* SettingsService.swift */,
@@ -546,9 +549,9 @@
 		FDCE3B48272AEEEC00DAF3AB /* Flows */ = {
 			isa = PBXGroup;
 			children = (
-				DCE8FE3B272EC34200A43032 /* NewChat */,
 				FD624277272B232400EF7F73 /* Auth */,
 				FDCE3B51272AEFA200DAF3AB /* Main */,
+				DCE8FE3B272EC34200A43032 /* NewChat */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -792,6 +795,7 @@
 				FD624281272B283100EF7F73 /* StartView.swift in Sources */,
 				DC5469C9272D766600935298 /* ChatListViewModel.swift in Sources */,
 				FDCE3B4E272AEF0300DAF3AB /* Builder.swift in Sources */,
+				FD063DE327335DEA00464DDA /* SettingsHeader.swift in Sources */,
 				FD62426A272AFC2000EF7F73 /* Font+Stroganina.swift in Sources */,
 				FD62425D272AFA2D00EF7F73 /* TitledSwitchRow.swift in Sources */,
 				FD62427E272B255800EF7F73 /* AuthService.swift in Sources */,
@@ -939,7 +943,7 @@
 				CODE_SIGN_ENTITLEMENTS = Stroganina/Stroganina.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"Stroganina/Preview Content\"";
 				DEVELOPMENT_TEAM = D28449VFLN;
 				ENABLE_PREVIEWS = YES;
@@ -965,7 +969,7 @@
 				CODE_SIGN_ENTITLEMENTS = Stroganina/Stroganina.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"Stroganina/Preview Content\"";
 				DEVELOPMENT_TEAM = D28449VFLN;
 				ENABLE_PREVIEWS = YES;
