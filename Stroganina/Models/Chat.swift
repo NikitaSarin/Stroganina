@@ -15,9 +15,13 @@ final class Chat: Identifiable, ObservableObject {
     var title: String
     var showSenders: Bool
 
-    @Published var unreadCount: Int
-    @Published var lastMessage: MessageWrapper?
     @Published var users: [User]?
+    @Published var unreadCount: Int
+    @Published var lastMessage: MessageWrapper? {
+        willSet {
+            objectWillChange.send()
+        }
+    }
 
     init(
         id: ID,

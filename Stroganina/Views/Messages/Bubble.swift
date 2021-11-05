@@ -117,9 +117,8 @@ struct Bubble<Content: View>: View {
                     .foregroundColor(color(for: sender))
             }
         }
-        .padding(.top, style.insets.top)
-        .padding(.bottom, CGFloat(style == .transparent ? 4 : 0))
-        .padding(.horizontal, style.insets.leading)
+        .padding(.top, 4)
+        .padding(.horizontal, 12)
     }
 
     func color(for name: String) -> Color {
@@ -135,10 +134,16 @@ struct Bubble_Previews: PreviewProvider {
             VStack {
                 Bubble(
                     message: .mock(),
-                    style: .service
+                    style: .plain
                 ) {
                     Text("Who?")
                         .bubble(isOutgoing: false)
+                }
+                Bubble(
+                    message: .mock(),
+                    style: .transparent
+                ) {
+                    EmojiMessageRow(message: .init(base: .mock(), text: "😎"))
                 }
             }
         }

@@ -35,6 +35,7 @@ final class Router {
 
     func start() {
         store.load()
+        builder.updateCenter.start()
         if auth.isAuthorized {
             openMainFlow(animated: false)
         } else {

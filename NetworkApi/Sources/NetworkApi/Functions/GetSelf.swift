@@ -6,8 +6,7 @@
 //
 
 public struct GetSelf {
-    public init() {
-    }
+    public init() {}
 }
 
 extension GetSelf: ApiFunction {

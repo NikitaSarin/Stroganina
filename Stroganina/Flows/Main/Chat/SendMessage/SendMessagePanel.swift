@@ -19,7 +19,7 @@ struct SendMessagePanel: View {
     weak var delegate: SendMessagePanelDelegate?
     
     private var sendEnabled: Bool {
-        text.count > 1
+        !text.isEmpty
     }
 
     var body: some View {
