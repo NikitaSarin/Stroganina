@@ -20,7 +20,7 @@ final class UpdateCenter {
 
     func start() {
         queue.async { [weak self] in
-            self?.requestUpdate()
+            self?.activate()
         }
     }
 
@@ -30,6 +30,23 @@ final class UpdateCenter {
 
     func sendNotification(_ notifications: Notification...) {
         self.update(notifications)
+    }
+    
+    func activate() {
+        api.addListener(GetUpdate()) { [weak self] result in
+            switch result {
+            case .success(let response):
+                self?.process(notifications: response.notifications)
+            case .failure(let error):
+                if case ApiError.closeConnect = error {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                        self?.activate()
+                    }
+                }
+            }
+        }
+        api.perform(AddListenerUpdate()) { _ in
+        }
     }
 
     private func update(_ notifications: [Notification]) {
@@ -42,20 +59,6 @@ final class UpdateCenter {
             listener.update(notifications)
         }
         listeners = newListeners
-    }
-
-    private func requestUpdate() {
-        api.perform(GetUpdate(), queue: queue) { [weak self] result in
-            switch result {
-            case .success(let response):
-                self?.process(notifications: response.notifications)
-                self?.requestUpdate()
-            case .failure(_):
-                self?.queue.asyncAfter(deadline: .now() + 5) {
-                    self?.requestUpdate()
-                }
-            }
-        }
     }
 
     private func process(notifications: [GetUpdate.Response.Notification]){

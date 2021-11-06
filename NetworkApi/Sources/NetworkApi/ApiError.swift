@@ -11,4 +11,5 @@ public enum ApiError: Error {
 	case userError(_ error: ResponseError)
 	case networkError(_ error: Error)
 	case decodingError
+    case closeConnect
 }
