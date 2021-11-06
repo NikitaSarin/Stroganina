@@ -35,7 +35,6 @@ final class Router {
 
     func start() {
         store.load()
-        builder.updateCenter.start()
         if auth.isAuthorized {
             openMainFlow(animated: false)
         } else {
@@ -61,6 +60,7 @@ extension Router: AuthRouting {
     }
 
     func openMainFlow(animated: Bool) {
+        builder.updateCenter.start()
         let viewController = builder.buildMainScene(router: self)
         navigation.setViewControllers([viewController], animated: animated)
     }
