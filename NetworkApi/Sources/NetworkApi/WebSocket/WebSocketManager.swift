@@ -43,16 +43,17 @@ final class WebSocketManager {
         handlers[handler.identifeir] = nil
     }
 
-    private func active() {
-        if (socketTask?.closeReason) != nil {
-            let error = ApiError.closeConnect
-            for handler in handlers {
-                handler.value.handler(data: nil, error: error)
-            }
-            handlers = [:]
-            socketTask = nil
-            return
+    private func close() {
+        let error = ApiError.closeConnect
+        let handlers = handlers
+        self.handlers = [:]
+        for handler in handlers {
+            handler.value.handler(data: nil, error: error)
         }
+        socketTask = nil
+    }
+
+    private func active() {
         if socketTask == nil {
             socketTask = session.webSocketTask(with: url)
         }
@@ -60,11 +61,10 @@ final class WebSocketManager {
             switch result {
             case .success(let message):
                 self?.didLoad(message: message)
-            case .failure(let error):
-                log("[API][WS][ERROR]", "\(error)")
-                break
+                self?.active()
+            case .failure:
+                self?.close()
             }
-            self?.active()
         })
         socketTask?.resume()
     }
