@@ -11,10 +11,10 @@ import Foundation
 final class ChatSetupViewModel: ObservableObject {
 
     @Published var name: String = ""
+    let users: [User]
 
     private let service: ChatSetupServiceProtocol
     private let router: NewChatRouting
-    private let users: [User]
 
     init(
         users: [User],
@@ -24,6 +24,17 @@ final class ChatSetupViewModel: ObservableObject {
         self.users = users
         self.router = router
         self.service = service
+    }
+
+    func createPersonalButtonTapped() {
+        service.createPersonalChat(with: users[0]) { [weak self] result in
+            switch result {
+            case .success(let chat):
+                self?.router.openChatScene(input: chat)
+            case .failure:
+                break
+            }
+        }
     }
 
     func createButtonTapped() {

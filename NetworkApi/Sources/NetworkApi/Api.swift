@@ -176,7 +176,7 @@ extension Api {
     public struct Config {
         public static let `default` = Config(
             endPoint: URL(string: "https://176.57.214.20:8443")!,
-            wsEndPoint: URL(string: "wss://127.0.0.1:8443")!,
+            wsEndPoint: URL(string: "wss://176.57.214.20:8443")!,
             certificates: [try! Data(contentsOf: Bundle.main.url(forResource: "cert", withExtension: "crt")!)],
             withoutCertificateVerification: false
         )

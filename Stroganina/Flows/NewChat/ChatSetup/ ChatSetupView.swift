@@ -13,6 +13,26 @@ struct ChatSetupView: View {
 
     var body: some View {
         VStack(spacing: 32) {
+            if viewModel.users.count == 1 {
+                Spacer()
+                ActionButton("Create personal chat") {
+                    viewModel.createPersonalButtonTapped()
+                }
+                HStack {
+                    Spacer()
+                    VStack {
+                        Divider()
+                    }
+                    Text("or")
+                        .font(.system(size: 14))
+                        .lineLimit(8)
+                        .foregroundColor(.tg_grey)
+                    VStack {
+                        Divider()
+                    }
+                    Spacer()
+                }
+            }
             Spacer()
             Text("Choose\nthe chat name")
                 .font(.title)
@@ -33,6 +53,10 @@ struct ChatSetupView: View {
 struct ChatSetupView_Previews: PreviewProvider {
 
     struct Service: ChatSetupServiceProtocol {
+        func createPersonalChat(with user: User, completion: @escaping (Result<Chat, Error>) -> Void) {
+            completion(.success(.mock))
+        }
+
         func createChat(
             with name: String,
             users: [User],
@@ -46,7 +70,7 @@ struct ChatSetupView_Previews: PreviewProvider {
         NavigationView {
             ChatSetupView(
                 viewModel: ChatSetupViewModel(
-                    users: [],
+                    users: [.mock],
                     router: NewChatRouterMock(),
                     service: Service()
                 )
