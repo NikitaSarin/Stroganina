@@ -10,11 +10,21 @@ import Foundation
 public protocol ApiFunction: Encodable {
     associatedtype Response: Decodable
     static var method: String { get }
-    static var longTimeOut: Bool { get }
+    static var wayType: RequestWayType { get }
 }
 
-public extension ApiFunction {
-    static var longTimeOut: Bool {
-        false
+public protocol ApiListener {
+    associatedtype Response: Decodable
+    static var method: String { get }
+}
+
+extension ApiFunction {
+    public static var wayType: RequestWayType {
+        .http
     }
+}
+
+public enum RequestWayType {
+    case http
+    case ws
 }

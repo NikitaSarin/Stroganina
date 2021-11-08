@@ -60,10 +60,10 @@ final class ChatListService: ChatListServiceProtocol {
             {
                 return rhsMessage.date < lhsMessage.date
             }
-            if lhs.lastMessage == nil && rhs.lastMessage != nil {
-                return false
+            if lhs.lastMessage != nil && rhs.lastMessage == nil {
+                return true
             }
-            return true
+            return false
         })
         DispatchQueue.main.async {
             self.delegate?.didChange(chats: chats)

@@ -13,9 +13,22 @@ public protocol Networking {
         queue: DispatchQueue,
         completion: @escaping (Result<F.Response, ApiError>) -> Void
     )
+
+    func addListener<L: ApiListener>(
+        _ listener: L,
+        queue: DispatchQueue,
+        completion: @escaping (Result<L.Response, ApiError>) -> Void
+    )
 }
 
 public extension Networking {
+    func addListener<L: ApiListener>(
+        _ listener: L,
+        completion: @escaping (Result<L.Response, ApiError>) -> Void
+    ) {
+        addListener(listener, queue: .main, completion: completion)
+    }
+
     func perform<F: ApiFunction>(
         _ function: F,
         completion: @escaping (Result<F.Response, ApiError>) -> Void
@@ -27,6 +40,7 @@ public extension Networking {
 public final class Api: NSObject, Networking {
 
     private lazy var session = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
+    private lazy var webSocketManager = WebSocketManager(session: session, url: config.wsEndPoint)
     private let config: Config
     private let store: ApiStore
     private var authorisationInfo: AuthorisationInfo? { store.authorisationInfo }
@@ -39,62 +53,43 @@ public final class Api: NSObject, Networking {
         self.store = store
     }
 
+    public func addListener<L: ApiListener>(
+        _ listener: L,
+        queue: DispatchQueue,
+        completion: @escaping (Result<L.Response, ApiError>) -> Void
+    ) {
+        let handler = DefaultResponseHandler(
+            reuestId: nil,
+            method: L.method,
+            queue: queue,
+            handler: completion
+        )
+        webSocketManager.registerHandler(handler)
+    }
+
     public func perform<F: ApiFunction>(
         _ function: F,
         queue: DispatchQueue,
         completion: @escaping (Result<F.Response, ApiError>) -> Void
     ) {
         do {
-            let requestContainer = makeRequest(function)
-            let data = try JSONEncoder().encode(requestContainer)
-            let url = config.endPoint.appendingPathComponent(F.method)
-            var request = URLRequest(url: url)
-            if F.longTimeOut {
-                request.timeoutInterval = 60
+            let reuestId = UUID().uuidString
+            let data = try makeData(function, reuestId: reuestId)
+            let handler = DefaultResponseHandler(
+                reuestId: reuestId,
+                method: F.method,
+                queue: queue,
+                handler: completion
+            )
+            switch F.wayType {
+            case .http:
+                let request = makeRequest(function, data: data)
+                session.dataTask(with: request) { (data, _, error) in
+                    handler.handler(data: data, error: error)
+                }.resume()
+            case .ws:
+                webSocketManager.sendData(data, handler: handler)
             }
-            request.httpMethod = "POST"
-            request.httpBody = data
-            log("[API][\(F.method)][REQUEST]", String(data: data, encoding: .utf8) ?? "")
-            session.dataTask(with: request) { (data, _, error) in
-                if let error = error {
-                    queue.async {
-                        log("[API][\(F.method)][ERROR]", "\(error)")
-                        completion(.failure(.networkError(error)))
-                    }
-                    return
-                }
-                guard let data = data else {
-                    log("[API][\(F.method)][ERROR]", "data is empty")
-                    queue.async {
-                        completion(.failure(.decodingError))
-                    }
-                    return
-                }
-                do {
-                    log("[API][\(F.method)][RESPONSE]", String(data: data, encoding: .utf8) ?? "")
-                    let result = try JSONDecoder().decode(Response<F.Response>.self, from: data)
-                    if let content = result.content {
-                        queue.async {
-                            completion(.success(content))
-                        }
-                        return
-                    }
-                    if let error = result.errors?.first {
-                        queue.async {
-                            completion(.failure(.userError(error)))
-                        }
-                        return
-                    }
-                    queue.async {
-                        completion(.failure(.decodingError))
-                    }
-                }
-                catch {
-                    queue.async {
-                        completion(.failure(.networkError(error)))
-                    }
-                }
-            }.resume()
         } catch {
             queue.async {
                 completion(.failure(.networkError(error)))
@@ -102,10 +97,21 @@ public final class Api: NSObject, Networking {
         }
     }
 
-    private func makeRequest<F: ApiFunction>(_ function: F) -> Request<F> {
+    private func makeRequest<F: ApiFunction>(_ function: F, data: Data) -> URLRequest {
+        let url = config.endPoint.appendingPathComponent(F.method)
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = data
+        log("[API][\(F.method)][REQUEST]", String(data: data, encoding: .utf8) ?? "")
+        return request
+    }
+
+    private func makeData<F: ApiFunction>(_ function: F, reuestId: String) throws -> Data {
         let time = Date.serverTime
         let request = Request(
             time: time,
+            method: F.method,
+            reuestId: reuestId,
             authorisation: authorisationInfo.flatMap {
                 AuthorisationInfo(
                     token: $0.token,
@@ -114,7 +120,7 @@ public final class Api: NSObject, Networking {
             },
             content: function
         )
-        return request
+        return try JSONEncoder().encode(request)
     }
 }
 
@@ -127,6 +133,7 @@ extension Api: URLSessionDelegate {
         if config.withoutCertificateVerification {
             let urlCredential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
             completionHandler(.useCredential, urlCredential)
+            return
         }
         let serverCredential = getServerUrlCredential(protectionSpace: challenge.protectionSpace)
         guard serverCredential != nil else {
@@ -169,19 +176,22 @@ extension Api {
     public struct Config {
         public static let `default` = Config(
             endPoint: URL(string: "https://176.57.214.20:8443")!,
+            wsEndPoint: URL(string: "wss://127.0.0.1:8443")!,
             certificates: [try! Data(contentsOf: Bundle.main.url(forResource: "cert", withExtension: "crt")!)],
             withoutCertificateVerification: false
         )
-        
+
         public static let local = Config(
             endPoint: URL(string: "http://127.0.0.1:8080")!,
+            wsEndPoint: URL(string: "ws://127.0.0.1:8080")!,
             certificates: [],
             withoutCertificateVerification: true
         )
 
         let endPoint: URL
+        let wsEndPoint: URL
         let certificates: [Data]
-        
+
         // отключает проверку сертификата нужно для дебага
         let withoutCertificateVerification: Bool
     }
