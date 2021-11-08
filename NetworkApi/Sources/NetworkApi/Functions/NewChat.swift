@@ -18,7 +18,5 @@ extension NewChat: ApiFunction {
 
     public static var method = "chat/make"
 
-    public struct Response: Decodable {
-        public let chatId: ID
-    }
+    public typealias Response = Raw.Chat
 }

@@ -9,6 +9,7 @@ import NetworkApi
 
 protocol ChatSetupServiceProtocol {
     func createChat(with name: String, users: [User], completion: @escaping (Result<Chat, Error>) -> Void)
+    func createPersonalChat(with user: User, completion: @escaping (Result<Chat, Error>) -> Void)
 }
 
 final class ChatSetupService: ChatSetupServiceProtocol {
@@ -28,7 +29,18 @@ final class ChatSetupService: ChatSetupServiceProtocol {
         api.perform(NewChat(name: name)) { [weak self] result in
             switch result {
             case .success(let response):
-                self?.didNewChat(with: name, users: users, chatId: response.chatId, completion: completion)
+                self?.didNewChat(raw: response, users: users, completion: completion)
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+
+    func createPersonalChat(with user: User, completion: @escaping (Result<Chat, Error>) -> Void) {
+        api.perform(NewPersonalChat(userId: user.id)) { result in
+            switch result {
+            case .success(let response):
+                completion(.success(Chat(response)))
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -36,20 +48,13 @@ final class ChatSetupService: ChatSetupServiceProtocol {
     }
     
     private func didNewChat(
-        with name: String,
+        raw: Raw.Chat,
         users: [User],
-        chatId: ID,
         completion: @escaping (Result<Chat, Error>) -> Void
     ) {
-        let chat = Chat(
-            id: chatId,
-            title: name,
-            showSenders: true,
-            unreadCount: 0,
-            lastMessage: nil
-        )
+        let chat = Chat(raw)
         users.forEach { [api] user in
-            api.perform(AddUserInChat(chatId: chatId, userId: user.id), completion: { _ in })
+            api.perform(AddUserInChat(chatId: raw.chatId, userId: user.id), completion: { _ in })
         }
         updateCenter.sendNotification(.newChat(chat))
         completion(.success(chat))
