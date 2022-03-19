@@ -19,7 +19,7 @@ protocol LoginServiceProtocol {
 final class LoginViewModel: ObservableObject {
 
     @Published var username: String = ""
-    @Published var password: String = "123456"
+    @Published var password: String = ""
 
     private let router: AuthRouting
     private let service: LoginServiceProtocol
