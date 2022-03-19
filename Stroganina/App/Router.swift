@@ -83,3 +83,15 @@ extension Router: SettingsRouting {
         navigation.setViewControllers([viewController], animated: animated)
     }
 }
+
+extension Router: ChatRouting {
+    func openSearchUser(_ selectedUsersHandler: @escaping ([User]) -> Void) {
+        let container = UINavigationController()
+        let viewController = builder.buildUserSearchScene { [weak container] users in
+            selectedUsersHandler(users)
+            container?.dismiss(animated: true, completion: nil)
+        }
+        container.viewControllers = [viewController]
+        navigation.present(container, animated: true, completion: nil)
+    }
+}

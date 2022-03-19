@@ -55,27 +55,13 @@ struct ChatSetupView: View {
 
 struct ChatSetupView_Previews: PreviewProvider {
 
-    struct Service: ChatSetupServiceProtocol {
-        func createPersonalChat(with user: User, completion: @escaping (Result<Chat, Error>) -> Void) {
-            completion(.success(.mock))
-        }
-
-        func createChat(
-            with name: String,
-            users: [User],
-            completion: @escaping (Result<Chat, Error>) -> Void
-        ) {
-            completion(.success(.mock))
-        }
-    }
-
     static var previews: some View {
         NavigationView {
             ChatSetupView(
                 viewModel: ChatSetupViewModel(
                     users: [.mock],
                     router: NewChatRouterMock(),
-                    service: Service()
+                    service: ChatSetupService.Mock()
                 )
             )
         }

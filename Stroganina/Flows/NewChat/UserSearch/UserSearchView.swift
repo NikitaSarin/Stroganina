@@ -87,7 +87,7 @@ struct UserSearchView_Previews: PreviewProvider {
     static var viewModel: UserSearchViewModel {
         let viewModel = UserSearchViewModel(
             service: Service(),
-            router: NewChatRouterMock()
+            selectedUsersHandler: { _ in }
         )
         viewModel.searchText = "kek"
         viewModel.selectedUsers = [.mock]

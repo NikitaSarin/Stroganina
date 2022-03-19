@@ -12,6 +12,7 @@ final class Chat: Identifiable, ObservableObject {
     typealias ID = UInt
 
     let id: ID
+    let chatType: ChatType
     var title: String
     var showSenders: Bool
 
@@ -28,12 +29,14 @@ final class Chat: Identifiable, ObservableObject {
         title: String,
         showSenders: Bool,
         unreadCount: Int,
+        chatType: ChatType,
         lastMessage: MessageWrapper?
     ) {
         self.id = id
         self.title = title
         self.showSenders = showSenders
         self.unreadCount = unreadCount
+        self.chatType = chatType
         self.lastMessage = lastMessage
     }
 }
@@ -49,11 +52,20 @@ extension Chat: Hashable {
 }
 
 extension Chat {
+    enum ChatType {
+        case group
+        case personal
+        case unknown
+    }
+}
+
+extension Chat {
     static let mock = Chat(
         id: 1,
         title: "Stroganina Club",
         showSenders: true,
         unreadCount: 2,
+        chatType: .personal,
         lastMessage: .mock
     )
 }

@@ -14,7 +14,21 @@ extension Chat {
             title: raw.name,
             showSenders: raw.type != .personal,
             unreadCount: raw.notReadCount ?? 0,
+            chatType: .init(raw.type),
             lastMessage: raw.message.flatMap(MessageWrapper.init)
         )
+    }
+}
+
+extension Chat.ChatType {
+    init(_ raw: Raw.Chat.ChatType) {
+        switch raw {
+        case .personal:
+            self = .personal
+        case .group:
+            self = .group
+        case .unknown:
+            self = .unknown
+        }
     }
 }
