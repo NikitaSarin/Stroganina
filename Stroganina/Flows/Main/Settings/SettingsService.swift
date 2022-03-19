@@ -27,6 +27,8 @@ final class SettingsService: SettingsServiceProtocol {
     }
 
     func logout() {
+        api.perform(UserLogout()) { _ in
+        }
         store.set(authorisationInfo: nil)
     }
 
