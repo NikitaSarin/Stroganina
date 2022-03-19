@@ -24,13 +24,21 @@ struct SendMessagePanel: View {
 
     var body: some View {
         HStack(spacing: 7) {
-            TextField("Message", text: $text)
-                .padding(.horizontal, 15)
-                .frame(height: inputHeight)
-                .background(Color.sgn_background)
-                .cornerRadius(15)
-                .padding(.leading, 7)
-                .padding(.vertical, 12)
+            TextField(
+                "Message",
+                text: $text,
+                onCommit: {
+                    if sendEnabled {
+                        delegate?.sendButtonTapped()
+                    }
+                }
+            )
+            .padding(.horizontal, 15)
+            .frame(height: inputHeight)
+            .background(Color.sgn_background)
+            .cornerRadius(15)
+            .padding(.leading, 7)
+            .padding(.vertical, 12)
             Button(action: {
                 delegate?.sendButtonTapped()
             }, label: {

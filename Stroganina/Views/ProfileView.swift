@@ -35,7 +35,7 @@ struct ProfileView: View {
             case .small:
                 return 12
             case .medium:
-                return 22
+                return 20
             case .large:
                 return 40
             }
@@ -87,7 +87,7 @@ struct ProfileView: View {
                     .aspectRatio(contentMode: .fill)
             case let .text(title):
                 Text(title.prefix(1))
-                    .font(.system(size: size.fontSize))
+                    .font(.bold(size: size.fontSize))
                     .foregroundColor(.tg_white)
             }
         }
