@@ -46,6 +46,7 @@ final class WebSocketManager {
     
     func didDisactive() {
         socketTask = nil
+        active()
     }
     
     private func nextPing() {
@@ -53,8 +54,8 @@ final class WebSocketManager {
             self?.timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { _ in
                 self?.socketTask?.sendPing(pongReceiveHandler: { error in
                     if let error = error {
-                        print(error)
-                        self?.socketTask = nil
+                        log("[API][WS][ERROR]", "ping \(error)")
+                        self?.didDisactive()
                     } else {
                         self?.nextPing()
                     }
