@@ -29,6 +29,7 @@ extension GetUpdate: ApiListener {
         public enum NotificationTypeRaw: String, Decodable {
             case newMessage
             case addedInNewChat
+            case newPersonalChat
         }
         
         public enum Notification {
@@ -48,6 +49,8 @@ extension GetUpdate.Response.Notification: Decodable {
         case .newMessage:
             self = .newMessage(try container.decode(Raw.Message.self, forKey: .content))
         case .addedInNewChat:
+            self = .addedInNewChat(try container.decode(Raw.Chat.self, forKey: .content))
+        case .newPersonalChat:
             self = .addedInNewChat(try container.decode(Raw.Chat.self, forKey: .content))
         case .none:
             self = .unknown

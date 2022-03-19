@@ -42,6 +42,10 @@ final class WebSocketManager {
     func removeHandler(_ handler: ResponseHandler) {
         handlers[handler.identifeir] = nil
     }
+    
+    func didDisactive() {
+        socketTask = nil
+    }
 
     private func close() {
         let error = ApiError.closeConnect
