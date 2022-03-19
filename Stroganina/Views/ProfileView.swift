@@ -1,12 +1,13 @@
 //
 //  ProfileView.swift
-//  EasyMessenger WatchKit Extension
+//  Stroganina
 //
 //  Created by Сарин Никита Сергеевич on 24.05.2021.
 //
 
 import SwiftUI
 import UIKit
+import CryptoKit
 
 struct ProfileView: View {
 
@@ -23,7 +24,7 @@ struct ProfileView: View {
             case .small:
                 return 24
             case .medium:
-                return 44
+                return 52
             case .large:
                 return 80
             }
@@ -34,7 +35,7 @@ struct ProfileView: View {
             case .small:
                 return 12
             case .medium:
-                return 20
+                return 22
             case .large:
                 return 40
             }
@@ -48,16 +49,22 @@ struct ProfileView: View {
     init(user: User) {
         self.size = .medium
         self.mode = .text(user.picture?.emoji ?? user.fullName)
-        self.backgroundColor = user.picture?.color ?? .sgn_brand
+        self.backgroundColor = user.picture?.color ?? user.name.color
     }
 
     init(
         mode: Mode,
-        size: Size = .small
+        size: Size = .small,
+        backgroundColor: Color? = nil
     ) {
         self.mode = mode
         self.size = size
-        self.backgroundColor = .sgn_brand
+        switch mode {
+        case .image:
+            self.backgroundColor = .sgn_brand
+        case let .text(string):
+            self.backgroundColor = string.color
+        }
     }
 
     init(
@@ -87,6 +94,27 @@ struct ProfileView: View {
         .frame(edge: size.edge)
         .background(backgroundColor)
         .cornerRadius(size.edge / 2)
+    }
+}
+
+private extension String {
+    var color: Color {
+        let data = self.data(using: .utf8) ?? Data()
+        let digest = Insecure.MD5.hash(data: data)
+        let hashString = digest.map {
+            String(format: "%02hhx", $0)
+        }
+        .joined()
+        .prefix(6)
+        let number = Int(hashString, radix: 16) ?? 0
+        let colors: [Color] = [
+            .tg_red,
+            .tg_green,
+            .tg_orange,
+            .sgn_brand,
+            .tg_purple,
+        ]
+        return colors[number % colors.count]
     }
 }
 

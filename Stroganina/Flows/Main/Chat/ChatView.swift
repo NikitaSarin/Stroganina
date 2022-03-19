@@ -1,6 +1,6 @@
 //
 //  ChatView.swift
-//  Pentagram WatchKit Extension
+//  Pentagram
 //
 //  Created by Сарин Никита Сергеевич on 21.03.2021.
 //
@@ -32,7 +32,7 @@ struct ChatView: View {
                 Spacer()
                 Text("No messages\nhere yet")
                     .foregroundColor(.tg_grey)
-                    .font(.reqular(size: 17))
+                    .font(.regular(size: 17))
                     .multilineTextAlignment(.center)
                 Spacer()
             } else {

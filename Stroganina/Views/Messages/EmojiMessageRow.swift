@@ -1,6 +1,6 @@
 //
 //  EmojiMessageRow.swift
-//  EasyMessenger WatchKit Extension
+//  Stroganina
 //
 //  Created by Сарин Никита Сергеевич on 26.05.2021.
 //

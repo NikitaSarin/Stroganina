@@ -1,6 +1,6 @@
 //
 //  Section.swift
-//  EasyMessenger WatchKit Extension
+//  Stroganina
 //
 //  Created by Сарин Никита Сергеевич on 30.05.2021.
 //

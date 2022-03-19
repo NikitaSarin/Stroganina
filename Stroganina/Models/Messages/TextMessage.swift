@@ -19,5 +19,5 @@ final class TextMessage: Message {
 }
 
 extension TextMessage {
-    static let mock = TextMessage(base: .mock(), text: "Hello")
+    static let mock = TextMessage(base: .mock(), text: "Hello\nWorld")
 }

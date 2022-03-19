@@ -8,22 +8,46 @@
 import SwiftUI
 
 struct ChatRow: View {
+    
+    private static let formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:MM"
+        return formatter
+    }()
 
     @ObservedObject var chat: Chat
 
-    var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(chat.title)
-                .font(.medium(size: 17))
-            if let message = chat.lastMessage {
-                Text(message.type.description)
-                    .font(.reqular(size: 14))
-                    .foregroundColor(.tg_grey)
-            }
-            Divider()
+    private var date: String {
+        guard let date = chat.lastMessage?.base.date else {
+            return ""
         }
-        .padding(4)
+        return Self.formatter.string(from: date)
+    }
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 8) {
+            ProfileView(mode: .text(chat.title), size: .medium)
+            VStack(alignment: .leading, spacing: 2) {
+                HStack {
+                    Text(chat.title)
+                        .font(.medium(size: 15))
+                    Spacer()
+                    Text(date)
+                        .font(.regular(size: 12))
+                        .foregroundColor(.tg_grey)
+                        .padding(.trailing, 2)
+                }
+                if let message = chat.lastMessage {
+                    Text(message.type.description)
+                        .font(.regular(size: 12))
+                        .lineLimit(2)
+                        .foregroundColor(.tg_grey)
+                }
+            }
+            .padding(.vertical, 2)
+        }
         .contentShape(Rectangle())
+        .padding(.vertical, 4)
     }
 }
 

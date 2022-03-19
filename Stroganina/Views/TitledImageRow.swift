@@ -1,6 +1,6 @@
 //
 //  TitledImageRow.swift
-//  EasyMessenger WatchKit Extension
+//  Stroganina
 //
 //  Created by Сарин Никита Сергеевич on 02.06.2021.
 //
@@ -23,7 +23,7 @@ struct TitledImageRow: View {
                 .frame(edge: 24)
                 .cornerRadius(12)
             Text(title)
-                .font(.reqular(size: 17))
+                .font(.regular(size: 17))
             .lineLimit(1)
             Spacer(minLength: 0)
         })

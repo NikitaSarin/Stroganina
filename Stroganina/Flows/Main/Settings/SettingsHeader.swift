@@ -19,7 +19,7 @@ struct SettingsHeader: View {
                     .font(.medium(size: 20))
                 Text("@\(user.name.lowercased())")
                     .foregroundColor(.tg_grey)
-                    .font(.reqular(size: 16))
+                    .font(.regular(size: 16))
             }
             Spacer()
             Image(systemName: "chevron.forward")
