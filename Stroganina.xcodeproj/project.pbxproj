@@ -845,7 +845,7 @@
 				CODE_SIGN_ENTITLEMENTS = Stroganina/Stroganina.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"Stroganina/Preview Content\"";
 				DEVELOPMENT_TEAM = D28449VFLN;
 				ENABLE_PREVIEWS = YES;
@@ -871,7 +871,7 @@
 				CODE_SIGN_ENTITLEMENTS = Stroganina/Stroganina.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"Stroganina/Preview Content\"";
 				DEVELOPMENT_TEAM = D28449VFLN;
 				ENABLE_PREVIEWS = YES;
