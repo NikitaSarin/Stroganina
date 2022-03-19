@@ -20,6 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         AppContext.shared = AppContext(window: window)
 
         let store = Store()
+        store.load()
         let builder = Builder(store: store)
         router = Router(window: window, builder: builder)
         router?.start()
