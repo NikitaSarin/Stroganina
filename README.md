@@ -1,3 +1,3 @@
 # Stroganina
 
-[BACKEND REPO](https://github.com/shsanek/Pisyarik)
+[BACKEND REPOSITORY](https://github.com/shsanek/Pisyarik)
