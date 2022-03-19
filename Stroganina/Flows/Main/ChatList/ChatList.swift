@@ -42,7 +42,7 @@ struct ChatList: View {
                 } else {
                     Text("No chats")
                         .foregroundColor(.tg_grey)
-                        .font(.reqular(size: 17))
+                        .font(.regular(size: 17))
                         .multilineTextAlignment(.center)
                 }
                 Spacer()
@@ -69,7 +69,7 @@ struct ChatList: View {
                 .animation(.easeIn)
             }
         }
-        .padding(.horizontal, 8)
+        .padding(.horizontal, 6)
     }
 }
 

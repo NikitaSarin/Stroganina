@@ -1,6 +1,6 @@
 //
 //  UIColor+Hex.swift
-//  EasyMessenger WatchKit Extension
+//  Stroganina
 //
 //  Created by Сарин Никита Сергеевич on 12.03.2021.
 //

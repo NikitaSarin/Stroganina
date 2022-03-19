@@ -1,6 +1,6 @@
 //
 //  BlueDot.swift
-//  EasyMessenger WatchKit Extension
+//  Stroganina
 //
 //  Created by Сарин Никита Сергеевич on 06.06.2021.
 //

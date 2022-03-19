@@ -1,6 +1,6 @@
 //
 //  PollMessage.swift
-//  EasyMessenger WatchKit Extension
+//  Stroganina
 //
 //  Created by Сарин Никита Сергеевич on 29.05.2021.
 //

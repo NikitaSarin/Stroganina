@@ -1,6 +1,6 @@
 //
 //  TextMessageRow.swift
-//  Pentagram WatchKit Extension
+//  Pentagram
 //
 //  Created by Сарин Никита Сергеевич on 21.03.2021.
 //
@@ -9,7 +9,7 @@ import SwiftUI
 
 extension Text {
     func bubble(isOutgoing: Bool) -> some View {
-        font(.reqular(size: 17))
+        font(.regular(size: 17))
         .foregroundColor(isOutgoing ? .tg_white : .sgn_primary)
         .lineLimit(nil)
     }

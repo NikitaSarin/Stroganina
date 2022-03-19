@@ -1,6 +1,6 @@
 //
 //  StickerSetEntity.swift
-//  EasyMessenger WatchKit Extension
+//  Stroganina
 //
 //  Created by Сарин Никита Сергеевич on 02.06.2021.
 //
