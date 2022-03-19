@@ -46,6 +46,21 @@ final class WebSocketManager {
     func didDisactive() {
         socketTask = nil
     }
+    
+    private func nextPing() {
+        DispatchQueue.main.async { [weak self] in
+            self?.timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { _ in
+                self?.socketTask?.sendPing(pongReceiveHandler: { error in
+                    if let error = error {
+                        print(error)
+                        self?.socketTask = nil
+                    } else {
+                        self?.nextPing()
+                    }
+                })
+            }
+        }
+    }
 
     private func close() {
         let error = ApiError.closeConnect
