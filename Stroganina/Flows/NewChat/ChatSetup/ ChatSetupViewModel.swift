@@ -10,7 +10,9 @@ import Foundation
 
 final class ChatSetupViewModel: ObservableObject {
 
+    @Published var emptyNameCount: Int = 0
     @Published var name: String = ""
+
     let users: [User]
 
     private let service: ChatSetupServiceProtocol
@@ -38,6 +40,10 @@ final class ChatSetupViewModel: ObservableObject {
     }
 
     func createButtonTapped() {
+        if name.isEmpty {
+            emptyNameCount += 1
+            return
+        }
         service.createChat(with: name, users: users) { [weak self] result in
             switch result {
             case .success(let chat):

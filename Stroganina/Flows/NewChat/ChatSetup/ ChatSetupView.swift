@@ -42,8 +42,11 @@ struct ChatSetupView: View {
             TextField("Name", text: $viewModel.name)
                 .multilineTextAlignment(.center)
                 .frame(height: 60)
+                .modifier(Shake(animatableData: CGFloat(viewModel.emptyNameCount)))
             ActionButton("Create") {
-                viewModel.createButtonTapped()
+                withAnimation(.default) {
+                    viewModel.createButtonTapped()
+                }
             }
             Spacer()
         }
