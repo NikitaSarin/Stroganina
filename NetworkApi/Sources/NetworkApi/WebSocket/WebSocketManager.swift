@@ -13,6 +13,7 @@ final class WebSocketManager {
 
     private var handlers: [ResponseHandlerIdentifier: ResponseHandler] = [:]
     private var socketTask: URLSessionWebSocketTask?
+    private var timer: Timer?
 
     init(session: URLSession, url: URL) {
         self.session = session
@@ -75,6 +76,7 @@ final class WebSocketManager {
     private func active() {
         if socketTask == nil {
             socketTask = session.webSocketTask(with: url)
+            nextPing()
         }
         socketTask?.receive(completionHandler: { [weak self] result in
             switch result {
