@@ -116,3 +116,21 @@ extension ChatService: Listener {
         }
     }
 }
+
+extension ChatService {
+    struct Mock: ChatServiceProtocol {
+        var allMessagesFetched = true
+        var delegate: ChatServiceDelegate?
+
+        func start() {}
+        func send(text: String, completion: @escaping BoolClosure) {}
+        func fetch(from messageId: Message.ID?) {
+            let messages: [MessageWrapper] = (0...20).map { index in
+                MessageWrapper(
+                    type: .text(.init(base: .mock(id: index), text: "Hello"))
+                )
+            }
+            delegate?.didChange(messages: messages)
+        }
+    }
+}

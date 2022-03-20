@@ -53,8 +53,9 @@ final class Builder {
 
     func buildChatScene(router: Router, input: Chat) -> UIViewController {
         let service = ChatService(chatId: input.id, api: api, updateCenter: updateCenter)
+        let chatSetupService = ChatSetupService(api: api, updateCenter: updateCenter)
         let factory = ChatMessagesFactory()
-        let viewModel = ChatViewModel(chat: input, service: service)
+        let viewModel = ChatViewModel(chat: input, service: service, chatSetupService: chatSetupService, router: router)
         let view = ChatView(viewModel: viewModel, factory: factory)
         return UIHostingController(rootView: view)
     }
@@ -86,9 +87,9 @@ final class Builder {
         return UIHostingController(rootView: view)
     }
 
-    func buildUserSearchScene(router: NewChatRouter) -> UIViewController {
+    func buildUserSearchScene(selectedUsersHandler: @escaping ([User]) -> Void) -> UIViewController {
         let service = UserSearchService(api: api)
-        let viewModel = UserSearchViewModel(service: service, router: router)
+        let viewModel = UserSearchViewModel(service: service, selectedUsersHandler: selectedUsersHandler)
         let view = UserSearchView(viewModel: viewModel)
         return UIHostingController(rootView: view)
     }

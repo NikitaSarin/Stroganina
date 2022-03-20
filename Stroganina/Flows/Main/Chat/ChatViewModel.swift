@@ -11,18 +11,28 @@ import SwiftUI
 final class ChatViewModel: ObservableObject {
 
     let chat: Chat
+    
+    var isEnabledAddNewUser: Bool {
+        chat.chatType == .group
+    }
 
     @Published var history = [MessageWrapper]()
     @Published var messageText = ""
 
     private var service: ChatServiceProtocol
+    private let chatSetupService: ChatSetupServiceProtocol
+    private let router: ChatRouting
 
     init(
         chat: Chat,
-        service: ChatServiceProtocol
+        service: ChatServiceProtocol,
+        chatSetupService: ChatSetupServiceProtocol,
+        router: ChatRouting
     ) {
         self.chat = chat
         self.service = service
+        self.chatSetupService = chatSetupService
+        self.router = router
 
         self.service.delegate = self
     }
@@ -40,6 +50,12 @@ final class ChatViewModel: ObservableObject {
 
     func reloadHistory() {
         service.fetch(from: history.last?.id)
+    }
+    
+    func addUsersInChat() {
+        router.openSearchUser { [weak self, chat] users in
+            self?.chatSetupService.addUsers(in: chat, users: users)
+        }
     }
 }
 

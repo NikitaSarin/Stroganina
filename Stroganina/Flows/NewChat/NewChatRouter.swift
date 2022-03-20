@@ -26,7 +26,9 @@ final class NewChatRouter {
     }
     
     func start() {
-        let viewController = builder.buildUserSearchScene(router: self)
+        let viewController = builder.buildUserSearchScene { users in
+            self.openChatSetupScene(input: users)
+        }
         navigation.setViewControllers([viewController], animated: false)
     }
 }

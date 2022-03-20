@@ -10,6 +10,7 @@ import NetworkApi
 protocol ChatSetupServiceProtocol {
     func createChat(with name: String, users: [User], completion: @escaping (Result<Chat, Error>) -> Void)
     func createPersonalChat(with user: User, completion: @escaping (Result<Chat, Error>) -> Void)
+    func addUsers(in chat: Chat, users: [User])
 }
 
 final class ChatSetupService: ChatSetupServiceProtocol {
@@ -29,7 +30,10 @@ final class ChatSetupService: ChatSetupServiceProtocol {
         api.perform(NewChat(name: name)) { [weak self] result in
             switch result {
             case .success(let response):
-                self?.didNewChat(raw: response, users: users, completion: completion)
+                let chat = Chat(response)
+                self?.addUsers(in: chat, users: users)
+                self?.updateCenter.sendNotification(.newChat(chat))
+                completion(.success(chat))
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -47,16 +51,34 @@ final class ChatSetupService: ChatSetupServiceProtocol {
         }
     }
     
-    private func didNewChat(
-        raw: Raw.Chat,
-        users: [User],
-        completion: @escaping (Result<Chat, Error>) -> Void
+    func addUsers(
+        in chat: Chat,
+        users: [User]
     ) {
-        let chat = Chat(raw)
-        users.forEach { [api] user in
-            api.perform(AddUserInChat(chatId: raw.chatId, userId: user.id), completion: { _ in })
+        users.forEach { user in
+            api.perform(AddUserInChat(chatId: chat.id, userId: user.id), completion: { _ in })
         }
-        updateCenter.sendNotification(.newChat(chat))
-        completion(.success(chat))
+    }
+}
+
+extension ChatSetupService {
+    struct Mock: ChatSetupServiceProtocol {
+        func createPersonalChat(with user: User, completion: @escaping (Result<Chat, Error>) -> Void) {
+            completion(.success(.mock))
+        }
+
+        func createChat(
+            with name: String,
+            users: [User],
+            completion: @escaping (Result<Chat, Error>) -> Void
+        ) {
+            completion(.success(.mock))
+        }
+        
+        func addUsers(
+            in chat: Chat,
+            users: [User]
+        ) {
+        }
     }
 }

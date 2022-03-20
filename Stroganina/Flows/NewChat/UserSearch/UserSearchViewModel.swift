@@ -32,14 +32,14 @@ final class UserSearchViewModel: ObservableObject {
     }
 
     private let service: UserSearchServiceProtocol
-    private let router: NewChatRouting
+    private let selectedUsersHandler: ([User]) -> Void
 
     init(
         service: UserSearchServiceProtocol,
-        router: NewChatRouting
+        selectedUsersHandler: @escaping ([User]) -> Void
     ) {
         self.service = service
-        self.router = router
+        self.selectedUsersHandler = selectedUsersHandler
     }
 
     func set(user: User, selected: Bool) {
@@ -51,7 +51,7 @@ final class UserSearchViewModel: ObservableObject {
     }
 
     func nextButtonTapped() {
-        router.openChatSetupScene(input: selectedUsers)
+        selectedUsersHandler(users)
     }
 
     private func update() {

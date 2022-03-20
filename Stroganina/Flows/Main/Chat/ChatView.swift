@@ -23,6 +23,18 @@ struct ChatView: View {
         .navigationTitle(viewModel.chat.title)
         .onAppear {
             viewModel.start()
+        }.toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                ZStack {
+                    if viewModel.isEnabledAddNewUser {
+                        Button {
+                            viewModel.addUsersInChat()
+                        } label: {
+                            Image(systemName: "plus")
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -80,26 +92,12 @@ struct ChatView_Previews: PreviewProvider {
             ChatView(
                 viewModel: ChatViewModel(
                     chat: .mock,
-                    service: Service()
+                    service: ChatService.Mock(),
+                    chatSetupService: ChatSetupService.Mock(),
+                    router: ChatRoutingMock()
                 ),
                 factory: ChatMessagesFactory()
             )
-        }
-    }
-
-    struct Service: ChatServiceProtocol {
-        var allMessagesFetched = true
-        var delegate: ChatServiceDelegate?
-
-        func start() {}
-        func send(text: String, completion: @escaping BoolClosure) {}
-        func fetch(from messageId: Message.ID?) {
-            let messages: [MessageWrapper] = (0...20).map { index in
-                MessageWrapper(
-                    type: .text(.init(base: .mock(id: index), text: "Hello"))
-                )
-            }
-            delegate?.didChange(messages: messages)
         }
     }
 }
