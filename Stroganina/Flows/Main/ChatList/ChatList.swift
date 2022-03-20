@@ -18,10 +18,30 @@ struct ChatList: View {
                 .navigationBarTitle("Chats", displayMode: .large)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            viewModel.newChatButtonTapped()
-                        } label: {
-                            Image(systemName: "plus")
+                        Menu {
+                            Button {
+                                viewModel.newPersonalChatButtonTapped()
+                            } label: {
+                                Label(
+                                    "New personal chat",
+                                    systemImage: "person"
+                                )
+                            }
+                            Button {
+                                viewModel.newGroupButtonTapped()
+                            } label: {
+                                Label(
+                                    "New group",
+                                    systemImage: "person.2"
+                                )
+                            }
+                        }
+                        label: {
+                            Image(systemName: "square.and.pencil")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .padding(11)
+                                .frame(edge: 40)
                         }
                     }
                 }
@@ -53,21 +73,19 @@ struct ChatList: View {
     }
 
     private var chats: some View {
-        ScrollViewReader { proxy in
-            ScrollView(showsIndicators: false) {
-                LazyVStack(spacing: 4) {
-                    Color.clear
-                        .frame(height: 8)
-                    ForEach(viewModel.chats) { chat in
-                        ChatRow(chat: chat)
-                            .onTapGesture {
-                                viewModel.didTap(on: chat)
-                            }
-                    }
+        ScrollView(showsIndicators: false) {
+            LazyVStack(spacing: 4) {
+                Color.clear
+                    .frame(height: 8)
+                ForEach(viewModel.chats) { chat in
+                    ChatRow(chat: chat)
+                        .onTapGesture {
+                            viewModel.didTap(on: chat)
+                        }
                 }
-                .transition(.opacity)
-                .animation(.easeIn)
             }
+            .transition(.opacity)
+            .animation(.easeIn, value: viewModel.chats)
         }
         .padding(.horizontal, 6)
     }
@@ -78,9 +96,9 @@ struct ChatList_Previews: PreviewProvider {
         NavigationView {
             ChatList(
                 viewModel: ChatListViewModel(
+                    router: ChatListRoutingMock(),
                     service: Service(),
-                    store: Store(),
-                    routing: ChatListRoutingMock()
+                    store: Store()
                 )
             )
         }

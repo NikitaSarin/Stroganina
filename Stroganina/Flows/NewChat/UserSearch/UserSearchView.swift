@@ -14,7 +14,13 @@ struct UserSearchView: View {
     var body: some View {
         VStack(spacing: 10) {
             searchBar
-            selectedUsers
+            if viewModel.multipleUsers {
+                selectedUsers
+            } else {
+                Color
+                    .clear
+                    .frame(height: 10)
+            }
             if viewModel.searchEnabled {
                 searchResults
             } else {
@@ -35,6 +41,7 @@ struct UserSearchView: View {
                     viewModel.nextButtonTapped()
                 }
                 .disabled(!viewModel.nextStepEnabled)
+                .opacity(viewModel.multipleUsers ? 1 : 0)
             }
         }
     }
@@ -47,6 +54,11 @@ struct UserSearchView: View {
             .cornerRadius(8)
             .padding(.top, 8)
             .padding(.horizontal, 20)
+            .onAppear {
+                UITextField
+                    .appearance()
+                    .clearButtonMode = .whileEditing
+            }
     }
 
     private var selectedUsers: some View {
@@ -68,6 +80,7 @@ struct UserSearchView: View {
                 ForEach(viewModel.users) { user in
                     UserRow(
                         user: user,
+                        showCheckbox: viewModel.multipleUsers,
                         isSelected: .init(
                             get: {
                                 viewModel.selectedUsers.contains(user)
@@ -76,7 +89,6 @@ struct UserSearchView: View {
                             }
                         )
                     )
-                    Divider()
                 }
             }
         }
@@ -84,10 +96,16 @@ struct UserSearchView: View {
 }
 
 struct UserSearchView_Previews: PreviewProvider {
+
+    struct Handler: UserSearchOutputHandler {
+        func process(output: [User]) {}
+    }
+
     static var viewModel: UserSearchViewModel {
         let viewModel = UserSearchViewModel(
-            service: Service(),
-            selectedUsersHandler: { _ in }
+            multipleUsers: true,
+            handler: Handler(),
+            service: Service()
         )
         viewModel.searchText = "kek"
         viewModel.selectedUsers = [.mock]

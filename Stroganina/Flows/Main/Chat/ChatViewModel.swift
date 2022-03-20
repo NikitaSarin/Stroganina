@@ -20,18 +20,15 @@ final class ChatViewModel: ObservableObject {
     @Published var messageText = ""
 
     private var service: ChatServiceProtocol
-    private let chatSetupService: ChatSetupServiceProtocol
     private let router: ChatRouting
 
     init(
         chat: Chat,
         service: ChatServiceProtocol,
-        chatSetupService: ChatSetupServiceProtocol,
         router: ChatRouting
     ) {
         self.chat = chat
         self.service = service
-        self.chatSetupService = chatSetupService
         self.router = router
 
         self.service.delegate = self
@@ -53,9 +50,7 @@ final class ChatViewModel: ObservableObject {
     }
     
     func addUsersInChat() {
-        router.openSearchUser { [weak self, chat] users in
-            self?.chatSetupService.addUsers(in: chat, users: users)
-        }
+        router.openSearchUser(input: chat)
     }
 }
 

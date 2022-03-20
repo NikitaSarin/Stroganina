@@ -93,7 +93,6 @@ struct ChatView_Previews: PreviewProvider {
                 viewModel: ChatViewModel(
                     chat: .mock,
                     service: ChatService.Mock(),
-                    chatSetupService: ChatSetupService.Mock(),
                     router: ChatRoutingMock()
                 ),
                 factory: ChatMessagesFactory()
