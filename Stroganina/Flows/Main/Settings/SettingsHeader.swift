@@ -13,7 +13,7 @@ struct SettingsHeader: View {
 
     var body: some View {
         Section {
-            ProfileView(user: user)
+            ProfileView(user: user, size: .large)
             VStack(alignment: .leading, spacing: 6) {
                 Text(user.fullName)
                     .font(.medium(size: 20))

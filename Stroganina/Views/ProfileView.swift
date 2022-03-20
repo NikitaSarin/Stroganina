@@ -22,7 +22,7 @@ struct ProfileView: View {
         var edge: CGFloat {
             switch self {
             case .small:
-                return 24
+                return 32
             case .medium:
                 return 52
             case .large:
@@ -33,11 +33,11 @@ struct ProfileView: View {
         var fontSize: CGFloat {
             switch self {
             case .small:
-                return 12
+                return 14
             case .medium:
                 return 20
             case .large:
-                return 40
+                return 30
             }
         }
     }
@@ -46,8 +46,11 @@ struct ProfileView: View {
     let size: Size
     let backgroundColor: Color
 
-    init(user: User) {
-        self.size = .medium
+    init(
+        user: User,
+        size: Size = .medium
+    ) {
+        self.size = size
         self.mode = .text(user.picture?.emoji ?? user.fullName)
         self.backgroundColor = user.picture?.color ?? user.name.color
     }

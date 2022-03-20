@@ -12,17 +12,18 @@ final class ChatListViewModel: ObservableObject {
 
     @Published var chats = [Chat]()
     @Published var isLoading = true
+
+    private let router: ChatListRouting
     private var service: ChatListServiceProtocol
-    private let routing: ChatListRouting
     private let store: Store
 
     init(
+        router: ChatListRouting,
         service: ChatListServiceProtocol,
-        store: Store,
-        routing: ChatListRouting
+        store: Store
     ) {
+        self.router = router
         self.service = service
-        self.routing = routing
         self.store = store
         self.service.delegate = self
     }
@@ -32,11 +33,15 @@ final class ChatListViewModel: ObservableObject {
     }
 
     func didTap(on chat: Chat) {
-        routing.openChatScene(chat)
+        router.openChatScene(chat)
     }
 
-    func newChatButtonTapped() {
-        routing.openNewChatScene()
+    func newPersonalChatButtonTapped() {
+        router.openNewChatScene(type: .personal)
+    }
+
+    func newGroupButtonTapped() {
+        router.openNewChatScene(type: .group)
     }
 }
 

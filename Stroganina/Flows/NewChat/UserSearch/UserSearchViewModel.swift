@@ -9,6 +9,10 @@ import Combine
 import Foundation
 import SwiftUI
 
+protocol UserSearchOutputHandler {
+    func process(output: [User])
+}
+
 final class UserSearchViewModel: ObservableObject {
 
     @Published var users = [User]()
@@ -31,27 +35,32 @@ final class UserSearchViewModel: ObservableObject {
         searchText.count > 2
     }
 
+    let multipleUsers: Bool
+    private let handler: UserSearchOutputHandler
     private let service: UserSearchServiceProtocol
-    private let selectedUsersHandler: ([User]) -> Void
 
     init(
-        service: UserSearchServiceProtocol,
-        selectedUsersHandler: @escaping ([User]) -> Void
+        multipleUsers: Bool,
+        handler: UserSearchOutputHandler,
+        service: UserSearchServiceProtocol
     ) {
+        self.multipleUsers = multipleUsers
+        self.handler = handler
         self.service = service
-        self.selectedUsersHandler = selectedUsersHandler
     }
 
     func set(user: User, selected: Bool) {
         if selected {
-            selectedUsers.append(user)
+            multipleUsers
+            ? selectedUsers.append(user)
+            : handler.process(output: users)
         } else {
             selectedUsers.removeAll(where: { $0 == user })
         }
     }
 
     func nextButtonTapped() {
-        selectedUsersHandler(users)
+        handler.process(output: users)
     }
 
     private func update() {

@@ -18,10 +18,6 @@ final class Router {
         return navigation
     }()
     private let store: Store
-    
-    lazy var newChatRouter = NewChatRouter(builder: builder) { [weak self] chat in
-        self?.openChatScene(chat)
-    }
 
     init(
         window: UIWindow,
@@ -71,9 +67,12 @@ extension Router: ChatListRouting {
         navigation.pushViewController(viewController, animated: true)
     }
 
-    func openNewChatScene() {
-        newChatRouter.start()
-        navigation.present(newChatRouter.navigation, animated: true, completion: nil)
+    func openNewChatScene(type: Chat.ChatType) {
+        let router = builder.buildNewChatRouter(type: type) { [weak self] chat in
+            self?.openChatScene(chat)
+        }
+        router.start()
+        navigation.present(router.navigation, animated: true, completion: nil)
     }
 }
 
@@ -85,13 +84,8 @@ extension Router: SettingsRouting {
 }
 
 extension Router: ChatRouting {
-    func openSearchUser(_ selectedUsersHandler: @escaping ([User]) -> Void) {
-        let container = UINavigationController()
-        let viewController = builder.buildUserSearchScene { [weak container] users in
-            selectedUsersHandler(users)
-            container?.dismiss(animated: true, completion: nil)
-        }
-        container.viewControllers = [viewController]
-        navigation.present(container, animated: true, completion: nil)
+    func openSearchUser(input: Chat) {
+        let viewController = builder.buildAddUsersScene(chat: input)
+        navigation.present(viewController, animated: true, completion: nil)
     }
 }

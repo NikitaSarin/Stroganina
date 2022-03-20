@@ -6,9 +6,9 @@
 //
 
 protocol ChatRouting {
-    func openSearchUser(_ selectedUsersHandler: @escaping ([User]) -> Void)
+    func openSearchUser(input: Chat)
 }
 
 struct ChatRoutingMock: ChatRouting {
-    func openSearchUser(_ selectedUsersHandler: @escaping ([User]) -> Void) { }
+    func openSearchUser(input: Chat) { }
 }
