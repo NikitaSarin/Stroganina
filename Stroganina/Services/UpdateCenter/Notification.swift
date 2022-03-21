@@ -8,4 +8,5 @@
 enum Notification {
     case newMessage(_ message: MessageWrapper)
     case newChat(_ chat: Chat)
+    case closeConnect
 }

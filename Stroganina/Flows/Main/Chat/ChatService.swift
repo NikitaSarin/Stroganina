@@ -89,6 +89,10 @@ final class ChatService: ChatServiceProtocol {
     private func reload() {
         fetch(from: messages.first?.id)
     }
+    
+    private func reloadLast() {
+        fetch(from: nil)
+    }
 
     private func notifyDelegate() {
         delegate?.didChange(messages: messages)
@@ -106,6 +110,8 @@ extension ChatService: Listener {
                     messages.insert(message, at: 0)
                     isNeedUpdate = true
                 }
+            case .closeConnect:
+                reloadLast()
             default:
                 break
             }

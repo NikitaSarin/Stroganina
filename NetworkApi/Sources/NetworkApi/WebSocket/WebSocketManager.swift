@@ -45,8 +45,7 @@ final class WebSocketManager {
     }
     
     func didDisactive() {
-        socketTask = nil
-        active()
+        close()
     }
     
     private func nextPing() {

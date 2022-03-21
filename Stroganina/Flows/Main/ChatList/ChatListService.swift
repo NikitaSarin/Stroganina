@@ -82,6 +82,8 @@ extension ChatListService: Listener {
             case .newChat(let chat):
                 chats.insert(chat)
                 isNeedUpdate = true
+            case .closeConnect:
+                fetchChats()
             }
         }
         if isNeedUpdate {

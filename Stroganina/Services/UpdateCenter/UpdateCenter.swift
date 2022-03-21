@@ -39,6 +39,7 @@ final class UpdateCenter {
                 self?.process(notifications: response.notifications)
             case .failure(let error):
                 if case ApiError.closeConnect = error {
+                    self?.update([.closeConnect])
                     DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                         self?.activate()
                     }
@@ -61,15 +62,15 @@ final class UpdateCenter {
         listeners = newListeners
     }
 
-    private func process(notifications: [GetUpdate.Response.Notification]){
+    private func process(notifications: [SafeCodableContainer<GetUpdate.Response.Notification>]){
         var result = [Notification]()
         for notification in notifications {
-            switch notification {
+            switch notification.value {
             case .newMessage(let message):
                 result.append(.newMessage(MessageWrapper(message)))
-            case .addedInNewChat(let chat):
+            case .newChat(let chat):
                 result.append(.newChat(Chat(chat)))
-            case .unknown:
+            case .none:
                 continue
             }
         }
