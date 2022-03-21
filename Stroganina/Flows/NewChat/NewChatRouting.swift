@@ -5,12 +5,14 @@
 //  Created by Aleksandr Shipin on 31.10.2021.
 //
 
-protocol NewChatRouting {
-    func openChatSetupScene(input: [User])
+protocol NewChatRouting: AnyObject {
+    func openUserSearchScene(multipleUsers: Bool)
+    func openChatSetupScene()
     func openChatScene(input: Chat)
 }
 
-struct NewChatRouterMock: NewChatRouting {
-    func openChatSetupScene(input: [User]) { }
+final class NewChatRouterMock: NewChatRouting {
+    func openUserSearchScene(multipleUsers: Bool) {}
+    func openChatSetupScene() { }
     func openChatScene(input: Chat) { }
 }

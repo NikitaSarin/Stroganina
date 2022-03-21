@@ -7,10 +7,10 @@
 
 protocol ChatListRouting {
     func openChatScene(_ chat: Chat)
-    func openNewChatScene()
+    func openNewChatScene(type: Chat.ChatType)
 }
 
 struct ChatListRoutingMock: ChatListRouting {
     func openChatScene(_ chat: Chat) {}
-    func openNewChatScene() { }
+    func openNewChatScene(type: Chat.ChatType) {}
 }

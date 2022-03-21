@@ -6,37 +6,18 @@
 //
 
 import Combine
-import Foundation
 
 final class ChatSetupViewModel: ObservableObject {
 
     @Published var emptyNameCount: Int = 0
     @Published var name: String = ""
 
-    let users: [User]
-
-    private let service: ChatSetupServiceProtocol
-    private let router: NewChatRouting
+    private let handler: ChatSetupOutputHandler
 
     init(
-        users: [User],
-        router: NewChatRouting,
-        service: ChatSetupServiceProtocol
+        handler: ChatSetupOutputHandler
     ) {
-        self.users = users
-        self.router = router
-        self.service = service
-    }
-
-    func createPersonalButtonTapped() {
-        service.createPersonalChat(with: users[0]) { [weak self] result in
-            switch result {
-            case .success(let chat):
-                self?.router.openChatScene(input: chat)
-            case .failure:
-                break
-            }
-        }
+        self.handler = handler
     }
 
     func createButtonTapped() {
@@ -44,13 +25,6 @@ final class ChatSetupViewModel: ObservableObject {
             emptyNameCount += 1
             return
         }
-        service.createChat(with: name, users: users) { [weak self] result in
-            switch result {
-            case .success(let chat):
-                self?.router.openChatScene(input: chat)
-            case .failure:
-                break
-            }
-        }
+        handler.process(output: name)
     }
 }

@@ -53,16 +53,15 @@ final class Builder {
 
     func buildChatScene(router: Router, input: Chat) -> UIViewController {
         let service = ChatService(chatId: input.id, api: api, updateCenter: updateCenter)
-        let chatSetupService = ChatSetupService(api: api, updateCenter: updateCenter)
         let factory = ChatMessagesFactory()
-        let viewModel = ChatViewModel(chat: input, service: service, chatSetupService: chatSetupService, router: router)
+        let viewModel = ChatViewModel(chat: input, service: service, router: router)
         let view = ChatView(viewModel: viewModel, factory: factory)
         return UIHostingController(rootView: view)
     }
 
     private func buildChatListScene(router: Router) -> UIViewController {
         let service = ChatListService(api: api, updateCenter: updateCenter)
-        let viewModel = ChatListViewModel(service: service, store: store, routing: router)
+        let viewModel = ChatListViewModel(router: router, service: service, store: store)
         let view = ChatList(viewModel: viewModel)
         let viewController = UIHostingController(rootView: view)
         viewController.tabBarItem = UITabBarItem(title: "Chats", image: UIImage(systemName: "message"), tag: 0)
@@ -80,17 +79,54 @@ final class Builder {
 
     // Все ниже в отдельный билдер
 
-    func buildChatSetupScene(router: NewChatRouter, users: [User]) -> UIViewController {
-        let service = ChatSetupService(api: api, updateCenter: updateCenter)
-        let viewModel = ChatSetupViewModel(users: users, router: router, service: service)
+    func buildNewChatRouter(
+        type: Chat.ChatType,
+        openChatHandler: @escaping (Chat) -> Void
+    ) -> NewChatRouter {
+        let engine = NewChatEngine(mode: type, api: api)
+        let router = NewChatRouter(
+            engine: engine,
+            builder: self,
+            openChatHandler: openChatHandler
+        )
+        engine.router = router
+        return router
+    }
+
+    func buildChatSetupScene(handler: ChatSetupOutputHandler) -> UIViewController {
+        let viewModel = ChatSetupViewModel(handler: handler)
         let view = ChatSetupView(viewModel: viewModel)
         return UIHostingController(rootView: view)
     }
 
-    func buildUserSearchScene(selectedUsersHandler: @escaping ([User]) -> Void) -> UIViewController {
+    func buildUserSearchScene(
+        multipleUsers: Bool,
+        handler: UserSearchOutputHandler
+    ) -> UIViewController {
         let service = UserSearchService(api: api)
-        let viewModel = UserSearchViewModel(service: service, selectedUsersHandler: selectedUsersHandler)
+        let viewModel = UserSearchViewModel(
+            multipleUsers: multipleUsers,
+            handler: handler,
+            service: service
+        )
         let view = UserSearchView(viewModel: viewModel)
         return UIHostingController(rootView: view)
+    }
+
+    func buildAddUsersScene(chat: Chat) -> UIViewController {
+        let navigation = UINavigationController()
+        let decorator = AddUsersDecorator(api: api, chat: chat) {
+            navigation.dismiss(animated: true)
+        }
+        let service = UserSearchService(api: api)
+        let viewModel = UserSearchViewModel(
+            multipleUsers: true,
+            handler: decorator,
+            service: service
+        )
+        let view = UserSearchView(viewModel: viewModel)
+        let viewController = UIHostingController(rootView: view)
+        navigation.viewControllers = [viewController]
+        return navigation
     }
 }
