@@ -6,6 +6,7 @@
 //
 
 import Combine
+import Foundation
 
 enum MessageType: Identifiable {
 
@@ -34,6 +35,29 @@ enum MessageType: Identifiable {
         case let .service(message):
             return message.text
         }
+    }
+
+    init(
+        text: String,
+        chatId: Chat.ID
+    ) {
+        let identifier = MessageIdentifier.make(with: nil)
+        let base = Message(
+            id: identifier,
+            date: Date(),
+            chatId: chatId,
+            remoteId: nil,
+            state: .awaiting
+        )
+        if text.isSingleEmoji {
+            self = .emoji(TextMessage(base: base, text: text))
+        } else {
+            self = .text(TextMessage(base: base, text: text))
+        }
+    }
+
+    func wrapped() -> MessageWrapper {
+        MessageWrapper(type: self)
     }
 }
 

@@ -17,7 +17,7 @@ struct SendMessagePanel: View {
 
     @Binding var text: String
     weak var delegate: SendMessagePanelDelegate?
-    
+
     private var sendEnabled: Bool {
         !text.isEmpty
     }

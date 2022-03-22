@@ -20,18 +20,18 @@ extension Message {
             isOutgoing: raw.user.isSelf,
             chatId: raw.chatId,
             remoteId: raw.messageId,
-            state: .init(raw.state?.value)
+            status: .init(raw.state?.value)
         )
     }
 }
 
-extension Message.MessageState {
+extension Message.Status {
     init(_ state: Raw.MessageState?) {
         switch state {
         case .sended:
-            self = .sended
+            self = .sent
         case .none:
-            self = .sended
+            self = .sent
         case .failed:
             self = .failed
         case .read:

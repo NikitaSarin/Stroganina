@@ -9,7 +9,7 @@ enum HistoryItem: Identifiable {
     case new(id: MessageIdentifier.ID?, reverse: Bool)
     case empty(id: MessageIdentifier.ID, reverse: Bool)
     case message(message: MessageWrapper)
-    
+
     var id: String {
         switch self {
         case let .new(id, reverse):

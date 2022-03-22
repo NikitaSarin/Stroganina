@@ -8,28 +8,21 @@
 import Foundation
 
 extension ChatService {
-    final class MessageContainer {
+    final class MessageNode {
         let messageWrapper: MessageWrapper
-
-        var messageType: MessageType {
-            didSet {
-                DispatchQueue.main.async {
-                    self.messageWrapper.type = self.messageType
-                }
-            }
-        }
+        let messageType: MessageType
 
         private(set) var nextID: MessageIdentifier?
         private(set) var backID: MessageIdentifier?
         
-        internal init(messageWrapper: MessageWrapper) {
+        init(_ messageWrapper: MessageWrapper) {
             self.messageType = messageWrapper.type
             self.messageWrapper = messageWrapper
         }
     }
 }
 
-extension ChatService.MessageContainer {
+extension ChatService.MessageNode {
     var identifier: MessageIdentifier {
         messageType.base.id
     }
@@ -40,32 +33,32 @@ extension ChatService.MessageContainer {
         }
         return identifier
     }
-    
+
     var remoteID: MessageIdentifier.ID? {
         return messageType.base.remoteId
     }
 }
 
-extension ChatService.MessageContainer {
+extension ChatService.MessageNode {
     func updateType(_ type: MessageType) {
         self.messageWrapper.type = type
     }
 }
 
-extension ChatService.MessageContainer {
-    func linkNext(_ container: ChatService.MessageContainer) {
-        guard container.remoteID != nil, self.remoteID != nil else {
+extension ChatService.MessageNode {
+    func linkNext(_ message: ChatService.MessageNode) {
+        guard message.remoteID != nil, self.remoteID != nil else {
             return
         }
-        self.nextID = container.identifier
-        container.backID = self.identifier
+        self.nextID = message.identifier
+        message.backID = self.identifier
     }
-    
-    func linkBack(_ container: ChatService.MessageContainer) {
-        guard container.remoteID != nil, self.remoteID != nil else {
+
+    func linkBack(_ message: ChatService.MessageNode) {
+        guard message.remoteID != nil, self.remoteID != nil else {
             return
         }
-        self.backID = container.identifier
-        container.nextID = self.identifier
+        self.backID = message.identifier
+        message.nextID = self.identifier
     }
 }

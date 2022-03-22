@@ -53,8 +53,7 @@ final class ChatViewModel: ObservableObject {
 
 extension ChatViewModel: SendMessagePanelDelegate {
     func sendButtonTapped() {
-        service.send(text: messageText) { [weak self] success in
-            self?.messageText = ""
-        }
+        service.send(text: messageText)
+        messageText = ""
     }
 }

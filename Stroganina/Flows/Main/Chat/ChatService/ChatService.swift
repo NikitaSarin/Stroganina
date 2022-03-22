@@ -11,7 +11,7 @@ import SwiftUI
 
 protocol ChatServiceProtocol {
     func load(_ handler: @escaping (([HistoryItem]) -> Void))
-    func send(text: String, completion: @escaping BoolClosure)
+    func send(text: String)
     func viewDidShow(_ item: HistoryItem)
 }
 
@@ -19,8 +19,8 @@ final class ChatService: ChatServiceProtocol {
     private var updateHandler: (([HistoryItem]) -> Void)?
 
     private let queue = DispatchQueue(label: "storage.queue")
-    private var pools: [MessagesPool] = []
-    
+    private var pages: [MessagesPage] = []
+
     private let api: Networking
     private let chatId: Chat.ID
     private let updateCenter: UpdateCenter
@@ -28,7 +28,7 @@ final class ChatService: ChatServiceProtocol {
 
     private var topLoaded: Bool = false
     private var bottomLoaded: Bool = false
-    
+
     private var loading = Set<String>()
 
     init(
@@ -44,7 +44,7 @@ final class ChatService: ChatServiceProtocol {
     }
     
     func viewDidShow(_ item: HistoryItem) {
-        self.queue.async {
+        queue.async {
             switch item {
             case .new(let id, let reverse):
                 if !self.loading.contains(item.id) {
@@ -69,50 +69,46 @@ final class ChatService: ChatServiceProtocol {
             }
         }
     }
-    
-    func send(text: String, completion: @escaping BoolClosure) {
+
+    func send(text: String) {
         let function = NewMessage(
             type: .text,
             content: text,
             chatId: chatId
         )
-        let container = MessageContainer(
-            messageWrapper: .init(
-                type: .makeTextSkeletonType(
-                    content: text,
-                    chatId: chatId
-                )
-            )
+        let message = MessageNode(
+            MessageType(
+                text: text,
+                chatId: chatId
+            ).wrapped()
         )
-        self.queue.async {
-            MessagesPool(containers: [container]).flatMap { self.pools.append($0) }
+        queue.async {
+            MessagesPage(messages: [message]).flatMap { self.pages.append($0) }
             self.didUpdate()
         }
         api.perform(function) { [weak self] result in
             switch result {
             case .success(let response):
-                container.messageType.base.update(.init(response, identifier: container.identifier))
+                message.messageType.base.update(.init(response, identifier: message.identifier))
                 self?.queue.async {
-                    self?.sendedMessage(container)
+                    self?.sendedMessage(message)
                     DispatchQueue.main.async {
-                        self?.updateCenter.sendNotification(.newMessage(container.messageWrapper))
+                        self?.updateCenter.sendNotification(.newMessage(message.messageWrapper))
                     }
                 }
-                completion(true)
             case let .failure(error):
                 print(error)
-                completion(false)
             }
         }
     }
-    
+
     func load(_ handler: @escaping (([HistoryItem]) -> Void)) {
         queue.async {
             self.updateHandler = handler
             self.didUpdate()
         }
     }
-    
+
     private func outOfSync() {
         queue.async {
             self.bottomLoaded = false
@@ -156,33 +152,33 @@ final class ChatService: ChatServiceProtocol {
             }
         }
     }
-    
+
     private func update(raws: [Raw.Message]) {
         queue.async {
-            self.update(raws.map { .init(messageWrapper: .init($0, identifier: nil)) })
+            self.update(raws.map { MessageNode(MessageWrapper($0, identifier: nil)) })
         }
     }
-    
-    private func addNewMessage(_ message: MessageContainer) {
+
+    private func addNewMessage(_ message: MessageNode) {
         queue.async {
             guard self.bottomLoaded else {
                 self.update([message])
                 return
             }
-            if let pool = self.pools.last(where: { $0.containers.last?.remoteID != nil }) {
-                pool.containers.append(message)
+            if let page = self.pages.last(where: { $0.messages.last?.remoteID != nil }) {
+                page.messages.append(message)
                 self.didUpdate()
             } else {
                 self.update([message])
             }
         }
     }
-    
+
     private func didUpdate() {
         var items = [HistoryItem]()
 
-        for pool in pools {
-            if pool.containers.first?.remoteID == nil {
+        for page in pages {
+            if page.messages.first?.remoteID == nil {
                 if case let .empty(id, reverse) = items.last {
                     items.removeLast()
                     if !bottomLoaded {
@@ -193,14 +189,14 @@ final class ChatService: ChatServiceProtocol {
                     items.append(.new(id: nil, reverse: false))
                 }
             }
-            if let first = pool.containers.first, first.backID == nil, let id = first.remoteID {
+            if let first = page.messages.first, first.backID == nil, let id = first.remoteID {
                 if !(items.isEmpty && self.topLoaded) {
                     items.append(.empty(id: .init(id), reverse: false))
                 }
             }
-            let messages = pool.containers.map { HistoryItem.message(message: $0.messageWrapper) }
+            let messages = page.messages.map { HistoryItem.message(message: $0.messageWrapper) }
             items.append(contentsOf: messages)
-            if let last = pool.containers.last, last.nextID == nil, let id = last.remoteID {
+            if let last = page.messages.last, last.nextID == nil, let id = last.remoteID {
                 items.append(.empty(id: .init(id), reverse: true))
             }
         }
@@ -216,12 +212,12 @@ final class ChatService: ChatServiceProtocol {
 
         self.updateHandler?(items.reversed())
     }
-    
-    private func sendedMessage(_ message: MessageContainer) {
-        pools.removeAll(where: { $0.containers.contains(where: { $0.identifier == message.identifier })})
+
+    private func sendedMessage(_ message: MessageNode) {
+        pages.removeAll(where: { $0.messages.contains(where: { $0.identifier == message.identifier })})
     }
 
-    private func update(_ inputs: [MessageContainer]) {
+    private func update(_ inputs: [MessageNode]) {
         guard !inputs.isEmpty else {
             return
         }
@@ -229,32 +225,30 @@ final class ChatService: ChatServiceProtocol {
             didUpdate()
         }
         var messages = inputs.sorted(by: { $0.actualIdentifier < $1.actualIdentifier })
-        
-        let index = (pools.firstIndex(where: { $0.minID >= messages[0].actualIdentifier }))
-        
+        let index = (pages.firstIndex(where: { $0.minID >= messages[0].actualIdentifier }))
         guard let index = index else {
-            MessagesPool(containers: messages).flatMap { pools.append($0) }
+            MessagesPage(messages: messages).flatMap { pages.append($0) }
             return
         }
-        
-        var result = [MessageContainer]()
-        while index < pools.count, !messages.isEmpty, pools[index].minID <= messages[messages.count - 1].actualIdentifier {
-            let pool = pools[index]
-            pools.remove(at: index)
-            
-            for container in pool.containers {
-                while !messages.isEmpty && messages[0].actualIdentifier < container.actualIdentifier {
+
+        var result = [MessageNode]()
+        while index < pages.count, !messages.isEmpty, pages[index].minID <= messages[messages.count - 1].actualIdentifier {
+            let page = pages[index]
+            pages.remove(at: index)
+
+            for message in page.messages {
+                while !messages.isEmpty && messages[0].actualIdentifier < message.actualIdentifier {
                     result.append(messages[0])
                     messages.removeFirst()
                 }
-                if !messages.isEmpty && container.actualIdentifier < messages[0].actualIdentifier {
-                    result.append(container)
-                } else if !messages.isEmpty && container.actualIdentifier == messages[0].actualIdentifier {
-                    container.messageType.base.update(messages[0].messageType.base)
-                    result.append(container)
+                if !messages.isEmpty && message.actualIdentifier < messages[0].actualIdentifier {
+                    result.append(message)
+                } else if !messages.isEmpty && message.actualIdentifier == messages[0].actualIdentifier {
+                    message.messageType.base.update(messages[0].messageType.base)
+                    result.append(message)
                     messages.removeFirst()
                 } else if messages.isEmpty {
-                    result.append(container)
+                    result.append(message)
                 }
             }
         }
@@ -262,8 +256,8 @@ final class ChatService: ChatServiceProtocol {
             result.append(messages[0])
             messages.removeFirst()
         }
-        if let newPools = MessagesPool(containers: result)?.separate(max: padgeSize) {
-            pools.insert(contentsOf: newPools, at: index)
+        if let newPages = MessagesPage(messages: result)?.separate(max: padgeSize) {
+            pages.insert(contentsOf: newPages, at: index)
         }
     }
 }
@@ -275,7 +269,7 @@ extension ChatService: Listener {
             case .newMessage(let message):
                 if message.base.chatId == chatId {
                     addNewMessage(
-                        .init(messageWrapper: message)
+                        MessageNode(message)
                     )
                 }
             case .closeConnect:
@@ -291,6 +285,6 @@ extension ChatService {
     struct Mock: ChatServiceProtocol {
         func viewDidShow(_ item: HistoryItem) { }
         func load(_ handler: @escaping (([HistoryItem]) -> Void)) { }
-        func send(text: String, completion: @escaping BoolClosure) {}
+        func send(text: String) {}
     }
 }

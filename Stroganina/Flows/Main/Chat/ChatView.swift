@@ -59,18 +59,15 @@ struct ChatView: View {
     }
 
     private var messages: some View {
-        ScrollViewReader { proxy in
-            ScrollView(showsIndicators: false) {
-                LazyVStack(spacing: 4) {
-                    Color.clear
-                        .frame(height: 8)
-                    ForEach(viewModel.history) { item in
-                        HistoryItemView(item: item, factory: factory)
-                            .id(item.id)
-                            .onAppear {
-                                viewModel.viewDidShow(item)
-                            }
-                    }
+        ScrollView(showsIndicators: false) {
+            LazyVStack(spacing: 4) {
+                Color.clear
+                    .frame(height: 8)
+                ForEach(viewModel.history) { item in
+                    HistoryItemView(item: item, factory: factory)
+                        .onAppear {
+                            viewModel.viewDidShow(item)
+                        }
                 }
             }
         }
