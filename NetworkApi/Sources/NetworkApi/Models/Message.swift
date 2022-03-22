@@ -7,10 +7,10 @@
 
 extension Raw {
     public struct Message: Codable {
-        public let user: User
+        public let user: User?
         public let date: UInt
         public let content: String
-        public let messageId: ID
+        public let messageId: ID?
         public let chatId: ID
         @SafeCodable public var type: MessageType
         public let state: SafeCodableContainer<MessageState>?
