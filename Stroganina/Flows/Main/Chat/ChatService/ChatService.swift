@@ -84,13 +84,19 @@ final class ChatService: ChatServiceProtocol {
             ),
             identifier: nil
         )
-        self.updateCenter.sendNotification(.newMessage(container.messageWrapper))
+        self.queue.async {
+            MessagesPool(containers: [container]).flatMap { self.pools.append($0) }
+            self.didUpdate()
+        }
         api.perform(function) { [weak self] result in
             switch result {
             case .success(let response):
                 container.provider = .init(response)
                 self?.queue.async {
                     self?.sendedMessage(container)
+                    DispatchQueue.main.async {
+                        self?.updateCenter.sendNotification(.newMessage(container.messageWrapper))
+                    }
                 }
                 completion(true)
             case let .failure(error):
@@ -213,7 +219,6 @@ final class ChatService: ChatServiceProtocol {
     
     private func sendedMessage(_ message: MessageContainer) {
         pools.removeAll(where: { $0.containers.contains(where: { $0.identifier == message.identifier })})
-        addNewMessage(message)
     }
 
     private func update(_ inputs: [MessageContainer]) {

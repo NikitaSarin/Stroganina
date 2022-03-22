@@ -35,7 +35,9 @@ final class ChatViewModel: ObservableObject {
     func start() {
         service.load { [weak self] items in
             DispatchQueue.main.async {
-                self?.history = items
+                withAnimation {
+                    self?.history = items
+                }
             }
         }
     }

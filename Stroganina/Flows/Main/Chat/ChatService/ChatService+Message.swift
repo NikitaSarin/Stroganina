@@ -25,7 +25,7 @@ extension ChatService {
         private(set) var nextID: MessageIdentifier?
         private(set) var backID: MessageIdentifier?
         
-        internal init(provider: MessageProvider, identifier: MessageIdentifier? = nil) {
+        internal init(provider: MessageProvider, identifier: MessageIdentifier?) {
             self.provider = provider
             self.identifier = identifier.generate(provider.remoteID)
         }
