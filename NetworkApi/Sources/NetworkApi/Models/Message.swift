@@ -13,5 +13,6 @@ extension Raw {
         public let messageId: ID
         public let chatId: ID
         @SafeCodable public var type: MessageType
+        public let state: SafeCodableContainer<MessageState>?
     }
 }

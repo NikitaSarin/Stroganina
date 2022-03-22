@@ -17,3 +17,9 @@ public struct SafeCodableContainer<T: Decodable>: Decodable {
         }
     }
 }
+
+extension SafeCodableContainer: Encodable where T: Encodable {
+    public func encode(to encoder: Encoder) throws {
+        try value?.encode(to: encoder)
+    }
+}

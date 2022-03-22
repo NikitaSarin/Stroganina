@@ -16,10 +16,12 @@ final class Builder {
     let pushService: PushService
 
     private let api: Networking
+    
+    private var chatServises = [Chat.ID: ChatService]()
 
     init(store: Store) {
         self.store = store
-        self.api = Api(config: .local, store: store)
+        self.api = Api(config: .default, store: store)
         self.updateCenter = UpdateCenter(api: api)
         self.pushService = PushService(api: api, store: store)
     }
@@ -52,7 +54,8 @@ final class Builder {
     }
 
     func buildChatScene(router: Router, input: Chat) -> UIViewController {
-        let service = ChatService(chatId: input.id, api: api, updateCenter: updateCenter)
+        let service = chatServises[input.id] ?? ChatService(chatId: input.id, api: api, updateCenter: updateCenter)
+        chatServises[input.id] = service
         let factory = ChatMessagesFactory()
         let viewModel = ChatViewModel(chat: input, service: service, router: router)
         let view = ChatView(viewModel: viewModel, factory: factory)

@@ -30,8 +30,18 @@ struct TextMessageRow: View {
     }
 
     var body: some View {
-        Text(message.text)
-            .bubble(isOutgoing: isOutgoing)
+        if #available(iOS 15, *) {
+            Text({ () -> AttributedString in
+                let text = try? AttributedString(
+                    markdown: message.text,
+                    options: AttributedString.MarkdownParsingOptions(interpretedSyntax: .full)
+                )
+                return text ?? AttributedString(message.text)
+            }()).bubble(isOutgoing: isOutgoing)
+        } else {
+            Text(message.text)
+                .bubble(isOutgoing: isOutgoing)
+        }
     }
 }
 

@@ -8,21 +8,8 @@
 import NetworkApi
 
 extension MessageWrapper {
-    convenience init(_ raw: Raw.Message) {
-        let base = Message(raw)
-        let type: MessageType
-        switch raw.type {
-        case .text:
-            if raw.content.isSingleEmoji {
-                type = .emoji(TextMessage(base: base, text: raw.content))
-            } else {
-                type = .text(TextMessage(base: base, text: raw.content))
-            }
-        case .service:
-            type = .service(TextMessage(base: base, text: raw.content))
-        case .unknown:
-            type = .service(TextMessage(base: base, text: "Unknown message type"))
-        }
+    convenience init(_ raw: Raw.Message, identifier: MessageIdentifier?) {
+        let type = MessageType(raw, identifier: identifier)
         self.init(type: type)
     }
 }

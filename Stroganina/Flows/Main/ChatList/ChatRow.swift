@@ -38,10 +38,23 @@ struct ChatRow: View {
                         .padding(.trailing, 2)
                 }
                 if let message = chat.lastMessage {
-                    Text(message.type.description)
-                        .font(.regular(size: 12))
-                        .lineLimit(2)
-                        .foregroundColor(.tg_grey)
+                    if #available(iOS 15, *) {
+                        Text({ () -> AttributedString in
+                            let text = try? AttributedString(
+                                markdown: message.type.description,
+                                options: AttributedString.MarkdownParsingOptions(interpretedSyntax: .full)
+                            )
+                            return text ?? AttributedString(message.type.description)
+                        }())
+                            .font(.regular(size: 12))
+                            .lineLimit(2)
+                            .foregroundColor(.tg_grey)
+                    } else {
+                        Text(message.type.description)
+                            .font(.regular(size: 12))
+                            .lineLimit(2)
+                            .foregroundColor(.tg_grey)
+                    }
                 }
             }
             .padding(.vertical, 2)

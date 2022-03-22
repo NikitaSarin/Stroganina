@@ -15,7 +15,7 @@ extension Chat {
             showSenders: raw.type != .personal,
             unreadCount: raw.notReadCount ?? 0,
             chatType: .init(raw.type),
-            lastMessage: raw.message.flatMap(MessageWrapper.init)
+            lastMessage: raw.message.flatMap( { MessageWrapper($0, identifier: .make(with: $0.messageId)) })
         )
     }
 }
