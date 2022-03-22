@@ -65,7 +65,7 @@ struct ChatView: View {
                     Color.clear
                         .frame(height: 8)
                     ForEach(viewModel.history) { item in
-                        ChatItem(item: item, factory: factory)
+                        ChatItemView(item: item, factory: factory)
                             .id(item.id)
                             .onAppear {
                                 viewModel.useItem(item)
@@ -82,8 +82,8 @@ struct ChatView: View {
     }
 }
 
-struct ChatItem: View {
-    let item: MessageItem
+struct ChatItemView: View {
+    let item: ChatItem
     let factory: ChatMessagesFactory
 
     var body: some View {

@@ -6,6 +6,12 @@
 //
 
 extension Raw {
+    public enum MessageState: Codable {
+        case watingSend
+        case failed
+        case read
+    }
+
     public enum MessageType: String, Codable, UnknownSafable {
         case text = "TEXT"
         case service = "SYSTEM_TEXT"

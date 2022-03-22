@@ -77,10 +77,10 @@ extension ChatListService: Listener {
         for notification in notifications {
             switch notification {
             case .newMessage(let message):
-                chats.first(where: { $0.id == message.chatId })?.lastMessage = MessageWrapper(message)
+                chats.first(where: { $0.id == message.base.chatId })?.lastMessage = message
                 isNeedUpdate = true
             case .newChat(let chat):
-                chats.insert(Chat(chat))
+                chats.insert(chat)
                 isNeedUpdate = true
             case .closeConnect:
                 fetchChats()

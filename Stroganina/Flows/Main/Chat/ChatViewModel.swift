@@ -16,7 +16,7 @@ final class ChatViewModel: ObservableObject {
         chat.chatType == .group
     }
 
-    @Published var history = [MessageItem]()
+    @Published var history = [ChatItem]()
     @Published var messageText = ""
 
     private var service: ChatServiceProtocol
@@ -40,7 +40,7 @@ final class ChatViewModel: ObservableObject {
         }
     }
 
-    func useItem(_ item: MessageItem) {
+    func useItem(_ item: ChatItem) {
         service.useItem(item)
     }
 

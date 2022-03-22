@@ -9,12 +9,13 @@ import SwiftUI
 
 class Message: Identifiable, ObservableObject {
 
-    typealias ID = String
+    typealias ID = MessageIdentifier
 
-    let id: ID
+    let id: MessageIdentifier
     let date: Date
     var isOutgoing: Bool
     var state: MessageState
+    var remoteId: MessageIdentifier.ID?
     let chatId: Chat.ID
     var sender: String? {
         (!isOutgoing) ? user?.name : nil
@@ -28,6 +29,7 @@ class Message: Identifiable, ObservableObject {
         user: User?,
         isOutgoing: Bool,
         chatId: Chat.ID,
+        remoteId: MessageIdentifier.ID?,
         state: MessageState
     ) {
         self.id = id
@@ -36,6 +38,23 @@ class Message: Identifiable, ObservableObject {
         self.isOutgoing = isOutgoing
         self.chatId = chatId
         self.state = state
+        self.remoteId = remoteId
+    }
+    
+    init(
+        id: ID,
+        date: Date,
+        chatId: Chat.ID,
+        remoteId: MessageIdentifier.ID?,
+        state: MessageState
+    ) {
+        self.id = id
+        self.date = date
+        self.user = nil
+        self.isOutgoing = true
+        self.chatId = chatId
+        self.state = state
+        self.remoteId = remoteId
     }
 
     init(_ other: Message) {
@@ -45,6 +64,7 @@ class Message: Identifiable, ObservableObject {
         isOutgoing = other.isOutgoing
         chatId = other.chatId
         state = other.state
+        remoteId = other.remoteId
     }
 }
 
@@ -69,13 +89,14 @@ extension Message {
         case unknown
     }
 
-    static func mock(_ options: MockOptions = .default, id: Message.ID = "1", state: MessageState = .sended) -> Message {
+    static func mock(_ options: MockOptions = .default, id: Message.ID = .remote(id: 10), state: MessageState = .sended) -> Message {
         Message(
             id: id,
             date: Date(),
             user: options.contains(.user) ? .mock : nil,
             isOutgoing: options.contains(.isOutgoing),
             chatId: 1,
+            remoteId: nil,
             state: .sended
         )
     }
