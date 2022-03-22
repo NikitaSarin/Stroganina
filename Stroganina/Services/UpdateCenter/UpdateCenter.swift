@@ -67,9 +67,9 @@ final class UpdateCenter {
         for notification in notifications {
             switch notification.value {
             case .newMessage(let message):
-                result.append(.newMessage(MessageWrapper(message)))
+                result.append(.newMessage(message))
             case .newChat(let chat):
-                result.append(.newChat(Chat(chat)))
+                result.append(.newChat(chat))
             case .none:
                 continue
             }

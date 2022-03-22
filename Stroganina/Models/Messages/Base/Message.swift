@@ -9,15 +9,15 @@ import SwiftUI
 
 class Message: Identifiable, ObservableObject {
 
-    typealias ID = UInt
+    typealias ID = String
 
     let id: ID
     let date: Date
     var isOutgoing: Bool
-    var showSenders: Bool
+    var state: MessageState
     let chatId: Chat.ID
     var sender: String? {
-        (showSenders && !isOutgoing) ? user?.name : nil
+        (!isOutgoing) ? user?.name : nil
     }
 
     @Published var user: User?
@@ -27,15 +27,15 @@ class Message: Identifiable, ObservableObject {
         date: Date,
         user: User?,
         isOutgoing: Bool,
-        showSenders: Bool,
-        chatId: Chat.ID
+        chatId: Chat.ID,
+        state: MessageState
     ) {
         self.id = id
         self.date = date
         self.user = user
         self.isOutgoing = isOutgoing
-        self.showSenders = showSenders
         self.chatId = chatId
+        self.state = state
     }
 
     init(_ other: Message) {
@@ -43,8 +43,8 @@ class Message: Identifiable, ObservableObject {
         date = other.date
         user = other.user
         isOutgoing = other.isOutgoing
-        showSenders = other.showSenders
         chatId = other.chatId
+        state = other.state
     }
 }
 
@@ -55,21 +55,28 @@ extension Message {
 
         static let user = MockOptions(rawValue: 1 << 0)
         static let isOutgoing = MockOptions(rawValue: 1 << 1)
-        static let showSenders = MockOptions(rawValue: 1 << 2)
         static let reply = MockOptions(rawValue: 1 << 3)
         static let forward = MockOptions(rawValue: 1 << 4)
-        static let `default`: MockOptions = [.user, .showSenders]
+        static let `default`: MockOptions = [.user]
         static let empty: MockOptions = []
     }
+    
+    enum MessageState {
+        case watingSend
+        case sended
+        case failed
+        case read
+        case unknown
+    }
 
-    static func mock(_ options: MockOptions = .default, id: Message.ID = 1) -> Message {
+    static func mock(_ options: MockOptions = .default, id: Message.ID = "1", state: MessageState = .sended) -> Message {
         Message(
             id: id,
             date: Date(),
             user: options.contains(.user) ? .mock : nil,
             isOutgoing: options.contains(.isOutgoing),
-            showSenders: options.contains(.showSenders),
-            chatId: 1
+            chatId: 1,
+            state: .sended
         )
     }
 }

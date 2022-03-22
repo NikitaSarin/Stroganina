@@ -6,7 +6,7 @@
 //
 
 extension Raw {
-    public struct User: Codable {
+    public struct User: Codable, Hashable {
         public let userId: ID
         public let isSelf: Bool
         public let name: String

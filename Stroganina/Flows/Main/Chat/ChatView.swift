@@ -64,14 +64,11 @@ struct ChatView: View {
                 LazyVStack(spacing: 4) {
                     Color.clear
                         .frame(height: 8)
-                    ForEach(viewModel.history) { wrapper in
-                        factory.bubble(for: wrapper.type) {}
-                        .flip()
-                            .id(wrapper.id)
+                    ForEach(viewModel.history) { item in
+                        ChatItem(item: item, factory: factory)
+                            .id(item.id)
                             .onAppear {
-                                if wrapper.id == viewModel.history.last?.id {
-                                    viewModel.loadNewMessagesIfNeeded()
-                                }
+                                viewModel.useItem(item)
                             }
                     }
                 }
@@ -85,6 +82,24 @@ struct ChatView: View {
     }
 }
 
+struct ChatItem: View {
+    let item: MessageItem
+    let factory: ChatMessagesFactory
+
+    var body: some View {
+        ZStack {
+            switch item {
+            case .new:
+                Spacer(minLength: 10)
+            case .empty:
+                Spacer(minLength: 100)
+            case .message(let wrapper):
+                factory.bubble(for: wrapper.type) {}.flip()
+            }
+        }
+    }
+    
+}
 
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {

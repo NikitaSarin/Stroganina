@@ -11,12 +11,12 @@ import NetworkApi
 extension Message {
     convenience init(_ raw: Raw.Message) {
         self.init(
-            id: raw.messageId,
+            id: "\(raw.messageId)",
             date: Date(timeIntervalSince1970: TimeInterval(raw.date)),
             user: User(raw.user),
             isOutgoing: raw.user.isSelf,
-            showSenders: true,
-            chatId: raw.chatId
+            chatId: raw.chatId,
+            state: .unknown
         )
     }
 }

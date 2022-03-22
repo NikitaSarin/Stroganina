@@ -95,12 +95,53 @@ struct Bubble<Content: View>: View {
             }
         }
     }
+    
+    private var statusView: some View {
+        Group {
+            switch message.state {
+            case .sended:
+                Image(systemName: "checkmark.circle")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(.green.opacity(0.7))
+            case .failed:
+                Image(systemName: "xmark.octagon.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(.red)
+            case .read:
+                Image(systemName: "checkmark.circle.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(.green.opacity(0.7))
+            case .unknown:
+                Spacer(minLength: 0)
+            case .watingSend:
+                ProgressView()
+                    .scaledToFit()
+            }
+        }
+        .frame(width: 14, height: 14)
+    }
 
     private var bubble: some View {
         VStack(alignment: .leading, spacing: 0) {
             info
-            content
-                .padding(style.insets)
+            HStack(spacing: 0) {
+                content
+                    .padding({ () -> EdgeInsets in
+                        var result = style.insets
+                        if message.isOutgoing && message.state != .unknown {
+                            result.trailing = 0
+                        }
+                        return result
+                    }())
+                if message.isOutgoing && message.state != .unknown {
+                    Spacer(minLength: 2).frame(width: style.insets.trailing / 2)
+                    statusView.padding(.bottom, 0)
+                    Spacer(minLength: 2).frame(width: style.insets.trailing)
+                }
+            }
         }
         .background(style.backgroundColor(isOutgoing: message.isOutgoing))
         .cornerRadius(style.cornerRadius)
@@ -133,14 +174,14 @@ struct Bubble_Previews: PreviewProvider {
         ScrollView {
             VStack {
                 Bubble(
-                    message: .mock(),
+                    message: .mock([.isOutgoing], state: .sended),
                     style: .plain
                 ) {
                     Text("Who?")
                         .bubble(isOutgoing: false)
                 }
                 Bubble(
-                    message: .mock(),
+                    message: .mock([.isOutgoing], state: .sended),
                     style: .transparent
                 ) {
                     EmojiMessageRow(message: .init(base: .mock(), text: "😎"))

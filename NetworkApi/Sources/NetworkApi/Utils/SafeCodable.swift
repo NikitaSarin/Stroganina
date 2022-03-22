@@ -10,7 +10,7 @@ import Foundation
 @propertyWrapper
 public struct SafeCodable<T: Codable & UnknownSafable>: Codable {
 
-    public let wrappedValue: T
+    public var wrappedValue: T
 
     public init(wrappedValue: T) {
         self.wrappedValue = wrappedValue
