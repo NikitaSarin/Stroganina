@@ -38,6 +38,7 @@
 		E8EBDBAC27EA0960001A5189 /* MessageIdentifier+Raw.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EBDBAB27EA0960001A5189 /* MessageIdentifier+Raw.swift */; };
 		E8EBDBB027EA0B03001A5189 /* HistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EBDBAF27EA0B03001A5189 /* HistoryItem.swift */; };
 		E8EBDBB227EA0BA8001A5189 /* MessagesPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EBDBB127EA0BA8001A5189 /* MessagesPage.swift */; };
+		E8EBDBB827EA8DF4001A5189 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EBDBB727EA8DF4001A5189 /* WebView.swift */; };
 		FD01A91C272C9741005241ED /* EmojiMessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD62422E272AFA2D00EF7F73 /* EmojiMessageRow.swift */; };
 		FD01A91F272C97FF005241ED /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD01A91E272C97FF005241ED /* Helpers.swift */; };
 		FD063DC92730507F00464DDA /* NetworkApi in Frameworks */ = {isa = PBXBuildFile; productRef = FD063DC82730507F00464DDA /* NetworkApi */; };
@@ -130,6 +131,7 @@
 		E8EBDBAB27EA0960001A5189 /* MessageIdentifier+Raw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageIdentifier+Raw.swift"; sourceTree = "<group>"; };
 		E8EBDBAF27EA0B03001A5189 /* HistoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItem.swift; sourceTree = "<group>"; };
 		E8EBDBB127EA0BA8001A5189 /* MessagesPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesPage.swift; sourceTree = "<group>"; };
+		E8EBDBB727EA8DF4001A5189 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		FD01A91E272C97FF005241ED /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		FD063DCD27305C9100464DDA /* cert.crt */ = {isa = PBXFileReference; lastKnownFileType = file; path = cert.crt; sourceTree = "<group>"; };
 		FD063DCF27305F9300464DDA /* ChatRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRow.swift; sourceTree = "<group>"; };
@@ -308,6 +310,14 @@
 				E8EBDBAF27EA0B03001A5189 /* HistoryItem.swift */,
 			);
 			path = ChatService;
+			sourceTree = "<group>";
+		};
+		E8EBDBB627EA8DF4001A5189 /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				E8EBDBB727EA8DF4001A5189 /* WebView.swift */,
+			);
+			path = Web;
 			sourceTree = "<group>";
 		};
 		FD063DC72730507F00464DDA /* Frameworks */ = {
@@ -500,6 +510,7 @@
 		FDCE3B50272AEF9500DAF3AB /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				E8EBDBB627EA8DF4001A5189 /* Web */,
 				E8EBDB9F27E9F40C001A5189 /* ChatService */,
 				FDECCC05272C7FF300BFAF8D /* SendMessage */,
 				FD624212272AF9A700EF7F73 /* ChatView.swift */,
@@ -742,6 +753,7 @@
 				DCE8FE22272EA6D100A43032 /* UserSearchService.swift in Sources */,
 				E8EBDBA227E9F421001A5189 /* MessageNode.swift in Sources */,
 				FDCE3B35272AEEBC00DAF3AB /* SceneDelegate.swift in Sources */,
+				E8EBDBB827EA8DF4001A5189 /* WebView.swift in Sources */,
 				FD624240272AFA2D00EF7F73 /* Bubble.swift in Sources */,
 				FD62426E272AFCC500EF7F73 /* UIImage+Stroganina.swift in Sources */,
 				DC5469DB272D8B7100935298 /* User+Raw.swift in Sources */,

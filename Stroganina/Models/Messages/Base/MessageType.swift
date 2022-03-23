@@ -13,6 +13,9 @@ enum MessageType: Identifiable {
     case text(TextMessage)
     case emoji(TextMessage)
     case service(TextMessage)
+    case web(TextMessage)
+    case webContent(TextMessage)
+    case telegram(TelegramMessage)
 
     var id: Message.ID {
         base.id
@@ -23,6 +26,9 @@ enum MessageType: Identifiable {
         case let .text(message): return message
         case let .emoji(message): return message
         case let .service(message): return message
+        case let .web(message): return message
+        case let .webContent(message): return message
+        case let .telegram(message): return message
         }
     }
 
@@ -34,6 +40,12 @@ enum MessageType: Identifiable {
             return message.text
         case let .service(message):
             return message.text
+        case let .web(message):
+            return message.text
+        case .webContent:
+            return "***HTML***"
+        case .telegram:
+            return "***Telegramm message***"
         }
     }
 
@@ -49,10 +61,19 @@ enum MessageType: Identifiable {
             remoteId: nil,
             state: .awaiting
         )
-        if text.isSingleEmoji {
-            self = .emoji(TextMessage(base: base, text: text))
+        self = Self.makeTextBase(base, text: text)
+    }
+
+    static func makeTextBase(_ base: Message, text: String) -> Self {
+        let tgPrefix = "https://t.me/"
+        if text.hasPrefix(tgPrefix) {
+            return .telegram(TelegramMessage(base: base, link: text.split(separator: "?").map(String.init)[0]))
+        } else if URL(string: text) != nil, text.hasPrefix("https://") {
+            return .web(TextMessage(base: base, text: text))
+        } else if text.isSingleEmoji {
+            return .emoji(TextMessage(base: base, text: text))
         } else {
-            self = .text(TextMessage(base: base, text: text))
+            return .text(TextMessage(base: base, text: text))
         }
     }
 

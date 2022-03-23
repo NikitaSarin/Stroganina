@@ -15,15 +15,15 @@ extension MessageType {
         let base = Message(raw, identifier: identifier.generate(raw.messageId))
         switch raw.type {
         case .text:
-            if raw.content.isSingleEmoji {
-                self = .emoji(TextMessage(base: base, text: raw.content))
-            } else {
-                self = .text(TextMessage(base: base, text: raw.content))
-            }
+            self = Self.makeTextBase(base, text: raw.content)
         case .service:
             self = .service(TextMessage(base: base, text: raw.content))
         case .unknown:
             self = .service(TextMessage(base: base, text: "Unknown message type"))
+        case .webURL:
+            self = .webContent(TextMessage(base: base, text: raw.content))
+        case .webContent:
+            self = .web(TextMessage(base: base, text: raw.content))
         }
     }
 }

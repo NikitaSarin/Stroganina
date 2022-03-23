@@ -15,6 +15,8 @@ extension Raw {
     public enum MessageType: String, Codable, UnknownSafable {
         case text = "TEXT"
         case service = "SYSTEM_TEXT"
+        case webURL = "WEB_URL"
+        case webContent = "WEB_CONTENT"
         case unknown
     }
 }

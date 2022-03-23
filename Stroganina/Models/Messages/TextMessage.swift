@@ -21,3 +21,21 @@ final class TextMessage: Message {
 extension TextMessage {
     static let mock = TextMessage(base: .mock(), text: "Hello\nWorld")
 }
+
+
+final class TelegramMessage: Message {
+
+    let link: String
+
+    init(
+        base: Message,
+        link: String
+    ) {
+        self.link = link
+        super.init(base)
+    }
+}
+
+extension TelegramMessage {
+    static let mock = TelegramMessage(base: .mock(), link: "https://t.me/ru2ch_news/38783")
+}
