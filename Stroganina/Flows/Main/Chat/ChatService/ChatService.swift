@@ -272,7 +272,7 @@ extension ChatService: Listener {
                         MessageNode(message)
                     )
                 }
-            case .closeConnect:
+            case .reconnected:
                 outOfSync()
             default:
                 break

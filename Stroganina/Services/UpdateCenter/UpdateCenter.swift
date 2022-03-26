@@ -32,7 +32,7 @@ final class UpdateCenter {
         self.update(notifications)
     }
     
-    func activate() {
+    func activate(_ reconnect: Bool = false) {
         api.addListener(GetUpdate()) { [weak self] result in
             switch result {
             case .success(let response):
@@ -41,12 +41,15 @@ final class UpdateCenter {
                 if case ApiError.closeConnect = error {
                     self?.update([.closeConnect])
                     DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                        self?.activate()
+                        self?.activate(true)
                     }
                 }
             }
         }
-        api.perform(AddListenerUpdate()) { _ in
+        api.perform(AddListenerUpdate()) { [weak self] result in
+            if case .success = result, reconnect {
+                self?.update([.reconnected])
+            }
         }
     }
 
