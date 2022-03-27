@@ -97,6 +97,9 @@ final class ChatService: ChatServiceProtocol {
                     }
                 }
             case let .failure(error):
+                DispatchQueue.main.async {
+                    message.messageType.base.status = .failed
+                }
                 print(error)
             }
         }
@@ -110,6 +113,7 @@ final class ChatService: ChatServiceProtocol {
     }
 
     private func outOfSync() {
+
         queue.async {
             self.bottomLoaded = false
             self.didUpdate()
@@ -225,7 +229,7 @@ final class ChatService: ChatServiceProtocol {
             didUpdate()
         }
         var messages = inputs.sorted(by: { $0.actualIdentifier < $1.actualIdentifier })
-        let index = (pages.firstIndex(where: { $0.minID >= messages[0].actualIdentifier }))
+        let index = (pages.firstIndex(where: { $0.maxID >= messages[0].actualIdentifier }))
         guard let index = index else {
             MessagesPage(messages: messages).flatMap { pages.append($0) }
             return

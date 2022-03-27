@@ -32,10 +32,10 @@ final class ChatListService: ChatListServiceProtocol {
     ) {
         self.api = api
         self.updateCenter = updateCenter
+        updateCenter.addListener(self)
     }
 
     func fetchChats() {
-        updateCenter.addListener(self)
         api.perform(GetChats()) { [weak self] response in
             self?.didLoad(response)
         }
