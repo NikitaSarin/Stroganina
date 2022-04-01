@@ -16,6 +16,11 @@ final class Builder {
     let pushService: PushService
 
     private let api: Networking
+    private lazy var chatServisesBuilder: ChatServisesBuilder = {
+        ChatServisesBuilder(updateCenter: updateCenter, api: api)
+    }()
+    
+    private var chatServises = [Chat.ID: ChatService]()
 
     init(store: Store) {
         self.store = store
@@ -52,7 +57,7 @@ final class Builder {
     }
 
     func buildChatScene(router: Router, input: Chat) -> UIViewController {
-        let service = ChatService(chatId: input.id, api: api, updateCenter: updateCenter)
+        let service = chatServisesBuilder.service(with: input.id)
         let factory = ChatMessagesFactory()
         let viewModel = ChatViewModel(chat: input, service: service, router: router)
         let view = ChatView(viewModel: viewModel, factory: factory)

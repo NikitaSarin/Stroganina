@@ -19,7 +19,7 @@ struct SettingsView: View {
             Spacer()
             Section {
                 Spacer()
-                Text("Logout")
+                Text("Log out")
                     .foregroundColor(.red)
                     .font(.regular(size: 18))
                     .frame(height: 30)

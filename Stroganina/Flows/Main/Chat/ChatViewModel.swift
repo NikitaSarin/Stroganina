@@ -16,7 +16,7 @@ final class ChatViewModel: ObservableObject {
         chat.chatType == .group
     }
 
-    @Published var history = [MessageWrapper]()
+    @Published var history = [HistoryItem]()
     @Published var messageText = ""
 
     private var service: ChatServiceProtocol
@@ -30,44 +30,30 @@ final class ChatViewModel: ObservableObject {
         self.chat = chat
         self.service = service
         self.router = router
-
-        self.service.delegate = self
     }
 
     func start() {
-        service.start()
-        reloadHistory()
-    }
-
-    func loadNewMessagesIfNeeded() {
-        if !service.allMessagesFetched {
-            reloadHistory()
+        service.load { [weak self] items in
+            DispatchQueue.main.async {
+                withAnimation {
+                    self?.history = items
+                }
+            }
         }
     }
 
-    func reloadHistory() {
-        service.fetch(from: history.last?.id)
+    func viewDidShow(_ item: HistoryItem) {
+        service.viewDidShow(item)
     }
-    
+
     func addUsersInChat() {
         router.openSearchUser(input: chat)
     }
 }
 
-extension ChatViewModel: ChatServiceDelegate {
-    func didChange(messages: [MessageWrapper]) {
-        DispatchQueue.main.async {
-            withAnimation {
-                self.history = messages
-            }
-        }
-    }
-}
-
 extension ChatViewModel: SendMessagePanelDelegate {
     func sendButtonTapped() {
-        service.send(text: messageText) { [weak self] success in
-            self?.messageText = ""
-        }
+        service.send(text: messageText)
+        messageText = ""
     }
 }

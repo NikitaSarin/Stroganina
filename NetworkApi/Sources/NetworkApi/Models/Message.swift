@@ -10,8 +10,9 @@ extension Raw {
         public let user: User
         public let date: UInt
         public let content: String
-        public let messageId: ID
+        public let messageId: ID?
         public let chatId: ID
         @SafeCodable public var type: MessageType
+        public let state: SafeCodableContainer<MessageState>?
     }
 }

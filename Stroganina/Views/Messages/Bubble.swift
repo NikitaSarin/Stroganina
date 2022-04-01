@@ -42,6 +42,15 @@ enum BubbleStyle {
         }
     }
 
+    var statusInsets: EdgeInsets {
+        switch self {
+        case .plain:
+            return .init(top: 0, leading: 0, bottom: -3, trailing: -5)
+        case .transparent, .service:
+            return .init(top: 0, leading: 0, bottom: 4, trailing: 8)
+        }
+    }
+
     var cornerRadius: CGFloat {
         switch self {
         case .plain: return 16
@@ -97,15 +106,43 @@ struct Bubble<Content: View>: View {
     }
 
     private var bubble: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            info
-            content
+        HStack(spacing: 2) {
+            VStack(alignment: .leading, spacing: 0) {
+                info
+                HStack(spacing: style == .plain ? 6 : 0) {
+                    content
+                        .padding(.trailing,
+                                 style == .transparent ? -10 : 0)
+                    if message.isOutgoing, message.status != .failed {
+                        VStack {
+                            Spacer(minLength: 0)
+                            MessageStatusView(
+                                status: message.status,
+                                bubbleStyle: style
+                            )
+                            .padding(style.statusInsets)
+                        }
+                    }
+                }
                 .padding(style.insets)
-        }
-        .background(style.backgroundColor(isOutgoing: message.isOutgoing))
-        .cornerRadius(style.cornerRadius)
-        .onTapGesture {
-            detailsBlock?()
+            }
+            .background(style.backgroundColor(isOutgoing: message.isOutgoing))
+            .cornerRadius(style.cornerRadius)
+            .onTapGesture {
+                detailsBlock?()
+            }
+            if message.status == .failed {
+                Button {
+                    //
+                } label: {
+                    MessageStatusView(
+                        status: message.status,
+                        bubbleStyle: style
+                    )
+                }
+                .frame(edge: 20)
+                .padding(.trailing, 2)
+            }
         }
     }
 
@@ -132,15 +169,16 @@ struct Bubble_Previews: PreviewProvider {
     static var previews: some View {
         ScrollView {
             VStack {
+                let status: Message.Status = .sent
                 Bubble(
-                    message: .mock(),
+                    message: .mock([.isOutgoing], status: status),
                     style: .plain
                 ) {
                     Text("Who?")
-                        .bubble(isOutgoing: false)
+                        .bubble(isOutgoing: true)
                 }
                 Bubble(
-                    message: .mock(),
+                    message: .mock([.isOutgoing], status: status),
                     style: .transparent
                 ) {
                     EmojiMessageRow(message: .init(base: .mock(), text: "😎"))

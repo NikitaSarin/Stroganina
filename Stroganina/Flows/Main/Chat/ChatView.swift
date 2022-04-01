@@ -59,21 +59,15 @@ struct ChatView: View {
     }
 
     private var messages: some View {
-        ScrollViewReader { proxy in
-            ScrollView(showsIndicators: false) {
-                LazyVStack(spacing: 4) {
-                    Color.clear
-                        .frame(height: 8)
-                    ForEach(viewModel.history) { wrapper in
-                        factory.bubble(for: wrapper.type) {}
-                        .flip()
-                            .id(wrapper.id)
-                            .onAppear {
-                                if wrapper.id == viewModel.history.last?.id {
-                                    viewModel.loadNewMessagesIfNeeded()
-                                }
-                            }
-                    }
+        ScrollView(showsIndicators: false) {
+            LazyVStack(spacing: 4) {
+                Color.clear
+                    .frame(height: 8)
+                ForEach(viewModel.history) { item in
+                    HistoryItemView(item: item, factory: factory)
+                        .onAppear {
+                            viewModel.viewDidShow(item)
+                        }
                 }
             }
         }
@@ -85,6 +79,24 @@ struct ChatView: View {
     }
 }
 
+struct HistoryItemView: View {
+    let item: HistoryItem
+    let factory: ChatMessagesFactory
+
+    var body: some View {
+        ZStack {
+            switch item {
+            case .new:
+                Spacer(minLength: 10)
+            case .empty:
+                Spacer(minLength: 100)
+            case .message(let wrapper):
+                factory.bubble(for: wrapper.type) {}.flip()
+            }
+        }
+    }
+    
+}
 
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
