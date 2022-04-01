@@ -5,7 +5,6 @@
 //  Created by Сарин Никита Сергеевич on 28.10.2021.
 //
 
-import UIKit
 import SwiftUI
 import NetworkApi
 
@@ -29,67 +28,56 @@ final class Builder {
         self.pushService = PushService(api: api, store: store)
     }
 
-    func buildStartScene(router: AuthRouting) -> UIViewController {
-        let view = StartView(router: router)
-        return HostingController(rootView: view)
+    func buildStartScene(router: AuthRouting) -> some IScreenView {
+        ScreenView(StartView(router: router), navigationBarConfig: .init(hidden: true))
     }
 
-    func buildLoginScene(router: AuthRouting) -> UIViewController {
+    func buildLoginScene(router: AuthRouting) -> some IScreenView {
         let service = LoginService(api: api, store: store)
         let viewModel = LoginViewModel(router: router, service: service, pushService: pushService)
         let view = LoginView(viewModel: viewModel)
-        return HostingController(rootView: view)
+        return ScreenView(view)
     }
 
-    func buildRegistrationScene(router: AuthRouting) -> UIViewController {
+    func buildRegistrationScene(router: AuthRouting) -> some IScreenView {
         let service = RegistrationService(api: api, store: store)
         let viewModel = RegistrationViewModel(router: router, service: service, pushService: pushService)
         let view = RegistrationView(viewModel: viewModel)
-        return HostingController(rootView: view)
+        return ScreenView(view)
     }
 
-    func buildMainScene(router: Router) -> UIViewController {
-        let chatList = buildChatListScene(router: router)
-        let settings = buildSettingsScene(router: router)
-        let tabbar = TabBarController()
-        tabbar.viewControllers = [chatList, settings]
-        return tabbar
-    }
-
-    func buildChatScene(router: Router, input: Chat) -> UIViewController {
+    func buildChatScene(router: Router, input: Chat) -> some IScreenView {
         let service = chatServisesBuilder.service(with: input.id)
         let factory = ChatMessagesFactory()
         let viewModel = ChatViewModel(chat: input, service: service, router: router)
         let view = ChatView(viewModel: viewModel, factory: factory)
-        return HostingController(rootView: view)
+        return ScreenView(view)
     }
 
-    private func buildChatListScene(router: Router) -> UIViewController {
+    func buildChatListScene(router: Router) -> some IScreenView {
         let service = ChatListService(api: api, updateCenter: updateCenter)
         let viewModel = ChatListViewModel(router: router, service: service, store: store)
         let view = ChatList(viewModel: viewModel)
-        let viewController = HostingController(rootView: view)
-        viewController.tabBarItem = UITabBarItem(title: "Chats", image: UIImage(systemName: "message"), tag: 0)
-        return viewController
+        return ScreenView(view)
     }
 
-    private func buildSettingsScene(router: Router) -> UIViewController {
+    func buildSettingsScene(router: Router) -> some IScreenView {
         let service = SettingsService(api: api, store: store)
         let viewModel = SettingsViewModel(router: router, service: service)
         let view = SettingsView(viewModel: viewModel)
-        let viewController = HostingController(rootView: view, isNavigationBarHidden: true)
-        viewController.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gear"), tag: 0)
-        return viewController
+        return ScreenView(view, navigationBarConfig: .init(hidden: true))
     }
 
     // Все ниже в отдельный билдер
 
     func buildNewChatRouter(
+        navigation: Navigation,
         type: Chat.ChatType,
         openChatHandler: @escaping (Chat) -> Void
     ) -> NewChatRouter {
         let engine = NewChatEngine(mode: type, api: api)
         let router = NewChatRouter(
+            root: navigation,
             engine: engine,
             builder: self,
             openChatHandler: openChatHandler
@@ -98,16 +86,16 @@ final class Builder {
         return router
     }
 
-    func buildChatSetupScene(handler: ChatSetupOutputHandler) -> UIViewController {
+    func buildChatSetupScene(handler: ChatSetupOutputHandler) -> some IScreenView {
         let viewModel = ChatSetupViewModel(handler: handler)
         let view = ChatSetupView(viewModel: viewModel)
-        return HostingController(rootView: view)
+        return ScreenView(view)
     }
 
     func buildUserSearchScene(
         multipleUsers: Bool,
         handler: UserSearchOutputHandler
-    ) -> UIViewController {
+    ) -> some IScreenView {
         let service = UserSearchService(api: api)
         let viewModel = UserSearchViewModel(
             multipleUsers: multipleUsers,
@@ -115,13 +103,12 @@ final class Builder {
             service: service
         )
         let view = UserSearchView(viewModel: viewModel)
-        return HostingController(rootView: view)
+        return ScreenView(view)
     }
 
-    func buildAddUsersScene(chat: Chat) -> UIViewController {
-        let navigation = UINavigationController()
+    func buildAddUsersScene(chat: Chat, closeHandler: @escaping () -> Void) -> some IScreenView {
         let decorator = AddUsersDecorator(api: api, chat: chat) {
-            navigation.dismiss(animated: true)
+            closeHandler()
         }
         let service = UserSearchService(api: api)
         let viewModel = UserSearchViewModel(
@@ -130,8 +117,6 @@ final class Builder {
             service: service
         )
         let view = UserSearchView(viewModel: viewModel)
-        let viewController = HostingController(rootView: view)
-        navigation.viewControllers = [viewController]
-        return navigation
+        return ScreenView(view)
     }
 }

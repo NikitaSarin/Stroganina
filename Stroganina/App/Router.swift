@@ -9,25 +9,17 @@ import UIKit
 
 final class Router {
 
-    private let window: UIWindow
     private let builder: Builder
     private let auth: AuthService
 
-    private lazy var root: RootViewController = {
-        let root = RootViewController()
-        builder.updateCenter.addListener(root)
-        return root
-    }()
-    private var navigation: UINavigationController {
-        return root.content
-    }
+    private var navigation: Navigation
     private let store: Store
 
     init(
-        window: UIWindow,
+        navigation: Navigation,
         builder: Builder
     ) {
-        self.window = window
+        self.navigation = navigation
         self.builder = builder
         self.store = builder.store
         self.auth = AuthService(store: builder.store)
@@ -39,7 +31,6 @@ final class Router {
         } else {
             openStartScene(animated: false)
         }
-        window.rootViewController = root
     }
 
     func appDidEnterBackground() {
@@ -49,19 +40,24 @@ final class Router {
 
 extension Router: AuthRouting {
     func openLoginScene() {
-        let viewController = builder.buildLoginScene(router: self)
-        navigation.pushViewController(viewController, animated: true)
+        let screen = builder.buildLoginScene(router: self)
+        navigation.pushViewController(screen, animated: true)
     }
 
     func openRegistrationScene() {
-        let viewController = builder.buildRegistrationScene(router: self)
-        navigation.pushViewController(viewController, animated: true)
+        let screen = builder.buildRegistrationScene(router: self)
+        navigation.pushViewController(screen, animated: true)
     }
 
     func openMainFlow(animated: Bool) {
         builder.updateCenter.start()
-        let viewController = builder.buildMainScene(router: self)
-        navigation.setViewControllers([viewController], animated: animated)
+        let chatList = builder.buildChatListScene(router: self)
+        let settings = builder.buildSettingsScene(router: self)
+
+        navigation.setRoot(animated: false, requredFullScreen: false) { tabNavigation in
+            tabNavigation.add(.init(title: "Chat", image: "message", screen: chatList))
+            tabNavigation.add(.init(title: "Settings", image: "gear", screen: settings))
+        }
     }
 }
 
@@ -72,24 +68,29 @@ extension Router: ChatListRouting {
     }
 
     func openNewChatScene(type: Chat.ChatType) {
-        let router = builder.buildNewChatRouter(type: type) { [weak self] chat in
+        let router = builder.buildNewChatRouter(navigation: navigation, type: type) { [weak self] chat in
             self?.openChatScene(chat)
         }
         router.start()
-        navigation.present(router.navigation, animated: true, completion: nil)
     }
 }
 
 extension Router: SettingsRouting {
     func openStartScene(animated: Bool) {
-        let viewController = builder.buildStartScene(router: self)
-        navigation.setViewControllers([viewController], animated: animated)
+        let screen = builder.buildStartScene(router: self)
+        navigation.setRoot(screen, animated: animated, requredFullScreen: true)
     }
 }
 
 extension Router: ChatRouting {
     func openSearchUser(input: Chat) {
-        let viewController = builder.buildAddUsersScene(chat: input)
-        navigation.present(viewController, animated: true, completion: nil)
+        navigation.present(animated: true, completion: nil) { navigation in
+            var navigation: Navigation? = navigation
+            let screen = builder.buildAddUsersScene(chat: input) {
+                navigation?.dismiss(animated: true, completion: nil)
+                navigation = nil
+            }
+            navigation?.setRoot(screen, animated: true, requredFullScreen: true)
+        }
     }
 }

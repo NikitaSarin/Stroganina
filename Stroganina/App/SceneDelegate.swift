@@ -22,7 +22,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let store = Store()
         store.load()
         let builder = Builder(store: store)
-        router = Router(window: window, builder: builder)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            let navigation = IPadNavigation(window: window)
+            router = Router(navigation: navigation, builder: builder)
+        } else {
+            let navigation = IOSNavigation()
+            window.rootViewController = navigation.navigationController
+            router = Router(navigation: navigation, builder: builder)
+        }
         router?.start()
         window.makeKeyAndVisible()
     }

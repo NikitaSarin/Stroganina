@@ -113,12 +113,12 @@ final class NavigationController: UINavigationController {
 
 import SwiftUI
 
-final class HostingController<MyView: View>: UIHostingController<MyView> {
+final class HostingController<Screen: IScreenView>: UIHostingController<Screen> {
     private let isNavigationBarHidden: Bool?
 
-    init(rootView: MyView, isNavigationBarHidden: Bool? = false) {
-        self.isNavigationBarHidden = isNavigationBarHidden
-        super.init(rootView: rootView)
+    init(_ screen: Screen) {
+        self.isNavigationBarHidden = screen.navigationBarConfig.hidden
+        super.init(rootView: screen)
     }
 
     @MainActor @objc required dynamic init?(coder aDecoder: NSCoder) {

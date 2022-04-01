@@ -50,39 +50,38 @@ struct ChatList: View {
     }
 
     var content: some View {
-        ScrollView(showsIndicators: false) {
-            Group {
-                if viewModel.chats.isEmpty {
-                    Spacer()
-                    if viewModel.isLoading {
-                        ProgressView()
-                    } else {
-                        Text("No chats")
-                            .foregroundColor(.tg_grey)
-                            .font(.regular(size: 17))
-                            .multilineTextAlignment(.center)
-                    }
-                    Spacer()
+        ZStack {
+            chats
+            if viewModel.chats.isEmpty {
+                Spacer()
+                if viewModel.isLoading {
+                    ProgressView()
                 } else {
-                    chats
+                    Text("No chats")
+                        .foregroundColor(.tg_grey)
+                        .font(.regular(size: 17))
+                        .multilineTextAlignment(.center)
                 }
+                Spacer()
             }
-        }.padding(.horizontal, 6)
+        }
     }
 
     private var chats: some View {
-        LazyVStack(spacing: 4) {
-            Color.clear
-                .frame(height: 8)
-            ForEach(viewModel.chats) { chat in
-                ChatRow(chat: chat)
-                    .onTapGesture {
-                        viewModel.didTap(on: chat)
-                    }
+        ScrollView(showsIndicators: false) {
+            LazyVStack(spacing: 4) {
+                Color.clear
+                    .frame(height: 8)
+                ForEach(viewModel.chats) { chat in
+                    ChatRow(chat: chat)
+                        .onTapGesture {
+                            viewModel.didTap(on: chat)
+                        }
+                }
             }
-        }
-        .transition(.opacity)
-        .animation(.easeIn, value: viewModel.chats)
+            .transition(.opacity)
+            .animation(.easeIn, value: viewModel.chats)
+        }.padding(.horizontal, 6)
     }
 }
 

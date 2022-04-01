@@ -9,20 +9,20 @@ import UIKit
 
 final class NewChatRouter {
 
-    private(set) lazy var navigation: UINavigationController = {
-        let navigation = UINavigationController()
-        return navigation
-    }()
+    private(set) var navigation: Navigation?
 
+    private let root: Navigation
     private let engine: NewChatEngine
     private let builder: Builder
     private let openChatHandler: (Chat) -> Void
 
     init(
+        root: Navigation,
         engine: NewChatEngine,
         builder: Builder,
         openChatHandler: @escaping (Chat) -> Void
     ) {
+        self.root = root
         self.engine = engine
         self.builder = builder
         self.openChatHandler = openChatHandler
@@ -35,17 +35,20 @@ final class NewChatRouter {
 
 extension NewChatRouter: NewChatRouting {
     func openUserSearchScene(multipleUsers: Bool) {
-        let viewController = builder.buildUserSearchScene(multipleUsers: multipleUsers, handler: self)
-        navigation.setViewControllers([viewController], animated: false)
+        let searchScene = builder.buildUserSearchScene(multipleUsers: multipleUsers, handler: self)
+        root.present(animated: true, completion: nil) { navigation in
+            navigation.setRoot(searchScene, animated: false, requredFullScreen: false)
+            self.navigation = navigation
+        }
     }
 
     func openChatSetupScene() {
         let viewController = builder.buildChatSetupScene(handler: self)
-        navigation.pushViewController(viewController, animated: true)
+        navigation?.pushViewController(viewController, animated: true)
     }
 
     func openChatScene(input: Chat) {
-        navigation.dismiss(animated: true, completion: nil)
+        navigation?.dismiss(animated: true, completion: nil)
         openChatHandler(input)
     }
 }

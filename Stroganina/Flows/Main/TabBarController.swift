@@ -7,10 +7,10 @@
 
 import UIKit
 
-final class TabBarController: UITabBarController {
+final class TabBarController: UITabBarController, TabNavigation {
 
     override var navigationItem: UINavigationItem {
-        self.viewControllers![0].navigationItem
+        (self.viewControllers?.count ?? 0 > 0) ? self.viewControllers![0].navigationItem : super.navigationItem
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -19,4 +19,9 @@ final class TabBarController: UITabBarController {
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
 
+    func add<Screen: IScreenView>(_ item: TabItem<Screen>) {
+        let host = HostingController(item.screen)
+        host.tabBarItem = .init(title: item.title, image: UIImage(systemName: item.image), tag: self.viewControllers?.count ?? 0)
+        self.setViewControllers((self.viewControllers ?? []) + [host], animated: false)
+    }
 }
