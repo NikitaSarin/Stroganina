@@ -10,7 +10,7 @@ import UIKit
 final class IPadNavigation: Navigation {
     let window: UIWindow
     let splitViewController = UISplitViewController()
-    var navigationController: UINavigationController = UINavigationController()
+    var navigationController: NavigationController = NavigationController()
 
     private var isFullScreen: Bool = false
 
@@ -66,16 +66,16 @@ extension IPadNavigation {
     func setRoot(vc: UIViewController, animated: Bool, requredFullScreen: Bool) {
         if requredFullScreen {
             isFullScreen = true
-            navigationController = UINavigationController()
+            navigationController = NavigationController()
             navigationController.navigationBar.prefersLargeTitles = true
             navigationController.viewControllers = [vc]
             window.rootViewController = navigationController
         } else {
             isFullScreen = false
-            navigationController = UINavigationController()
+            navigationController = NavigationController()
             navigationController.navigationBar.prefersLargeTitles = false
             navigationController.viewControllers = []
-            let rootNavigation = UINavigationController()
+            let rootNavigation = NavigationController()
             rootNavigation.viewControllers = [vc]
             rootNavigation.navigationBar.prefersLargeTitles = true
             splitViewController.viewControllers = [rootNavigation, navigationController]

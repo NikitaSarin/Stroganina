@@ -8,7 +8,7 @@
 import UIKit
 
 final class IOSNavigation: Navigation {
-    let navigationController: UINavigationController = UINavigationController()
+    let navigationController: NavigationController = NavigationController()
 
     init() {
         navigationController.navigationBar.prefersLargeTitles = true
