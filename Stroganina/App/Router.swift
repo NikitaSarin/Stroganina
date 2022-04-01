@@ -15,7 +15,6 @@ final class Router {
 
     private lazy var root: RootViewController = {
         let root = RootViewController()
-        root.content.setNavigationBarHidden(false, animated: false)
         builder.updateCenter.addListener(root)
         return root
     }()

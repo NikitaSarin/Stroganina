@@ -9,17 +9,14 @@ import UIKit
 
 final class TabBarController: UITabBarController {
 
-    private let hideNavigation: Bool
-
-    init(hideNavigation: Bool) {
-        self.hideNavigation = hideNavigation
-        super.init(nibName: nil, bundle: nil)
+    override var navigationItem: UINavigationItem {
+        self.viewControllers![0].navigationItem
     }
 
-    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(hideNavigation, animated: false)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
+
 }

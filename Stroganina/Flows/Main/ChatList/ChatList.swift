@@ -13,81 +13,76 @@ struct ChatList: View {
     @ObservedObject var viewModel: ChatListViewModel
 
     var body: some View {
-        NavigationView {
-            content
-                .navigationBarTitle("Chats", displayMode: .large)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Menu {
-                            Button {
-                                viewModel.newPersonalChatButtonTapped()
-                            } label: {
-                                Label(
-                                    "New personal chat",
-                                    systemImage: "person"
-                                )
-                            }
-                            Button {
-                                viewModel.newGroupButtonTapped()
-                            } label: {
-                                Label(
-                                    "New group",
-                                    systemImage: "person.2"
-                                )
-                            }
+        content
+            .navigationBarTitle("Chats", displayMode: .large)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Menu {
+                        Button {
+                            viewModel.newPersonalChatButtonTapped()
+                        } label: {
+                            Label(
+                                "New personal chat",
+                                systemImage: "person"
+                            )
                         }
-                        label: {
-                            Image(systemName: "square.and.pencil")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .padding(11)
-                                .frame(edge: 40)
+                        Button {
+                            viewModel.newGroupButtonTapped()
+                        } label: {
+                            Label(
+                                "New group",
+                                systemImage: "person.2"
+                            )
                         }
                     }
+                    label: {
+                        Image(systemName: "square.and.pencil")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .padding(11)
+                            .frame(edge: 40)
+                    }
                 }
-        }
-        .navigationTitle("")
-        .navigationBarHidden(true)
-        .onAppear {
-            viewModel.start()
-        }
+            }
+            .onAppear {
+                viewModel.start()
+            }
     }
 
     var content: some View {
-        Group {
-            if viewModel.chats.isEmpty {
-                Spacer()
-                if viewModel.isLoading {
-                    ProgressView()
+        ScrollView(showsIndicators: false) {
+            Group {
+                if viewModel.chats.isEmpty {
+                    Spacer()
+                    if viewModel.isLoading {
+                        ProgressView()
+                    } else {
+                        Text("No chats")
+                            .foregroundColor(.tg_grey)
+                            .font(.regular(size: 17))
+                            .multilineTextAlignment(.center)
+                    }
+                    Spacer()
                 } else {
-                    Text("No chats")
-                        .foregroundColor(.tg_grey)
-                        .font(.regular(size: 17))
-                        .multilineTextAlignment(.center)
+                    chats
                 }
-                Spacer()
-            } else {
-                chats
             }
-        }
+        }.padding(.horizontal, 6)
     }
 
     private var chats: some View {
-        ScrollView(showsIndicators: false) {
-            LazyVStack(spacing: 4) {
-                Color.clear
-                    .frame(height: 8)
-                ForEach(viewModel.chats) { chat in
-                    ChatRow(chat: chat)
-                        .onTapGesture {
-                            viewModel.didTap(on: chat)
-                        }
-                }
+        LazyVStack(spacing: 4) {
+            Color.clear
+                .frame(height: 8)
+            ForEach(viewModel.chats) { chat in
+                ChatRow(chat: chat)
+                    .onTapGesture {
+                        viewModel.didTap(on: chat)
+                    }
             }
-            .transition(.opacity)
-            .animation(.easeIn, value: viewModel.chats)
         }
-        .padding(.horizontal, 6)
+        .transition(.opacity)
+        .animation(.easeIn, value: viewModel.chats)
     }
 }
 

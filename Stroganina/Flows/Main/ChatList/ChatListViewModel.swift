@@ -11,7 +11,7 @@ import SwiftUI
 final class ChatListViewModel: ObservableObject {
 
     @Published var chats = [Chat]()
-    @Published var isLoading = true
+    @Published var isLoading = false
 
     private let router: ChatListRouting
     private var service: ChatListServiceProtocol

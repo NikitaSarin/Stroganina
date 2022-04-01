@@ -20,7 +20,7 @@ struct ChatView: View {
                 .ignoresSafeArea(.container, edges: .bottom)
             content
         }
-        .navigationTitle(viewModel.chat.title)
+        .navigationBarTitle(viewModel.chat.title, displayMode: .inline)
         .onAppear {
             viewModel.start()
         }.toolbar {
