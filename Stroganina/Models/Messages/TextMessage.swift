@@ -5,6 +5,8 @@
 //  Created by Сарин Никита Сергеевич on 28.10.2021.
 //
 
+import Foundation
+
 final class TextMessage: Message {
 
     let text: String
@@ -22,20 +24,11 @@ extension TextMessage {
     static let mock = TextMessage(base: .mock(), text: "Hello\nWorld")
 }
 
-
-final class TelegramMessage: Message {
-
-    let link: String
-
-    init(
-        base: Message,
-        link: String
-    ) {
-        self.link = link
-        super.init(base)
+extension TextMessage {
+    static func makeWeb(base: Message, text: String) -> MessageType? {
+        if URL(string: text) != nil, text.hasPrefix("https://") {
+            return .web(TextMessage(base: base, text: text))
+        }
+        return nil
     }
-}
-
-extension TelegramMessage {
-    static let mock = TelegramMessage(base: .mock(), link: "https://t.me/ru2ch_news/38783")
 }

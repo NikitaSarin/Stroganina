@@ -33,6 +33,7 @@
 		E8641A6927E67A2600003D92 /* Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8641A6827E67A2600003D92 /* Shake.swift */; };
 		E8641A6B27E6879800003D92 /* ChatRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8641A6A27E6879800003D92 /* ChatRouter.swift */; };
 		E8A9E5A627F73A2300331E2B /* ChatServisesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A9E5A527F73A2300331E2B /* ChatServisesBuilder.swift */; };
+		E8A9E5A827F73BCD00331E2B /* TelegramMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A9E5A727F73BCD00331E2B /* TelegramMessage.swift */; };
 		E8EBDBA227E9F421001A5189 /* MessageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EBDBA127E9F421001A5189 /* MessageNode.swift */; };
 		E8EBDBA427E9F6FA001A5189 /* MessageIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EBDBA327E9F6FA001A5189 /* MessageIdentifier.swift */; };
 		E8EBDBA627E9F922001A5189 /* MessageType+Raw.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EBDBA527E9F922001A5189 /* MessageType+Raw.swift */; };
@@ -127,6 +128,7 @@
 		E8641A6827E67A2600003D92 /* Shake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shake.swift; sourceTree = "<group>"; };
 		E8641A6A27E6879800003D92 /* ChatRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRouter.swift; sourceTree = "<group>"; };
 		E8A9E5A527F73A2300331E2B /* ChatServisesBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServisesBuilder.swift; sourceTree = "<group>"; };
+		E8A9E5A727F73BCD00331E2B /* TelegramMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelegramMessage.swift; sourceTree = "<group>"; };
 		E8EBDBA127E9F421001A5189 /* MessageNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageNode.swift; sourceTree = "<group>"; };
 		E8EBDBA327E9F6FA001A5189 /* MessageIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageIdentifier.swift; sourceTree = "<group>"; };
 		E8EBDBA527E9F922001A5189 /* MessageType+Raw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageType+Raw.swift"; sourceTree = "<group>"; };
@@ -591,6 +593,7 @@
 			children = (
 				FDCE3BA0272AF7E900DAF3AB /* Base */,
 				FDCE3B6A272AF22600DAF3AB /* TextMessage.swift */,
+				E8A9E5A727F73BCD00331E2B /* TelegramMessage.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -717,6 +720,7 @@
 				E8641A6B27E6879800003D92 /* ChatRouter.swift in Sources */,
 				DCE8FE20272EA6C500A43032 /* UserSearchViewModel.swift in Sources */,
 				DCE8FE40272ECCBE00A43032 /* UpdateCenter.swift in Sources */,
+				E8A9E5A827F73BCD00331E2B /* TelegramMessage.swift in Sources */,
 				DCE8FE28272EAB1000A43032 /* Scheduler.swift in Sources */,
 				FD01A91C272C9741005241ED /* EmojiMessageRow.swift in Sources */,
 				FD624289272B393200EF7F73 /* LoginView.swift in Sources */,

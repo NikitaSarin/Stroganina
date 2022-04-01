@@ -65,11 +65,10 @@ enum MessageType: Identifiable {
     }
 
     static func makeTextBase(_ base: Message, text: String) -> Self {
-        let tgPrefix = "https://t.me/"
-        if text.hasPrefix(tgPrefix) {
-            return .telegram(TelegramMessage(base: base, link: text.split(separator: "?").map(String.init)[0]))
-        } else if URL(string: text) != nil, text.hasPrefix("https://") {
-            return .web(TextMessage(base: base, text: text))
+        if let message = TelegramMessage.make(base: base, text: text) {
+            return message
+        } else if let message = TextMessage.makeWeb(base: base, text: text) {
+            return message
         } else if text.isSingleEmoji {
             return .emoji(TextMessage(base: base, text: text))
         } else {

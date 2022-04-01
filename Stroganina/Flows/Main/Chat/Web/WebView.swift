@@ -17,7 +17,21 @@ enum WebViewContent {
     case telegram(_ link: String)
 }
 
-struct WebContentView: UIViewRepresentable {
+struct WebView: View {
+    let content: WebViewContent
+    @ObservedObject private var viewModel = WebViewViewModel()
+
+    var body: some View {
+        WebContentView(
+            content: content,
+            viewModel: viewModel
+        ).frame(
+            height: max(content.cutHeight(viewModel.height ?? 10), 10)
+        )
+    }
+}
+
+fileprivate struct WebContentView: UIViewRepresentable {
     private let content: WebViewContent
     private let viewModel: WebViewViewModel
 
@@ -66,32 +80,30 @@ struct WebContentView: UIViewRepresentable {
     }
 }
 
-struct WebView: View {
-    let content: WebViewContent
-    @ObservedObject private var viewModel = WebViewViewModel()
-
-    var body: some View {
-        WebContentView(
-            content: content,
-            viewModel: viewModel
-        ).frame(
-            height: max(min(viewModel.height ?? 10, UIScreen.main.bounds.height * 2), 10)
-        )
+fileprivate extension WebViewContent {
+    func cutHeight(_ height: CGFloat) -> CGFloat {
+        switch self {
+        case .telegram:
+            return height
+        default:
+            return min(height, UIScreen.main.bounds.height / 2)
+        }
     }
 }
 
 fileprivate class WebViewViewModel: NSObject, ObservableObject, WKNavigationDelegate {
     @Published var height: CGFloat?
 
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        let script = """
+    private let telegramMessageScript = """
         document.getElementsByClassName('tgme_widget_message_user')[0].remove();
         document.getElementsByClassName('tgme_widget_message_bubble_tail')[0].remove();
         document.getElementsByClassName('tgme_widget_message_bubble_logo')[0].remove();
         document.getElementsByClassName('tgme_widget_message js-widget_message')[0].innerHTML =
-            document.getElementsByClassName('tgme_widget_message js-widget_message')[0].innerHTML.replace('class=\"tgme_widget_message_bubble\"', '');
-        """
-        webView.evaluateJavaScript(script, completionHandler: { [weak self] (_, _) in
+        document.getElementsByClassName('tgme_widget_message js-widget_message')[0].innerHTML.replace('class=\"tgme_widget_message_bubble\"', '');
+    """
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        webView.evaluateJavaScript(telegramMessageScript, completionHandler: { [weak self] (_, _) in
             webView.evaluateJavaScript("document.readyState", completionHandler: {  (complete, error) in
                 if complete != nil {
                     webView.evaluateJavaScript("document.body.scrollHeight", completionHandler: { (height, error) in
