@@ -34,6 +34,7 @@
 		E8641A6B27E6879800003D92 /* ChatRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8641A6A27E6879800003D92 /* ChatRouter.swift */; };
 		E8A9E5A627F73A2300331E2B /* ChatServisesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A9E5A527F73A2300331E2B /* ChatServisesBuilder.swift */; };
 		E8A9E5A827F73BCD00331E2B /* TelegramMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A9E5A727F73BCD00331E2B /* TelegramMessage.swift */; };
+		E8A9E5AD27F748AD00331E2B /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A9E5AC27F748AD00331E2B /* RootViewController.swift */; };
 		E8EBDBA227E9F421001A5189 /* MessageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EBDBA127E9F421001A5189 /* MessageNode.swift */; };
 		E8EBDBA427E9F6FA001A5189 /* MessageIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EBDBA327E9F6FA001A5189 /* MessageIdentifier.swift */; };
 		E8EBDBA627E9F922001A5189 /* MessageType+Raw.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EBDBA527E9F922001A5189 /* MessageType+Raw.swift */; };
@@ -129,6 +130,7 @@
 		E8641A6A27E6879800003D92 /* ChatRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRouter.swift; sourceTree = "<group>"; };
 		E8A9E5A527F73A2300331E2B /* ChatServisesBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServisesBuilder.swift; sourceTree = "<group>"; };
 		E8A9E5A727F73BCD00331E2B /* TelegramMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelegramMessage.swift; sourceTree = "<group>"; };
+		E8A9E5AC27F748AD00331E2B /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		E8EBDBA127E9F421001A5189 /* MessageNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageNode.swift; sourceTree = "<group>"; };
 		E8EBDBA327E9F6FA001A5189 /* MessageIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageIdentifier.swift; sourceTree = "<group>"; };
 		E8EBDBA527E9F922001A5189 /* MessageType+Raw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageType+Raw.swift"; sourceTree = "<group>"; };
@@ -305,6 +307,14 @@
 			path = UpdateCenter;
 			sourceTree = "<group>";
 		};
+		E8A9E5AB27F7489B00331E2B /* RootView */ = {
+			isa = PBXGroup;
+			children = (
+				E8A9E5AC27F748AD00331E2B /* RootViewController.swift */,
+			);
+			path = RootView;
+			sourceTree = "<group>";
+		};
 		E8EBDB9F27E9F40C001A5189 /* ChatService */ = {
 			isa = PBXGroup;
 			children = (
@@ -353,6 +363,7 @@
 		FD624216272AFA2D00EF7F73 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E8A9E5AB27F7489B00331E2B /* RootView */,
 				FD624260272AFA9700EF7F73 /* Messages */,
 				FD624284272B29C900EF7F73 /* ActionButton.swift */,
 				FD62423B272AFA2D00EF7F73 /* Section.swift */,
@@ -695,6 +706,7 @@
 				B182801B27EA63BC00D387DF /* MessageStatusView.swift in Sources */,
 				FDCE3B94272AF4F400DAF3AB /* Message.swift in Sources */,
 				E8EBDBAC27EA0960001A5189 /* MessageIdentifier+Raw.swift in Sources */,
+				E8A9E5AD27F748AD00331E2B /* RootViewController.swift in Sources */,
 				FD62425C272AFA2D00EF7F73 /* Section.swift in Sources */,
 				FDCE3B4A272AEEF900DAF3AB /* Router.swift in Sources */,
 				E8A9E5A627F73A2300331E2B /* ChatServisesBuilder.swift in Sources */,

@@ -12,11 +12,16 @@ final class Router {
     private let window: UIWindow
     private let builder: Builder
     private let auth: AuthService
-    private lazy var navigation: UINavigationController = {
-        let navigation = UINavigationController()
-        navigation.setNavigationBarHidden(true, animated: false)
-        return navigation
+
+    private lazy var root: RootViewController = {
+        let root = RootViewController()
+        root.content.setNavigationBarHidden(false, animated: false)
+        builder.updateCenter.addListener(root)
+        return root
     }()
+    private var navigation: UINavigationController {
+        return root.content
+    }
     private let store: Store
 
     init(
@@ -35,7 +40,7 @@ final class Router {
         } else {
             openStartScene(animated: false)
         }
-        window.rootViewController = navigation
+        window.rootViewController = root
     }
 
     func appDidEnterBackground() {
