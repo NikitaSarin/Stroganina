@@ -33,8 +33,11 @@ final class DefaultResponseHandler<Content: Decodable>: ResponseHandler {
     func handler(data: Data?, error: Error?) {
         if let error = error {
             log("[API][\(method)][ERROR]", "\(error)")
-            completion(.failure(.networkError(error)))
-
+            if let error = error as? ApiError {
+                completion(.failure(error))
+            } else {
+                completion(.failure(.networkError(error)))
+            }
             return
         }
         guard let data = data else {

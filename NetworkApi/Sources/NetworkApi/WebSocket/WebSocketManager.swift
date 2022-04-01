@@ -45,7 +45,9 @@ final class WebSocketManager {
     }
     
     func didDisactive() {
-        close()
+        DispatchQueue.main.async {
+            self.close()
+        }
     }
     
     private func nextPing() {
@@ -84,7 +86,7 @@ final class WebSocketManager {
                 self?.didLoad(message: message)
                 self?.active()
             case .failure:
-                self?.close()
+                return
             }
         })
         socketTask?.resume()

@@ -124,7 +124,7 @@ public final class Api: NSObject, Networking {
     }
 }
 
-extension Api: URLSessionDelegate, URLSessionWebSocketDelegate {
+extension Api: URLSessionDelegate {
     public func urlSession(
         _ session: URLSession, 
         didReceive challenge: URLAuthenticationChallenge, 
@@ -141,15 +141,6 @@ extension Api: URLSessionDelegate, URLSessionWebSocketDelegate {
             return
         }
         completionHandler(.useCredential, serverCredential)
-    }
-    
-    public func urlSession(
-        _ session: URLSession,
-        webSocketTask: URLSessionWebSocketTask,
-        didCloseWith closeCode: URLSessionWebSocketTask.CloseCode,
-        reason: Data?
-    ) {
-        self.webSocketManager.didDisactive()
     }
 }
 

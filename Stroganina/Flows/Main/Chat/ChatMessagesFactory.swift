@@ -16,6 +16,12 @@ private extension MessageType {
             return .transparent
         case .service:
             return .service
+        case .web:
+            return .plain
+        case .webContent:
+            return .plain
+        case .telegram:
+            return .plain
         }
     }
 }
@@ -35,6 +41,14 @@ struct ChatMessagesFactory {
                 EmojiMessageRow(message: message)
             case let .service(message):
                 ServiceMessageRow(message: message)
+            case let .web(message):
+                if let url = URL(string: message.text) {
+                    WebView(content: .url(url))
+                }
+            case let .webContent(message):
+                WebView(content: .html(message.text))
+            case let .telegram(message):
+                WebView(content: .telegram(message.link))
             }
         }
     }

@@ -5,6 +5,8 @@
 //  Created by Сарин Никита Сергеевич on 28.10.2021.
 //
 
+import Foundation
+
 final class TextMessage: Message {
 
     let text: String
@@ -20,4 +22,13 @@ final class TextMessage: Message {
 
 extension TextMessage {
     static let mock = TextMessage(base: .mock(), text: "Hello\nWorld")
+}
+
+extension TextMessage {
+    static func makeWeb(base: Message, text: String) -> MessageType? {
+        if URL(string: text) != nil, text.hasPrefix("https://") {
+            return .web(TextMessage(base: base, text: text))
+        }
+        return nil
+    }
 }
