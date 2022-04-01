@@ -32,6 +32,7 @@
 		DCE8FE42272ECCC700A43032 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE8FE41272ECCC700A43032 /* Notification.swift */; };
 		E8641A6927E67A2600003D92 /* Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8641A6827E67A2600003D92 /* Shake.swift */; };
 		E8641A6B27E6879800003D92 /* ChatRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8641A6A27E6879800003D92 /* ChatRouter.swift */; };
+		E8A9E5A627F73A2300331E2B /* ChatServisesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A9E5A527F73A2300331E2B /* ChatServisesBuilder.swift */; };
 		E8EBDBA227E9F421001A5189 /* MessageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EBDBA127E9F421001A5189 /* MessageNode.swift */; };
 		E8EBDBA427E9F6FA001A5189 /* MessageIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EBDBA327E9F6FA001A5189 /* MessageIdentifier.swift */; };
 		E8EBDBA627E9F922001A5189 /* MessageType+Raw.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EBDBA527E9F922001A5189 /* MessageType+Raw.swift */; };
@@ -125,6 +126,7 @@
 		DCE8FE41272ECCC700A43032 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		E8641A6827E67A2600003D92 /* Shake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shake.swift; sourceTree = "<group>"; };
 		E8641A6A27E6879800003D92 /* ChatRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRouter.swift; sourceTree = "<group>"; };
+		E8A9E5A527F73A2300331E2B /* ChatServisesBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServisesBuilder.swift; sourceTree = "<group>"; };
 		E8EBDBA127E9F421001A5189 /* MessageNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageNode.swift; sourceTree = "<group>"; };
 		E8EBDBA327E9F6FA001A5189 /* MessageIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageIdentifier.swift; sourceTree = "<group>"; };
 		E8EBDBA527E9F922001A5189 /* MessageType+Raw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageType+Raw.swift"; sourceTree = "<group>"; };
@@ -493,6 +495,7 @@
 				FDCE3B34272AEEBC00DAF3AB /* SceneDelegate.swift */,
 				FDCE3B49272AEEF900DAF3AB /* Router.swift */,
 				FDCE3B4D272AEF0300DAF3AB /* Builder.swift */,
+				E8A9E5A527F73A2300331E2B /* ChatServisesBuilder.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -691,6 +694,7 @@
 				E8EBDBAC27EA0960001A5189 /* MessageIdentifier+Raw.swift in Sources */,
 				FD62425C272AFA2D00EF7F73 /* Section.swift in Sources */,
 				FDCE3B4A272AEEF900DAF3AB /* Router.swift in Sources */,
+				E8A9E5A627F73A2300331E2B /* ChatServisesBuilder.swift in Sources */,
 				DC5469C4272D69A200935298 /* AuthorisationContext.swift in Sources */,
 				FDCE3B96272AF4F800DAF3AB /* TextMessage.swift in Sources */,
 				FDCE3B9E272AF7E100DAF3AB /* MessageType.swift in Sources */,
