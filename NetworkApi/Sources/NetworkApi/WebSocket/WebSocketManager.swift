@@ -8,16 +8,16 @@
 import Foundation
 
 final class WebSocketManager {
-    private let session: URLSession
-    private let url: URL
-
-    private var handlers: [ResponseHandlerIdentifier: ResponseHandler] = [:]
-    private var socketTask: URLSessionWebSocketTask?
-    private var timer: Timer?
+    @Locked private var handlers: [ResponseHandlerIdentifier: ResponseHandler] = [:]
+    private let connect: WebSocketConnect
 
     init(session: URLSession, url: URL) {
-        self.session = session
-        self.url = url
+        connect = WebSocketConnect(session: session, url: url)
+        connect.delegate = self
+    }
+
+    func closeConnect() {
+        connect.close()
     }
 
     func registerHandler(_ handler: ResponseHandler) {
@@ -25,109 +25,59 @@ final class WebSocketManager {
     }
 
     func sendData(_ data: Data, handler: ResponseHandler) {
-        if socketTask == nil {
-            active()
-        }
-        self.registerHandler(handler)
-        socketTask?.send(.data(data), completionHandler: { error in
+        registerHandler(handler)
+        connect.send(data) { [weak self] error in
             guard let error = error else {
                 return
             }
-            handler.handler(data: nil, error: error)
             DispatchQueue.main.async {
-                self.removeHandler(handler)
+                handler.handler(data: nil, error: error)
             }
-        })
+            self?.removeHandler(handler)
+        }
     }
 
     func removeHandler(_ handler: ResponseHandler) {
         handlers[handler.identifeir] = nil
     }
-    
-    func didDisactive() {
-        DispatchQueue.main.async {
-            self.close()
-        }
-    }
-    
-    private func nextPing() {
-        DispatchQueue.main.async { [weak self] in
-            self?.timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { _ in
-                self?.socketTask?.sendPing(pongReceiveHandler: { error in
-                    if let error = error {
-                        log("[API][WS][ERROR]", "ping \(error)")
-                        self?.didDisactive()
-                    } else {
-                        self?.nextPing()
-                    }
-                })
-            }
-        }
-    }
+}
 
-    private func close() {
+extension WebSocketManager: WebSocketConnectDelegate {
+    func didClose() {
         let error = ApiError.closeConnect
-        let handlers = handlers
-        self.handlers = [:]
-        for handler in handlers {
-            handler.value.handler(data: nil, error: error)
+        var handlers: [ResponseHandlerIdentifier: ResponseHandler] = [:]
+        self.$handlers.mutate {
+            handlers = $0
+            $0 = [:]
         }
-        socketTask = nil
-    }
-
-    private func active() {
-        if socketTask == nil {
-            socketTask = session.webSocketTask(with: url)
-            nextPing()
-        }
-        socketTask?.receive(completionHandler: { [weak self] result in
-            switch result {
-            case .success(let message):
-                self?.didLoad(message: message)
-                self?.active()
-            case .failure:
-                return
+        DispatchQueue.main.async {
+            for handler in handlers {
+                handler.value.handler(data: nil, error: error)
             }
-        })
-        socketTask?.resume()
-    }
-
-    private func didLoad(message: URLSessionWebSocketTask.Message) {
-        switch message {
-        case .data(let data):
-            self.didLoad(data)
-        case .string(let string):
-            guard let data = string.data(using: .utf8) else {
-                log("[API][WS][ERROR]", "чет мля стринг пришел \(string)")
-                return
-            }
-            self.didLoad(data)
-        @unknown default:
-            log("[API][WS][ERROR]", "хуетень на месте")
         }
     }
 
-    private func didLoad(_ data: Data) {
+    func didLoad(_ data: Data) {
         log("[API][WS][RESPONSE]", String(data: data, encoding: .utf8) ?? "")
         guard let metaInfo = try? JSONDecoder().decode(ResponseMetaInfo.self, from: data) else {
             log("[API][WS][ERROR]", "не получилось извлечь мета инфо")
             return
         }
+        let identifier: ResponseHandlerIdentifier
+        if let reuestId = metaInfo.requestId {
+            identifier = .request(reuestId: reuestId)
+        } else {
+            identifier = .listener(method: metaInfo.method)
+        }
+        guard let handler = self.handlers[identifier] else {
+            log("[API][WS][ERROR]", "handler not found \(identifier)")
+            return
+        }
         DispatchQueue.main.async {
-            let identifier: ResponseHandlerIdentifier
-            if let reuestId = metaInfo.requestId {
-                identifier = .request(reuestId: reuestId)
-            } else {
-                identifier = .listener(method: metaInfo.method)
-            }
-            guard let handler = self.handlers[identifier] else {
-                log("[API][WS][ERROR]", "handler not found \(identifier)")
-                return
-            }
             handler.handler(data: data, error: nil)
-            if case .request = identifier {
-                self.removeHandler(handler)
-            }
+        }
+        if case .request = identifier {
+            self.removeHandler(handler)
         }
     }
 }

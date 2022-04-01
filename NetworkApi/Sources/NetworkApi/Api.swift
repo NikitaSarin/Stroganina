@@ -8,6 +8,8 @@
 import Foundation
 
 public protocol Networking {
+    func closeConnect()
+
     func perform<F: ApiFunction>(
         _ function: F,
         queue: DispatchQueue,
@@ -51,6 +53,10 @@ public final class Api: NSObject, Networking {
     ) {
         self.config = config
         self.store = store
+    }
+
+    public func closeConnect() {
+        webSocketManager.closeConnect()
     }
 
     public func addListener<L: ApiListener>(
