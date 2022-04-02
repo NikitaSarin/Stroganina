@@ -43,12 +43,12 @@ struct ChatMessagesFactory {
                 ServiceMessageRow(message: message)
             case let .web(message):
                 if let url = URL(string: message.text) {
-                    WebView(content: .url(url))
+                    WebView(viewModel: WebViewViewModel(content: .url(url), base: message))
                 }
             case let .webContent(message):
-                WebView(content: .html(message.text))
+                WebView(viewModel: WebViewViewModel(content: .html(message.text), base: message))
             case let .telegram(message):
-                WebView(content: .telegram(message.link))
+                WebView(viewModel: WebViewViewModel(content: .telegram(message.link), base: message))
             }
         }
     }

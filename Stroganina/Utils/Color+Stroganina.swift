@@ -30,4 +30,8 @@ extension Color {
     static let tg_orange = Color(UIColor(hex: "FE9400"))
     static let tg_red = Color(UIColor(hex: "FE3C30"))
     static let tg_purple = Color(UIColor(hex: "7878FF"))
+
+    static let tg_autor = Color(UIColor(hex: "1d45bf"))
+    static let tg_link = Color(UIColor(hex: "1d45bf"))
+    static let tg_meta = Color(UIColor(hex: "646462"))
 }
