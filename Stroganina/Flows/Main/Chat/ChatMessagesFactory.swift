@@ -42,9 +42,7 @@ struct ChatMessagesFactory {
             case let .service(message):
                 ServiceMessageRow(message: message)
             case let .web(message):
-                if let url = URL(string: message.text) {
-                    WebView(viewModel: WebViewViewModel(content: .url(url), base: message))
-                }
+                WebView(viewModel: WebViewViewModel(content: .url(message.text), base: message))
             case let .webContent(message):
                 WebView(viewModel: WebViewViewModel(content: .html(message.text), base: message))
             case let .telegram(message):

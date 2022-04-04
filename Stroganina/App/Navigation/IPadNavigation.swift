@@ -9,13 +9,14 @@ import UIKit
 
 final class IPadNavigation: Navigation {
     let window: UIWindow
-    let splitViewController = UISplitViewController()
-    var navigationController: NavigationController = NavigationController()
 
+    private var navigationController: NavigationController = NavigationController()
     private var isFullScreen: Bool = false
+    private let updateCenter: UpdateCenter
 
-    init(window: UIWindow) {
+    init(window: UIWindow, updateCenter: UpdateCenter) {
         self.window = window
+        self.updateCenter = updateCenter
     }
 
     func setRoot(animated: Bool, requredFullScreen: Bool, setting: (TabNavigation) -> Void) {
@@ -66,10 +67,12 @@ extension IPadNavigation {
     func setRoot(vc: UIViewController, animated: Bool, requredFullScreen: Bool) {
         if requredFullScreen {
             isFullScreen = true
-            navigationController = NavigationController()
+            let root = RootViewController<NavigationController>()
+            updateCenter.addListener(root)
+            navigationController = root.content
             navigationController.navigationBar.prefersLargeTitles = true
             navigationController.viewControllers = [vc]
-            window.rootViewController = navigationController
+            window.rootViewController = root
         } else {
             isFullScreen = false
             navigationController = NavigationController()
@@ -78,8 +81,11 @@ extension IPadNavigation {
             let rootNavigation = NavigationController()
             rootNavigation.viewControllers = [vc]
             rootNavigation.navigationBar.prefersLargeTitles = true
-            splitViewController.viewControllers = [rootNavigation, navigationController]
-            window.rootViewController = splitViewController
+            let root = RootViewController<UISplitViewController>()
+            root.content.preferredDisplayMode = .oneBesideSecondary
+            updateCenter.addListener(root)
+            root.content.viewControllers = [rootNavigation, navigationController]
+            window.rootViewController = root
         }
     }
 }

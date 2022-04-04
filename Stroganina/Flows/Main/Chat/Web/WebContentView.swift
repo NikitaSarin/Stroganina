@@ -26,6 +26,8 @@ struct WebContentView: UIViewRepresentable {
 
         let configuration = WKWebViewConfiguration()
         configuration.preferences = preferences
+        configuration.allowsInlineMediaPlayback = true
+        configuration.mediaTypesRequiringUserActionForPlayback = [.all, .audio, .video]
 
         let webView = WKWebView(frame: CGRect.zero, configuration: configuration)
 
@@ -47,7 +49,9 @@ struct WebContentView: UIViewRepresentable {
     func updateUIView(_ webView: WKWebView, context: Context) {
         switch content {
         case .url(let url):
-            webView.load(URLRequest(url: url))
+            if let url = URL(string: url) {
+                webView.load(URLRequest(url: url))
+            }
         case .html(let html):
             webView.loadHTMLString(html, baseURL: nil)
         case .telegram(let link):

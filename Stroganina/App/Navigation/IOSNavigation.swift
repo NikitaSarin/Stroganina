@@ -8,7 +8,8 @@
 import UIKit
 
 final class IOSNavigation: Navigation {
-    let navigationController: NavigationController = NavigationController()
+    let root = RootViewController<NavigationController>()
+    lazy var navigationController = root.content
 
     init() {
         navigationController.navigationBar.prefersLargeTitles = true

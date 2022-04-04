@@ -16,8 +16,8 @@ final class WebSocketManager {
         connect.delegate = self
     }
 
-    func closeConnect() {
-        connect.close()
+    func reconnect() {
+        connect.reconnect()
     }
 
     func registerHandler(_ handler: ResponseHandler) {
@@ -43,8 +43,7 @@ final class WebSocketManager {
 }
 
 extension WebSocketManager: WebSocketConnectDelegate {
-    func didClose() {
-        let error = ApiError.closeConnect
+    func didClose(error: ApiError) {
         var handlers: [ResponseHandlerIdentifier: ResponseHandler] = [:]
         self.$handlers.mutate {
             handlers = $0

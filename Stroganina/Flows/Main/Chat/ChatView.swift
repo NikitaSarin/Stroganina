@@ -89,7 +89,7 @@ struct HistoryItemView: View {
             case .new:
                 Spacer(minLength: 10)
             case .empty:
-                Spacer(minLength: 100)
+                EmptyView()
             case .message(let wrapper):
                 factory.bubble(for: wrapper.type) {}.flip()
             }

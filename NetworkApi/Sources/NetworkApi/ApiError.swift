@@ -12,4 +12,5 @@ public enum ApiError: Error {
 	case networkError(_ error: Error)
 	case decodingError
     case closeConnect
+    case reconnect
 }

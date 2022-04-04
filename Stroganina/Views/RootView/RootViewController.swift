@@ -80,3 +80,18 @@ final class RootViewController<Content: UIViewController>: UIViewController {
         ])
     }
 }
+
+extension RootViewController: Listener {
+    func update(_ notifications: [Notification]) {
+        for notification in notifications {
+            switch notification {
+            case .closeConnect:
+                isShowDisconnect = true
+            case .reconnected:
+                isShowDisconnect = false
+            default:
+                break
+            }
+        }
+    }
+}

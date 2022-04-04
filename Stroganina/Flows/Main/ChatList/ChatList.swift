@@ -50,7 +50,7 @@ struct ChatList: View {
     }
 
     var content: some View {
-        ZStack {
+        ScrollView(showsIndicators: false) {
             chats
             if viewModel.chats.isEmpty {
                 Spacer()
@@ -64,24 +64,22 @@ struct ChatList: View {
                 }
                 Spacer()
             }
-        }
+        }.padding(.horizontal, 6)
     }
 
     private var chats: some View {
-        ScrollView(showsIndicators: false) {
-            LazyVStack(spacing: 4) {
-                Color.clear
-                    .frame(height: 8)
-                ForEach(viewModel.chats) { chat in
-                    ChatRow(chat: chat)
-                        .onTapGesture {
-                            viewModel.didTap(on: chat)
-                        }
-                }
+        LazyVStack(spacing: 4) {
+            Color.clear
+                .frame(height: 8)
+            ForEach(viewModel.chats) { chat in
+                ChatRow(chat: chat)
+                    .onTapGesture {
+                        viewModel.didTap(on: chat)
+                    }
             }
-            .transition(.opacity)
-            .animation(.easeIn, value: viewModel.chats)
-        }.padding(.horizontal, 6)
+        }
+        .transition(.opacity)
+        .animation(.easeIn, value: viewModel.chats)
     }
 }
 

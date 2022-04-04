@@ -10,10 +10,16 @@ import SwiftUI
 
 final class TelegramMessageScriptDecorator {
     func createScript(isSelf: Bool) -> String {
+
         var script = """
-            document.getElementsByClassName('tgme_widget_message_user')[0].remove();
-            document.getElementsByClassName('tgme_widget_message_bubble_tail')[0].remove();
-            document.getElementsByClassName('tgme_widget_message_bubble_logo')[0].remove();
+            \(removeElements("tgme_widget_message_user"))
+            \(removeElements("tgme_widget_message_bubble_tail"))
+            \(removeElements("tgme_widget_message_bubble_logo"))
+            \(removeElements("tiktok-1vwpj0p-DivPointerEvent e1733ect0"))
+            \(removeElements("tiktok-eu6h42-H1Text e3b0bu84"))
+            \(removeElements("tiktok-j6p4hh-DivRecommendListTitle e12ftuj83"))
+            \(removeElements("tiktok-j4nq3i-DivTopBannerAB e9ev8gh0"))
+
             document.getElementsByClassName('tgme_widget_message js-widget_message')[0].innerHTML =
             document.getElementsByClassName('tgme_widget_message js-widget_message')[0].innerHTML.replace('class=\"tgme_widget_message_bubble\"', '');
         """
@@ -31,6 +37,17 @@ final class TelegramMessageScriptDecorator {
     }
 
     private let color: ColorScheme = .init()
+
+    private func removeElements(_ element: String) -> String {
+        return """
+            {
+                var elements = document.getElementsByClassName('\(element)');
+                for (var i = 0; i < elements.length; i++) {
+                    elements[i].remove();
+                }
+            }
+        """
+    }
 
     private func setColor(_ color: Color, element: String) -> String {
         guard let hex = color.toHexString() else {

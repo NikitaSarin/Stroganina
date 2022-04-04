@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol Networking {
-    func closeConnect()
+    func reconnect()
 
     func perform<F: ApiFunction>(
         _ function: F,
@@ -55,8 +55,8 @@ public final class Api: NSObject, Networking {
         self.store = store
     }
 
-    public func closeConnect() {
-        webSocketManager.closeConnect()
+    public func reconnect() {
+        webSocketManager.reconnect()
     }
 
     public func addListener<L: ApiListener>(

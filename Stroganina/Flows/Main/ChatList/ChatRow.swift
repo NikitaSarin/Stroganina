@@ -40,11 +40,11 @@ struct ChatRow: View {
                 if let message = chat.lastMessage {
                     if #available(iOS 15, *) {
                         Text({ () -> AttributedString in
-                            let text = try? AttributedString(
+                            let text = try? NSAttributedString(
                                 markdown: message.type.description,
                                 options: AttributedString.MarkdownParsingOptions(interpretedSyntax: .full)
-                            )
-                            return text ?? AttributedString(message.type.description)
+                            ).string
+                            return AttributedString(text ?? message.type.description)
                         }())
                             .font(.regular(size: 12))
                             .lineLimit(2)

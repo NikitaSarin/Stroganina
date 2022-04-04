@@ -13,19 +13,19 @@ final class Builder {
     let store: Store
     let updateCenter: UpdateCenter
     let pushService: PushService
+    let api: Networking
 
-    private let api: Networking
     private lazy var chatServisesBuilder: ChatServisesBuilder = {
         ChatServisesBuilder(updateCenter: updateCenter, api: api)
     }()
-    
+
     private var chatServises = [Chat.ID: ChatService]()
 
     init(store: Store) {
         self.store = store
         self.api = Api(config: .default, store: store)
-        self.updateCenter = UpdateCenter(api: api)
-        self.pushService = PushService(api: api, store: store)
+        self.updateCenter = UpdateCenter(api: api, store: store)
+        self.pushService = PushService(api: api, store: store, updateCenter: updateCenter)
     }
 
     func buildStartScene(router: AuthRouting) -> some IScreenView {
@@ -57,6 +57,7 @@ final class Builder {
     func buildChatListScene(router: Router) -> some IScreenView {
         let service = ChatListService(api: api, updateCenter: updateCenter)
         let viewModel = ChatListViewModel(router: router, service: service, store: store)
+        pushService.appendHandler(viewModel)
         let view = ChatList(viewModel: viewModel)
         return ScreenView(view)
     }

@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 enum WebViewContent {
-    case url(_ url: URL)
+    case url(_ url: String)
     case html(_ html: String)
     case telegram(_ link: String)
 }
@@ -18,13 +18,35 @@ struct WebView: View {
     @ObservedObject var viewModel: WebViewViewModel
 
     var body: some View {
-        WebContentView(
-            content: viewModel.content,
-            viewModel: viewModel
-        ).frame(
-            width: min((viewModel.width ?? 500), 500),
-            height: max(viewModel.content.cutHeight(viewModel.height ?? 10), 10)
-        )
+        VStack(alignment: .leading) {
+            switch viewModel.content {
+            case .url(let url), .telegram(let url):
+                Button {
+                    if let url = URL(string: url) {
+                        UIApplication.shared.open(url)
+                    }
+                } label: {
+                    if viewModel.base.isOutgoing {
+                        Text(url.description)
+                            .foregroundColor(.tg_link)
+                            .multilineTextAlignment(.leading)
+                    } else {
+                        Text(url.description)
+                            .multilineTextAlignment(.leading)
+                    }
+                }
+            default:
+                EmptyView()
+            }
+            WebContentView(
+                content: viewModel.content,
+                viewModel: viewModel
+            ).frame(
+                height: max(viewModel.content.cutHeight(viewModel.height ?? 10), 10)
+            ).frame(
+                maxWidth: min((viewModel.width ?? 500), 500)
+            )
+        }
     }
 }
 
@@ -34,7 +56,8 @@ fileprivate extension WebViewContent {
         case .telegram:
             return height
         default:
-            return min(height, UIScreen.main.bounds.height / 2)
+            break
         }
+        return min(height, UIScreen.main.bounds.height / 2)
     }
 }

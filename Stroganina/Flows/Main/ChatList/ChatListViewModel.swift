@@ -16,6 +16,8 @@ final class ChatListViewModel: ObservableObject {
     private let router: ChatListRouting
     private var service: ChatListServiceProtocol
     private let store: Store
+    private var openChatId: Chat.ID?
+    private var currentChatId: Chat.ID?
 
     init(
         router: ChatListRouting,
@@ -29,10 +31,12 @@ final class ChatListViewModel: ObservableObject {
     }
 
     func start() {
+        currentChatId = nil
         service.fetchChats()
     }
 
     func didTap(on chat: Chat) {
+        currentChatId = chat.id
         router.openChatScene(chat)
     }
 
@@ -43,13 +47,38 @@ final class ChatListViewModel: ObservableObject {
     func newGroupButtonTapped() {
         router.openNewChatScene(type: .group)
     }
+
+    private func openChat(_ chatId: Chat.ID) {
+        self.openChatId = chatId
+        openPushChat()
+    }
+
+    private func openPushChat() {
+        guard let openChatId = openChatId, let chat = chats.first(where: { $0.id == openChatId }) else {
+            return
+        }
+        if currentChatId != openChatId {
+            currentChatId = chat.id
+            router.openChatScene(chat)
+        }
+        self.openChatId = nil
+    }
 }
 
 extension ChatListViewModel: ChatListServiceDelegate {
     func didChange(chats: [Chat]) {
-        withAnimation {
-            self.isLoading = false
-            self.chats = chats
-        }
+        self.isLoading = false
+        self.chats =  chats
+        openPushChat()
+    }
+}
+
+extension ChatListViewModel: PushNotificationHandler {
+    func canShow(info: PushNotificationInfo) -> Bool {
+        info.chatId != currentChatId
+    }
+
+    func open(info: PushNotificationInfo) {
+        openChat(info.chatId)
     }
 }

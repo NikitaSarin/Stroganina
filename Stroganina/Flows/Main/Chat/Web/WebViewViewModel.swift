@@ -13,9 +13,9 @@ class WebViewViewModel: NSObject, ObservableObject, WKNavigationDelegate {
     @Published var width: CGFloat?
 
     let content: WebViewContent
+    let base: Message
 
     private let decorator = TelegramMessageScriptDecorator()
-    private let base: Message
 
     init(content: WebViewContent, base: Message) {
         self.content = content
@@ -39,19 +39,5 @@ class WebViewViewModel: NSObject, ObservableObject, WKNavigationDelegate {
                 }
             })
         })
-    }
-
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if navigationAction.navigationType == .linkActivated  {
-            if let url = navigationAction.request.url, UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url)
-                print(url)
-                decisionHandler(.cancel)
-            } else {
-                decisionHandler(.allow)
-            }
-        } else {
-            decisionHandler(.allow)
-        }
     }
 }

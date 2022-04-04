@@ -85,7 +85,7 @@ extension ChatListService: Listener {
             case .reconnected:
                 fetchChats()
             case .closeConnect:
-                return
+                continue
             }
         }
         if isNeedUpdate {

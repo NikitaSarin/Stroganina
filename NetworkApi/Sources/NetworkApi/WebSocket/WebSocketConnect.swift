@@ -9,14 +9,14 @@ import Foundation
 
 protocol WebSocketConnectDelegate: AnyObject {
     func didLoad(_ data: Data)
-    func didClose()
+    func didClose(error: ApiError)
 }
 
 final class WebSocketConnect {
     weak var delegate: WebSocketConnectDelegate?
 
     private static let pingLoopTime: TimeInterval = 5
-    private static let pingTimeout: TimeInterval = 10
+    private static let pingTimeout: TimeInterval = 5
 
     private let session: URLSession
     private let url: URL
@@ -37,8 +37,8 @@ final class WebSocketConnect {
         })
     }
 
-    func close() {
-        didDisactive()
+    func reconnect() {
+        didDisactive(true)
     }
 
     private func activeIfNeeded() {
@@ -80,32 +80,33 @@ final class WebSocketConnect {
 
     private func ping() {
         DispatchQueue.main.async { [weak self, socketTask] in
-            self?.pingTimer = Timer.scheduledTimer(withTimeInterval: Self.pingLoopTime, repeats: false) { timer in
+            let timer = Timer.scheduledTimer(withTimeInterval: Self.pingLoopTime, repeats: false) { timer in
                 self?.socketTask?.sendPing(pongReceiveHandler: { error in
                     guard self?.pingTimer === timer, socketTask === self?.socketTask else {
                         return
                     }
+                    self?.pingTimer = nil
                     if let error = error {
                         log("[API][WS][ERROR]", "ping \(error)")
                         self?.didDisactive()
                     } else {
                         self?.ping()
                     }
-                    self?.pingTimer = nil
                 })
-                self?.timeoutTimer = Timer.scheduledTimer(withTimeInterval: Self.pingTimeout, repeats: false) { _ in
-                    guard self?.pingTimer === timer, socketTask === self?.socketTask else {
-                        return
-                    }
-                    self?.didDisactive()
+            }
+            self?.pingTimer = timer
+            self?.timeoutTimer = Timer.scheduledTimer(withTimeInterval: Self.pingTimeout + Self.pingLoopTime, repeats: false) { _ in
+                guard self?.pingTimer === timer, socketTask === self?.socketTask else {
+                    return
                 }
+                self?.didDisactive()
             }
         }
     }
 
-    private func didDisactive() {
+    private func didDisactive(_ reconnect: Bool = false) {
         socketTask = nil
-        delegate?.didClose()
+        delegate?.didClose(error: reconnect ? .reconnect : .closeConnect)
     }
 }
 

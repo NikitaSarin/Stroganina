@@ -11,15 +11,15 @@ final class ChatServisesBuilder {
     private let updateCenter: UpdateCenter
     private let api: Networking
 
-    private var chatServises = [Chat.ID: ChatService]()
+    private var chatServises = [Chat.ID: ChatServiceProtocol]()
 
     init(updateCenter: UpdateCenter, api: Networking) {
         self.updateCenter = updateCenter
         self.api = api
     }
 
-    func service(with chatId: Chat.ID) -> ChatService {
-        let service = chatServises[chatId] ?? ChatService(chatId: chatId, api: api, updateCenter: updateCenter)
+    func service(with chatId: Chat.ID) -> ChatServiceProtocol {
+        let service = ChatService(chatId: chatId, api: api, updateCenter: updateCenter)
         chatServises[chatId] = service
         return service
     }

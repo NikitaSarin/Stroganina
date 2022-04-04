@@ -7,11 +7,14 @@
 
 import UIKit
 import SwiftUI
+import NetworkApi
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     private var router: Router?
+    private var api: Networking?
+    private var isFirst: Bool = true
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene else { return }
@@ -22,12 +25,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let store = Store()
         store.load()
         let builder = Builder(store: store)
+        self.api = builder.api
         if UIDevice.current.userInterfaceIdiom == .pad {
-            let navigation = IPadNavigation(window: window)
+            let navigation = IPadNavigation(window: window, updateCenter: builder.updateCenter)
             router = Router(navigation: navigation, builder: builder)
         } else {
             let navigation = IOSNavigation()
-            window.rootViewController = navigation.navigationController
+            window.rootViewController = navigation.root
+            builder.updateCenter.addListener(navigation.root)
             router = Router(navigation: navigation, builder: builder)
         }
         router?.start()
@@ -36,5 +41,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func sceneDidEnterBackground(_ scene: UIScene) {
         router?.appDidEnterBackground()
+    }
+
+    func sceneWillEnterForeground(_ scene: UIScene) {
+        api?.reconnect()
     }
 }
